@@ -17,9 +17,11 @@ class CrearTablaTrabajador extends Migration
             $table->bigIncrements('id');
             $table->string('usuario',50)->unique();
             $table->string('password',100);
-            $table->string('nombres',50);
-            $table->string('apellidos',50);
-            $table->string('correo',300);
+            $table->string('primer_nombre',50);
+            $table->string('segundo_nombre',50)->nullable();
+            $table->string('primer_apellido',50);
+            $table->string('segundo_apellido',50);
+            $table->string('correo',300)->unique();
             $table->string('dni',10);
             $table->string('direccion',300)->nullable();
             $table->string('celular',9)->nullable();

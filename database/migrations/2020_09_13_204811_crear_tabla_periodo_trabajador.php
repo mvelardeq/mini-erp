@@ -17,7 +17,6 @@ class CrearTablaPeriodoTrabajador extends Migration
             $table->id();
             $table->unsignedBigInteger('trabajador_id');
             $table->foreign('trabajador_id','fk_periodotrabajador_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('numero');
             $table->date('fecha_inicio',12);
             $table->date('fecha_fin',12)->nullable();
             $table->timestamps();

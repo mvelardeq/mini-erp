@@ -21,6 +21,12 @@ use Illuminate\Support\Facades\Route;
 // Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
 Route::get('/', 'InicioController@index')->name('inicio');
+// Route::get('/', function()
+// {
+//     $img = Image::make('https://ovacion.pe/sites/default/files/styles/facebook_1200x630/public/articulos/2020/06/nacional.jpg?itok=gBhY1qem')->resize(900, 600);
+
+//     return $img->response('jpg');
+// });
 Route::get('seguridad/login', 'Seguridad\LoginController@index')->name('login');
 Route::post('seguridad/login', 'Seguridad\LoginController@login')->name('login_post');
 Route::get('seguridad/logout', 'Seguridad\LoginController@logout')->name('logout');
@@ -34,6 +40,17 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' =>['auth
     Route::get('trabajador/{id}/editar', 'TrabajadorController@editar')->name('editar_trabajador');
     Route::put('trabajador/{id}', 'TrabajadorController@actualizar')->name('actualizar_trabajador');
     Route::delete('trabajador/{id}', 'TrabajadorController@eliminar')->name('eliminar_trabajador');
+    Route::get('trabajador/{id}/perfil', 'TrabajadorPerfilController@index')->name('trabajador_perfil');
+
+    Route::get('trabajador/{id}/periodo-trabajador', 'PeriodoTrabajadorController@crear')->name('crear_periodo_trabajador');
+    Route::post('trabajador/{id}/periodo-trabajador', 'PeriodoTrabajadorController@guardar')->name('guardar_periodo_trabajador');
+    /*RUTAS DE OBSERVACION TRABAJADOR*/
+    Route::get('observacion-trabajador', 'ObservacionTrabajadorController@index')->name('observacion_trabajador');
+    Route::get('observacion-trabajador/crear', 'ObservacionTrabajadorController@crear')->name('crear_observacion_trabajador');
+    Route::post('observacion-trabajador', 'ObservacionTrabajadorController@guardar')->name('guardar_observacion_trabajador');
+    Route::get('observacion-trabajador/{id}/editar', 'ObservacionTrabajadorController@editar')->name('editar_observacion_trabajador');
+    Route::put('observacion-trabajador/{id}', 'ObservacionTrabajadorController@actualizar')->name('actualizar_observacion_trabajador');
+    Route::delete('observacion-trabajador/{id}', 'ObservacionTrabajadorController@eliminar')->name('eliminar_observacion_trabajador');
     /*RUTAS DE PERMISO*/
     Route::get('permiso', 'PermisoController@index')->name('permiso');
     Route::get('permiso/crear', 'PermisoController@crear')->name('crear_permiso');
@@ -70,4 +87,4 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' =>['auth
 
 // Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/inicio', 'HomeController@index')->name('home');

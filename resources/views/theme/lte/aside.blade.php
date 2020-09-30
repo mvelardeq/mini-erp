@@ -1,7 +1,7 @@
  <!-- Main Sidebar Container -->
   <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="/" class="brand-link">
+    <a href="/inicio" class="brand-link">
       <img src="{{asset("assets/$theme/dist/img/AdminLTELogo.png")}}" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">Ascensores Industriales</span>
     </a>
@@ -12,7 +12,7 @@
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column nav-legacy" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column nav-legacy nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <li class="nav-header">PRINCIPAL</li>

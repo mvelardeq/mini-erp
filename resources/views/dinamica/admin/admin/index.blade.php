@@ -5,6 +5,7 @@ Administrador
 
 @section('contenido')
 <div class="row">
-    <div class="col-lg-12">Bienvenido</div>
+    {{-- <div class="col-lg-12">{{dd(auth()->user()->foto)}}</div> --}}
+    <div class="col-lg-12">BIENVENIDO</div>
 </div>
 @endsection

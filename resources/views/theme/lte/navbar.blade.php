@@ -46,54 +46,92 @@ use Carbon\Carbon;
       <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                <img src="{{asset("assets/$theme/dist/img/user2-160x160.jpg")}}" class="user-image" alt="User Image">
-                <span class="hidden-xs">Hola, {{session()->get('nombre_trabajador') ?? 'Invitado'}} </span><i class="fas fa-angle-down"> </i>
+                <img src="{{Storage::url("imagenes/fotosTrabajadores/".auth()->user()->foto."")}}" class="user-image" alt="User Image">
+                <span class="hidden-xs">{{session()->get('nombre_trabajador') ?? 'Invitado'}} </span><i class="fas fa-angle-down"> </i>
             </a>
             <ul class="dropdown-menu bg-lightblue">
                 <!-- User image -->
                 <li class="user-header">
-                    <img src="{{asset("assets/$theme/dist/img/user2-160x160.jpg")}}" class="img-circle" alt="User Image">
+                    <img src="{{Storage::url("imagenes/fotosTrabajadores/".auth()->user()->foto."")}}" class="img-circle" alt="User Image">
                     <p>
-                    {{-- Alexander Pierce - Web Developer
-                    <small>Member since Nov. 2012</small> --}}
                     {{session()->get('nombre_trabajador', 'Inivitado')}} - {{session()->get('rol_nombre', 'Guest')}}
                     @auth
-                        <small>Registrado desde {{Carbon::parse(auth()->user()->created_at)->year }}</small>
+                        <small>Registrado desde {{Carbon::parse(auth()->user()->created_at)->isoFormat('MMM YYYY') }}</small>
                     @endauth
                     </p>
                 </li>
                 <!-- Menu Body -->
-                <li class="user-body">
-                    <div class="row justify-content-center align-items-center">
+                <li class="user-body bg-white">
+                    {{-- <div class=" p-3 text-center border-b-1 brc-secondary-l2">
+                        <div class="btn-group btn-group-toggle px-2" data-toggle="buttons">
+                            <label class="btn px-3 btn-sm btn-light btn-h-lighter-danger btn-a-danger btn-a-bold btn-a-bb2">
+                                <input type="radio" name="options" id="status-offline">
+                                OFFLINE
+                            </label>
+                            <label class="btn px-3 btn-sm btn-light btn-h-lighter-success btn-a-success btn-a-bold btn-a-bb2 active">
+                                <input type="radio" name="options" id="status-online" checked="">
+                                ONLINE
+                            </label>
+                        </div>
+                    </div> --}}
+                    <div class=" p-3 text-center border-b-1 brc-secondary-l2">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-outline-danger color-palette active">
+                            <input type="radio" name="options" id="option1" autocomplete="off" checked> OFFLINE
+                            </label>
+                            <label class="btn btn-outline-success color-palette">
+                            <input type="radio" name="options" id="option2" autocomplete="off"> ONLINE
+                            </label>
+                        </div>
+                    </div>
+                    {{-- <div class="row justify-content-center align-items-center">
                         @if(session()->get("roles") && count(session()->get("roles")) > 1)
                         <div class="col-xs-12 text-center">
                             <a href="#" class="cambiar-rol btn btn-block btn-outline-warning btn-sm">Cambiar Rol</a>
                         </div>
                         @endif
+                    </div> --}}
+
+                    @if(session()->get("roles") && count(session()->get("roles")) > 1)
+                        <div class="nav-link dropdown-item">
+                            <a class="cambiar-rol mt-1" href="#">
+                                <i class="far fa-clipboard text-info text-105 mr-1 w-2"></i>
+                                Cambiar Rol
+                            </a>
+                        </div>
+                    @endif
+
+                    <div class="nav-link dropdown-item">
+                        <a class="" href="#">
+                        <i class="far fa-user text-info text-105 mr-1 w-2"></i>
+                        Profile
+                        </a>
                     </div>
-                </li>
-                <!-- Menu Footer-->
-                <li class="user-footer">
-                    <div class="float-left">
-                    <a href="{{route('login')}}" class="btn btn-block btn-outline-info btn-sm">Login</a>
+
+                    <div class="nav-link dropdown-item">
+                        <a class="" href="#" data-toggle="modal" data-target="#id-ace-settings-modal">
+                        <i class="fas fa-sliders-h text-success text-105 mr-1 w-2"></i>
+                        Configurar
+                        </a>
                     </div>
-                    <div class="float-right">
-                    <a href="{{route('logout')}}" class="btn btn-block btn-outline-info btn-sm">Salir</a>
+                    <div class="dropdown-divider brc-secondary-l2"></div>
+
+                    <div class="nav-link dropdown-item">
+                        <a class="" href="{{route('logout')}}">
+                        <i class="fa fa-power-off text-orange text-105 mr-1 w-2"></i>
+                        Salir
+                        </a>
                     </div>
                 </li>
             </ul>
+
         </li>
 
-
-
-
-
-
-
       <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+          <p class="pl-4"></p>
+        {{-- <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
-        </a>
+        </a> --}}
       </li>
     </ul>
   </nav>

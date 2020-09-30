@@ -24,23 +24,35 @@ Trabajadores
                 <table class="table table-striped table-bordered table-hover table-responsive-lg" id="tabla-data">
                     <thead>
                         <tr>
-                            <th>Usuario</th>
-                            <th>Nombre</th>
+                            <th>Nombres y apellidos</th>
+                            <th>Dni</th>
                             <th>Correo</th>
+                            <th>Usuario</th>
                             <th>Roles</th>
+                            <th>Periodo</th>
                             <th class="width70"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($datas as $data)
                         <tr>
-                            <td>{{$data->usuario}}</td>
-                            <td>{{$data->nombres}}</td>
+                            <td><a href="{{route('trabajador_perfil', ['id' => $data->id])}}">{{$data->primer_nombre." ".$data->segundo_nombre." ".$data->primer_apellido." ".$data->segundo_apellido}}</a></td>
+                            <td>{{$data->dni}}</td>
                             <td>{{$data->correo}}</td>
+                            <td>{{$data->usuario}}</td>
                             <td>
                                 @foreach ($data->roles as $rol)
                                     {{$loop->last ? $rol->nombre : $rol->nombre . ', '}}
                                 @endforeach
+                            </td>
+                            <td>
+                                @if (isset($data->periodos->last()->fecha_fin))
+                                    <span class="badge bg-danger">Cesado</span>
+                                @elseif (isset($data->periodos->last()->fecha_inicio))
+                                    <span class="badge bg-success">Activo</span>
+                                @else
+                                    <span class="badge bg-warning">Sin contrato</span>
+                                @endif
                             </td>
                             <td>
                                 <a href="{{route('editar_trabajador', ['id' => $data->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">

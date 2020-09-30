@@ -8,7 +8,7 @@
 @else
     <li class="nav-item {{getMenuOpen($item["nombre"])}}">
         <a href="javascript:;" class="nav-link {{getMenuActive($item["nombre"])}}">
-          <i class="fas fa-{{$item["icono"]}}"></i>
+          <i class="nav-icon fas fa-{{$item["icono"]}}"></i>
             <p>
               {{$item["nombre"]}}
               <i class="right fas fa-angle-left"></i>

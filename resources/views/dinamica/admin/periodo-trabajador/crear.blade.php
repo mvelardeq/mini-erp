@@ -1,6 +1,7 @@
 @extends("theme.$theme.layout")
+
 @section('titulo')
-    Trabajadores
+    Sistema Periodo Trabajadores
 @endsection
 
 @section("styles")
@@ -14,33 +15,32 @@
 @endsection
 
 @section("script")
-<script src="{{asset("assets/pages/scripts/admin/trabajador/crear.js")}}" type="text/javascript"></script>
+<script src="{{asset("assets/pages/scripts/admin/observacion-trabajador/crear.js")}}" type="text/javascript"></script>
 @endsection
 
 @section('contenido')
-<div class="row">
-    <div class="col-lg-12">
-        @include('dinamica.includes.form-error')
-        @include('dinamica.includes.mensaje')
-        <div class="card card-outline card-info">
+    <div class="row">
+        <div class="col-lg-12">
+            @include('dinamica.includes.mensaje')
+        <div class="card card-primary card-outline">
             <div class="card-header">
-                <h3 class="card-title">Crear trabajador</h3>
+            <h3 class="card-title">Crear Periodo a {{$trabajador->primer_nombre." ".$trabajador->primer_apellido}}</h3>
                 <div class="card-tools">
-                    <a href="{{route('trabajador')}}" class="btn btn-block btn-info btn-sm">
-                        <i class="fa fa-fw fa-reply-all"></i> Volver al listado
-                    </a>
+                    <a href="{{route('trabajador_perfil', ['id' => $trabajador->id])}}" class="btn btn-block btn-info btn-sm">Volver</a>
                 </div>
             </div>
-            <form action="{{route('guardar_trabajador')}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
+            <!-- /.card-header -->
+            <form action="{{route('guardar_periodo_trabajador', ['id' => $trabajador->id])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off">
                 @csrf
                 <div class="card-body">
-                    @include('dinamica.admin.trabajador.form')
+                    @include('dinamica.admin.periodo-trabajador.form')
                 </div>
                 <div class="card-footer">
                     @include('dinamica.includes.boton-form-crear')
                 </div>
             </form>
         </div>
+        <!-- /.card -->
+        </div>
     </div>
-</div>
 @endsection

@@ -7,6 +7,7 @@ use App\Http\Requests\ValidacionTrabajador;
 use App\Models\Admin\Rol;
 use App\Models\Seguridad\Trabajador;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TrabajadorController extends Controller
 {
@@ -17,7 +18,7 @@ class TrabajadorController extends Controller
      */
     public function index()
     {
-        $datas = Trabajador::with('roles:id,nombre')->orderBy('id')->get();
+        $datas = Trabajador::with('roles:id,nombre', 'observaciones', 'periodos', 'ascensos')->orderBy('id')->get();
         return view('dinamica.admin.trabajador.index', compact('datas'));
     }
 
@@ -40,9 +41,15 @@ class TrabajadorController extends Controller
      */
     public function guardar(ValidacionTrabajador $request)
     {
+        // $trabajador = Trabajador::create($request->all());
+        // $trabajador->roles()->sync($request->rol_id);
+        // return redirect('admin/trabajador')->with('mensaje', 'Trabajador creado con exito');
+
+        if ($foto = Trabajador::setFoto($request->foto_up))
+            $request->request->add(['foto' => $foto]);
         $trabajador = Trabajador::create($request->all());
         $trabajador->roles()->sync($request->rol_id);
-        return redirect('admin/trabajador')->with('mensaje', 'Trabajador creado con exito');
+        return redirect()->route('trabajador')->with('mensaje', 'El trabajador se actualizó correctamente');
     }
 
     /**
@@ -67,10 +74,12 @@ class TrabajadorController extends Controller
      */
     public function actualizar(ValidacionTrabajador $request, $id)
     {
-        $trabajador=Trabajador::findOrFail($id);
+        $trabajador = Trabajador::findOrFail($id);
+        if ($foto = Trabajador::setFoto($request->foto_up, $trabajador->foto))
+            $request->request->add(['foto' => $foto]);
         $trabajador->update(array_filter($request->all()));
         $trabajador->roles()->sync($request->rol_id);
-        return redirect('admin/trabajador')->with('mensaje', 'Trabajador actualizado con exito');
+        return redirect()->route('trabajador')->with('mensaje', 'El trabajdor se actualizó correctamente');
     }
 
     /**

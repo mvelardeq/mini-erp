@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Biblioteca | Log in</title>
+  <title>Ascindu | Log in</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -17,7 +17,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="{{route('inicio')}}">Biblioteca</a>
+    <a href="{{route('inicio')}}">Ascensores Industriales</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
@@ -39,7 +39,7 @@
         <input type="text" name="usuario" class="form-control" value="{{old('usuario')}}" placeholder="Usuario">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+              <span class="fas fa-user"></span>
             </div>
           </div>
         </div>

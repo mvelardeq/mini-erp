@@ -8,11 +8,12 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
-    protected $redirectTo = '/admin';
+    protected $redirectTo = '/inicio';
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
@@ -29,6 +30,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        // $request->session()->flush();
         $roles = $user->roles()->get();
         if ($roles->isNotEmpty()) {
             $user->setSession($roles->toArray());
@@ -46,6 +48,7 @@ class LoginController extends Controller
 
     public function logout()
     {
+        Session::flush();
         Auth::logout();
         return redirect('seguridad/login');
     }

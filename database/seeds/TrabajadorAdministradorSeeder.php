@@ -14,11 +14,14 @@ class TrabajadorAdministradorSeeder extends Seeder
     {
         DB::table('trabajador')->insert([
             'usuario' => 'mvelarde',
-            'nombres' => 'Martín César',
-            'apellidos' => 'Velarde Quispe',
+            'primer_nombre' => 'Martín',
+            'segundo_nombre' => 'César',
+            'primer_apellido' => 'Velarde',
+            'segundo_apellido' => 'Quispe',
             'password' => bcrypt('pass123'),
             'correo' => 'martin_v_q@hotmail.com',
             'dni' => '45325572',
+            'foto' => 'D0xeeZNeJogjv5.jpg',
         ]);
 
 
