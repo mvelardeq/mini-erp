@@ -18,7 +18,7 @@ function ajaxRequest (url, data) {
         type: 'POST',
         data: data,
         success: function (respuesta) {
-            Biblioteca.notificaciones(respuesta.respuesta, 'Biblioteca', 'success');
+            Biblioteca.notificaciones(respuesta.respuesta, 'Ascensores Industriales', 'success');
         }
     });
 }

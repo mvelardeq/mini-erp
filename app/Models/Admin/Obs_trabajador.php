@@ -11,7 +11,7 @@ use Intervention\Image\Facades\Image;
 class Obs_trabajador extends Model
 {
     protected $table='obs_trabajador';
-    protected $fillable = ['trabajador_id','observacion','fecha','foto'];
+    protected $fillable = ['trabajador_id','titulo_observacion','observacion','fecha','foto'];
     protected $guarded = ['id'];
 
     public function trabajador()
@@ -22,14 +22,14 @@ class Obs_trabajador extends Model
     public static function setFoto($foto, $actual = false){
         if ($foto) {
             if ($actual) {
-                Storage::disk('public')->delete("imagenes/caratulas/$actual");
+                Storage::disk('public')->delete("imagenes/observacionesTrabajadores/$actual");
             }
             $imageName = Str::random(20) . '.jpg';
             $imagen = Image::make($foto)->encode('jpg', 75);
         $imagen->resize(600, 800, function ($constraint) {
                 $constraint->upsize();
             });
-            Storage::disk('public')->put("imagenes/caratulas/$imageName", $imagen->stream());
+            Storage::disk('public')->put("imagenes/observacionesTrabajadores/$imageName", $imagen->stream());
             return $imageName;
         } else {
             return false;

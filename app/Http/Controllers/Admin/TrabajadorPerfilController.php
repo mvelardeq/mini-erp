@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Ascenso_trabajador;
+use App\Models\Admin\Cargo_trabajador;
 use App\Models\Admin\Obs_trabajador;
 use App\Models\Admin\Periodo_trabajador;
 use App\Models\Seguridad\Trabajador;
@@ -18,7 +20,12 @@ class TrabajadorPerfilController extends Controller
     public function index($id)
     {
         $data = Trabajador::with('roles:id,nombre', 'observaciones', 'periodos', 'ascensos')->findOrFail($id);
-        return view('dinamica.admin.trabajador.perfil', compact('data'));
+        $ascensos = Ascenso_trabajador::with('cargo')->where('trabajador_id', $id)->get();
+
+        $trabajador = Trabajador::with('ascensos')->findOrFail($id);
+        $cargo_trabajador = Cargo_trabajador::get();
+
+        return view('dinamica.admin.trabajador.perfilTrabajador.index', compact('data', 'ascensos', 'trabajador','cargo_trabajador'));
     }
 
     /**

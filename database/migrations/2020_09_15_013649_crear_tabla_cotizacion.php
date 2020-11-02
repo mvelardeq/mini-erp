@@ -15,9 +15,9 @@ class CrearTablaCotizacion extends Migration
     {
         Schema::create('cotizacion', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('equipo_servicio_id');
-            $table->foreign('equipo_servicio_id','fk_cotizacion_equiposervicio')->references('id')->on('servicio')->onDelete('restrict')->onUpdate('restrict');
-            $table->string('nombre',100);
+            $table->unsignedBigInteger('equipo_id');
+            $table->foreign('equipo_id','fk_cotizacion_equipo')->references('id')->on('equipo')->onDelete('restrict')->onUpdate('restrict');
+            $table->string('numero',20);
             $table->date('fecha',12);
             $table->string('dirigido_a',100);
             $table->timestamps();

@@ -29,4 +29,6 @@ $(document).ready(function () {
         dropZoneEnabled: false,
         theme: "fas",
     });
+
+
 });

@@ -19,6 +19,6 @@ class Ascenso_trabajador extends Model
 
     public function cargo()
     {
-        return $this->belongsTo(Cargo_trabajador::class, 'cargo_id');
+        return $this->belongsTo(Cargo_trabajador::class, 'cargo_trabajador_id');
     }
 }

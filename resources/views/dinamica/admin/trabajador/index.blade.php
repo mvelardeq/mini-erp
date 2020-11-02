@@ -22,14 +22,14 @@ Trabajadores
             </div>
             <div class="card-body">
                 <table class="table table-striped table-bordered table-hover table-responsive-lg" id="tabla-data">
-                    <thead>
+                    <thead class="bg-dark">
                         <tr>
                             <th>Nombres y apellidos</th>
                             <th>Dni</th>
                             <th>Correo</th>
                             <th>Usuario</th>
                             <th>Roles</th>
-                            <th>Periodo</th>
+                            <th>Estado</th>
                             <th class="width70"></th>
                         </tr>
                     </thead>
