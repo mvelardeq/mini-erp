@@ -119,7 +119,7 @@ use Carbon\Carbon;
 
                 <hr>
 
-                <strong><i class="far fa-boot mr-1"></i> Botas</strong>
+                <strong><i class="fas fa-birthday-cake mr-1"></i> Botass</strong>
 
                 <p class="text-muted">
                     {{$data->botas}}

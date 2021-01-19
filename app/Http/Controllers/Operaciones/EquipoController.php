@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Operaciones;
 use App\Http\Controllers\Controller;
 use App\Models\Operaciones\Equipo;
 use App\Models\Operaciones\Obra;
+use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EquipoController extends Controller
 {
@@ -42,6 +45,19 @@ class EquipoController extends Controller
     {
         Equipo::create($request->all());
         return redirect('operaciones/equipo')->with('mensaje', 'Equipo creado con éxito');
+        // dd($request->file("plano")->getClientOriginalName());
+        // $file= $request->file("plano");
+        // $name= $request->file("plano")->getClientOriginalName();
+        // Storage::disk('google')->put("$name", $request->file('plano'));
+        // Storage::disk('google')->makeDirectory('Planos');
+        // $path = $request->file('plano')->store(
+            // 'Planos/', 'google');
+            // $path = $request->file('plano')->store('planos');
+            // Storage::putFile('plano', $file, 'public');
+            // Storage::disk('google')->putFile('otro',$file);
+        // Storage::disk('google')->put($path, $file);
+        // dd($path);
+        // dd('done');
     }
 
     /**

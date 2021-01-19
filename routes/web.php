@@ -155,15 +155,44 @@ Route::put('servicio/{id}', 'ServicioController@actualizar')->name('actualizar_s
 Route::delete('servicio/{id}', 'ServicioController@eliminar')->name('eliminar_servicio');
 // Route::get('trabajador/{id}/perfil', 'TrabajadorPerfilController@index')->name('trabajador_perfil');
 
-/*RUTAS DE COTIZACIÓN*/
-Route::get('cotizacion', 'CotizacionController@index')->name('cotizacion');
-Route::get('cotizacion/crear', 'CotizacionController@crear')->name('crear_cotizacion');
-Route::post('cotizacion', 'CotizacionController@guardar')->name('guardar_cotizacion');
-Route::get('cotizacion/{id}/editar', 'CotizacionController@editar')->name('editar_cotizacion');
-Route::put('cotizacion/{id}', 'CotizacionController@actualizar')->name('actualizar_cotizacion');
-Route::delete('cotizacion/{id}', 'CotizacionController@eliminar')->name('eliminar_cotizacion');
-
 });
+
+Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['auth','superadmin']], function () {
+
+    /*RUTAS DE COTIZACIÓN*/
+    Route::get('cotizacion', 'CotizacionController@index')->name('cotizacion');
+    Route::get('cotizacion/crear', 'CotizacionController@crear')->name('crear_cotizacion');
+    Route::post('cotizacion', 'CotizacionController@guardar')->name('guardar_cotizacion');
+    Route::get('cotizacion/{id}/editar', 'CotizacionController@editar')->name('editar_cotizacion');
+    Route::put('cotizacion/{id}', 'CotizacionController@actualizar')->name('actualizar_cotizacion');
+    Route::delete('cotizacion/{id}', 'CotizacionController@eliminar')->name('eliminar_cotizacion');
+
+    /*RUTAS DE CONTRATO*/
+    Route::get('contrato', 'ContratoController@index')->name('contrato');
+    Route::get('contrato/crear', 'ContratoController@crear')->name('crear_contrato');
+    Route::post('contrato', 'ContratoController@guardar')->name('guardar_contrato');
+    Route::get('contrato/{id}/editar', 'ContratoController@editar')->name('editar_contrato');
+    Route::put('contrato/{id}', 'ContratoController@actualizar')->name('actualizar_contrato');
+    Route::delete('contrato/{id}', 'ContratoController@eliminar')->name('eliminar_contrato');
+    Route::post('contrato/finalizar/{id}', 'ContratoController@finalizar')->name('finalizar_contrato');
+    Route::post('contrato/retomar/{id}', 'ContratoController@retomar')->name('retomar_contrato');
+
+    /*RUTAS DE FACTURA*/
+    Route::get('factura', 'FacturaController@index')->name('factura');
+    Route::get('factura/crear', 'FacturaController@crear')->name('crear_factura');
+    Route::post('factura', 'FacturaController@guardar')->name('guardar_factura');
+    Route::delete('factura/{id}', 'FacturaController@eliminar')->name('eliminar_factura');
+    Route::post('factura/combo/{id}', 'FacturaController@combo')->name('combo_factura');
+    Route::post('factura/costofac/{id}', 'FacturaController@costofac')->name('costofac_factura');
+    Route::post('factura/procesar/{id}', 'FacturaController@procesar')->name('procesar_factura');
+    Route::post('factura/pagar/{id}', 'FacturaController@pagar')->name('pagar_factura');
+    Route::post('factura/anular/{id}', 'FacturaController@anular')->name('anular_factura');
+
+    // Route::get('factura/{id}/editar', 'FacturaController@editar')->name('editar_factura');
+    // Route::put('factura/{id}', 'FacturaController@actualizar')->name('actualizar_factura');
+    // Route::delete('factura/{id}', 'FacturaController@eliminar')->name('eliminar_factura');
+
+    });
 
 // Auth::routes();
 

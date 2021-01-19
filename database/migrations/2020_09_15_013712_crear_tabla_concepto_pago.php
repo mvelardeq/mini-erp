@@ -15,10 +15,12 @@ class CrearTablaConceptoPago extends Migration
     {
         Schema::create('concepto_pago', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('equipo_servicio_id');
-            $table->foreign('equipo_servicio_id','fk_conceptopago_equiposervicio')->references('id')->on('equipo_servicio')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('contrato_id');
+            $table->foreign('contrato_id','fk_conceptopago_contrato')->references('id')->on('contrato')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('estado_conceptopago_id')->default(1);
+            $table->foreign('estado_conceptopago_id','fk_conceptopago_estadoconceptopago')->references('id')->on('estado_conceptopago')->onDelete('restrict')->onUpdate('restrict');
             $table->string('concepto',400);
-            $table->double('porcentaje', 3, 2);
+            $table->unsignedInteger('porcentaje');
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

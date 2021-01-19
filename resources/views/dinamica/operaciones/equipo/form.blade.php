@@ -66,3 +66,9 @@
         <input type="text" name="cuarto_maquina" id="cuarto_maquina" class="form-control" value="{{old('cuarto_maquina', $equipo->cuarto_maquina ?? '')}}"/>
     </div>
 </div>
+<div class="form-group row">
+    <label for="plano" class="col-lg-3 control-form-label">Plano</label>
+    <div class="col-lg-8">
+        <input type="file" name="plano" id="plano" data-initial-preview="{{isset($data->foto) ? Storage::url("imagenes/planoEquipos/$equipo->plano") : "http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=Plano+Equipo"}}" accept="image/*"/>
+    </div>
+</div>

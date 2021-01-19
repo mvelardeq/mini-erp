@@ -18,6 +18,7 @@ class CrearTablaCotizacion extends Migration
             $table->unsignedBigInteger('equipo_id');
             $table->foreign('equipo_id','fk_cotizacion_equipo')->references('id')->on('equipo')->onDelete('restrict')->onUpdate('restrict');
             $table->string('numero',20);
+            $table->string('resumen',200);
             $table->date('fecha',12);
             $table->string('dirigido_a',100);
             $table->timestamps();

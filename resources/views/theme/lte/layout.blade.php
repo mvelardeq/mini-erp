@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,6 +32,10 @@
   <link rel="stylesheet" href="{{asset("assets/$theme/plugins/daterangepicker/daterangepicker.css")}}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset("assets/$theme/plugins/summernote/summernote-bs4.min.css")}}">
+  <!-- datatable -->
+  <link rel="stylesheet" href="{{asset("assets/js/datatable/DataTables-1.10.23/css/dataTables.bootstrap4.min.css")}}">
+  <link rel="stylesheet" href="{{asset("assets/js/datatable/Buttons-1.6.5/css/buttons.bootstrap4.min.css")}}">
+
 
   @yield('styles')
   <link rel="stylesheet" href="{{asset("assets/css/custom.css")}}">
@@ -130,6 +134,18 @@
 <script src="{{asset("assets/js/jquery-validation/jquery.validate.min.js")}}"></script>
 <script src="{{asset("assets/js/jquery-validation/localization/messages_es.min.js")}}"></script>
 <script src="{{asset("assets/js/funciones.js")}}"></script>
+
+<!-- datatable -->
+<script src="{{asset("assets/js/datatable/JSZip-2.5.0/jszip.min.js")}}"></script>
+<script src="{{asset("assets/js/datatable/pdfmake-0.1.36/pdfmake.min.js")}}"></script>
+<script src="{{asset("assets/js/datatable/pdfmake-0.1.36/vfs_fonts.js")}}"></script>
+<script src="{{asset("assets/js/datatable/DataTables-1.10.23/js/jquery.dataTables.min.js")}}"></script>
+<script src="{{asset("assets/js/datatable/DataTables-1.10.23/js/dataTables.bootstrap4.min.js")}}"></script>
+<script src="{{asset("assets/js/datatable/Buttons-1.6.5/js/dataTables.buttons.min.js")}}"></script>
+<script src="{{asset("assets/js/datatable/Buttons-1.6.5/js/buttons.bootstrap4.min.js")}}"></script>
+<script src="{{asset("assets/js/datatable/Buttons-1.6.5/js/buttons.html5.min.js")}}"></script>
+<script src="{{asset("assets/js/datatable/Buttons-1.6.5/js/buttons.print.min.js")}}"></script>
+
 
 @yield("scriptsPlugins")
 

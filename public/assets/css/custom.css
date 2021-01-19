@@ -25,3 +25,19 @@ label.requerido:after{
 .pl-40{
     padding-left:40px !important;
 }
+
+div.dt-buttons{
+    position:absolute !important;
+}
+
+@media screen and (max-width: 767px) {
+    div.dt-buttons {
+      width: 111px !important;
+    }
+  }
+
+@media screen and (max-width: 540px) {
+    div.dt-buttons{
+        position:relative !important;
+    }
+  }

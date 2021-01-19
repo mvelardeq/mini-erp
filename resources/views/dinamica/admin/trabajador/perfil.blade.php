@@ -119,7 +119,7 @@ use Carbon\Carbon;
 
                 <hr>
 
-                <strong><i class="far fa-boot mr-1"></i> Botas</strong>
+                <strong><i class="far fa-shoe-prints mr-1"></i> Botass</strong>
 
                 <p class="text-muted">
                     {{$data->botas}}

@@ -128,10 +128,17 @@ use Carbon\Carbon;
 
                 <hr>
 
-                <strong><i class="far fa-boot mr-1"></i> Botas</strong>
+                <strong><i class="fas fa-shoe-prints mr-1"></i> Botas</strong>
 
                 <p class="text-muted">
                     {{$data->botas}}
+                </p>
+                <hr>
+
+                <strong><i class="fas fa-tshirt mr-1"></i> Overol</strong>
+
+                <p class="text-muted">
+                    {{$data->overol}}
                 </p>
 
             </div>

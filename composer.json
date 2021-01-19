@@ -12,11 +12,14 @@
         "ext-gd": "*",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
+        "google/apiclient": "^2.8",
+        "greenter/lite": "^4.1",
         "guzzlehttp/guzzle": "^6.3",
         "intervention/image": "^2.5",
         "laravel/framework": "^7.24",
         "laravel/tinker": "^2.0",
         "laravel/ui": "2.4",
+        "nao-pon/flysystem-google-drive": "~1.1",
         "predis/predis": "^1.1"
     },
     "require-dev": {

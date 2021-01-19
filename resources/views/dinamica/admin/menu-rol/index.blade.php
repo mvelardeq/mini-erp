@@ -17,7 +17,7 @@ Menú - Rol
             </div>
             <div class="card-body">
                 @csrf
-                <table class="table table-striped table-bordered table-hover table-responsive-sm" id="tabla-data">
+                <table class="table table-striped table-bordered table-hover table-responsive-sm" id="tabla">
                     <thead class="bg-dark">
                         <tr>
                             <th>Menú</th>

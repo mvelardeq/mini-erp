@@ -17,8 +17,8 @@ class CrearTablaOt extends Migration
             $table->id();
             $table->unsignedBigInteger('trabajador_id');
             $table->foreign('trabajador_id','fk_ot_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('equipo_servicio_id');
-            $table->foreign('equipo_servicio_id','fk_ot_equiposervicio')->references('id')->on('equipo_servicio')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('contrato_id');
+            $table->foreign('contrato_id','fk_ot_contrato')->references('id')->on('contrato')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('estado_ot_id');
             $table->foreign('estado_ot_id','fk_ot_estadoot')->references('id')->on('estado_ot')->onDelete('restrict')->onUpdate('restrict');
             $table->date('fecha',12);

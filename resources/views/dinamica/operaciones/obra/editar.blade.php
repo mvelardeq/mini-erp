@@ -34,7 +34,7 @@
             <form action="{{route('actualizar_obra', ['id' => $obra->id])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
                 @csrf @method("put")
                 <div class="card-body">
-                    @include('dinamica.admin.obra.form')
+                    @include('dinamica.operaciones.obra.form')
                 </div>
                 <div class="card-footer">
                     @include('dinamica.includes.boton-form-editar')

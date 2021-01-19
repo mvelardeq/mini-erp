@@ -20,7 +20,7 @@ Equipos
                     </a>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <table class="table table-striped table-bordered table-hover table-responsive-lg" id="tabla-data">
                     <thead class="bg-dark">
                         <tr>

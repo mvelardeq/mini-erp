@@ -21,9 +21,10 @@ class CrearTablaFactura extends Migration
             $table->foreign('estado_factura_id','fk_factura_estadofactura')->references('id')->on('estado_factura')->onDelete('restrict')->onUpdate('restrict');
             $table->string('numero',4);
             $table->date('fecha_facturacion',12);
-            $table->double('costo', 6, 2);
             $table->string('observacion',400)->nullable();
             $table->date('fecha_pago',12)->nullable();
+            $table->double('costo');
+            $table->double('pago');
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';
