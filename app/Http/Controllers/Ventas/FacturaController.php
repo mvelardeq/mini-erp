@@ -206,5 +206,32 @@ class FacturaController extends Controller
         }
     }
 
+    public function pagar(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            if (Factura::findOrFail($id)->update(['estado_factura_id' => 3 ])) {
+                return response()->json(['mensaje' => 'ok','id'=>$id]);
+            } else {
+                return response()->json(['mensaje' => 'ng']);
+            }
+        } else {
+            abort(404);
+        }
+    }
+
+    public function anular(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            if (Factura::findOrFail($id)->update(['estado_factura_id' => 4 ])) {
+                return response()->json(['mensaje' => 'ok','id'=>$id]);
+            } else {
+                return response()->json(['mensaje' => 'ng']);
+            }
+        } else {
+            abort(404);
+        }
+    }
+
+
 
 }
