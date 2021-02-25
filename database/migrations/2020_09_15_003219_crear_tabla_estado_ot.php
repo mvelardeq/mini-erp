@@ -15,7 +15,7 @@ class CrearTablaEstadoOt extends Migration
     {
         Schema::create('estado_ot', function (Blueprint $table) {
             $table->id();
-            $table->string('estado_ot',15);
+            $table->string('nombre',15);
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

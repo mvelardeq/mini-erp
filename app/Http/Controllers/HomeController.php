@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -24,5 +26,16 @@ class HomeController extends Controller
     public function index()
     {
         return view('dinamica.inicio');
+    }
+    public function guardar(Request $request)
+    {
+        // $name=$request->file("foto_up")->getClientOriginalName();
+        // $photo = $request->file("foto_up");
+        // Storage::disk('s3')->put('photos',$photo);
+        // $url = Storage::disk('s3')->url('photos/mfolVjh1ippk9NECcEbMybSiCuQJ0vo28Pf7YasO.jpg');
+
+        // return dd($url);
+        return dd(Config::get('filesystems'));
+
     }
 }

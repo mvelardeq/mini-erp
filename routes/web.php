@@ -31,6 +31,9 @@ Route::get('seguridad/login', 'Seguridad\LoginController@index')->name('login');
 Route::post('seguridad/login', 'Seguridad\LoginController@login')->name('login_post');
 Route::get('seguridad/logout', 'Seguridad\LoginController@logout')->name('logout');
 Route::post('ajax-sesion', 'AjaxController@setSession')->name('ajax')->middleware('auth');
+
+
+
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' =>['auth','superadmin']], function () {
     Route::get('', 'AdminController@index');
     /*RUTAS DE TRABAJADOR*/
@@ -53,36 +56,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' =>['auth
 
     Route::get('trabajador/{id}/ascenso-trabajador', 'AscensoTrabajadorController@crear')->name('crear_ascenso_trabajador');
     Route::post('trabajador/{id}/ascenso-trabajador', 'AscensoTrabajadorController@guardar')->name('guardar_ascenso_trabajador');
-
-    /*RUTAS DE OBRA*/
-    // Route::get('obra', 'ObraController@index')->name('obra');
-    // Route::get('obra/crear', 'ObraController@crear')->name('crear_obra');
-    // Route::post('obra', 'ObraController@guardar')->name('guardar_obra');
-    // Route::get('obra/{id}/editar', 'ObraController@editar')->name('editar_obra');
-    // Route::put('obra/{id}', 'ObraController@actualizar')->name('actualizar_obra');
-    // Route::delete('obra/{id}', 'ObraController@eliminar')->name('eliminar_obra');
-    // Route::get('trabajador/{id}/perfil', 'TrabajadorPerfilController@index')->name('trabajador_perfil');
-
-
-    /*RUTAS DE EQUIPO*/
-    // Route::get('equipo', 'EquipoController@index')->name('equipo');
-    // Route::get('equipo/crear', 'EquipoController@crear')->name('crear_equipo');
-    // Route::post('equipo', 'EquipoController@guardar')->name('guardar_equipo');
-    // Route::get('equipo/{id}/editar', 'EquipoController@editar')->name('editar_equipo');
-    // Route::put('equipo/{id}', 'EquipoController@actualizar')->name('actualizar_equipo');
-    // Route::delete('equipo/{id}', 'EquipoController@eliminar')->name('eliminar_equipo');
-    // Route::get('trabajador/{id}/perfil', 'TrabajadorPerfilController@index')->name('trabajador_perfil');
-
-
-
-    /*RUTAS DE OBSERVACION TRABAJADOR*/
-    // Route::get('observacion-trabajador', 'ObservacionTrabajadorController@index')->name('observacion_trabajador');
-    // Route::get('observacion-trabajador/crear', 'ObservacionTrabajadorController@crear')->name('crear_observacion_trabajador');
-    // // Route::post('observacion-trabajador', 'ObservacionTrabajadorController@guardar')->name('guardar_observacion_trabajador');
-    // Route::get('observacion-trabajador/{id}/editar', 'ObservacionTrabajadorController@editar')->name('editar_observacion_trabajador');
-    // Route::put('observacion-trabajador/{id}', 'ObservacionTrabajadorController@actualizar')->name('actualizar_observacion_trabajador');
-    // Route::delete('observacion-trabajador/{id}', 'ObservacionTrabajadorController@eliminar')->name('eliminar_observacion_trabajador');
-
 
     /*RUTAS DE PERMISO*/
     Route::get('permiso', 'PermisoController@index')->name('permiso');
@@ -153,7 +126,14 @@ Route::post('servicio', 'ServicioController@guardar')->name('guardar_servicio');
 Route::get('servicio/{id}/editar', 'ServicioController@editar')->name('editar_servicio');
 Route::put('servicio/{id}', 'ServicioController@actualizar')->name('actualizar_servicio');
 Route::delete('servicio/{id}', 'ServicioController@eliminar')->name('eliminar_servicio');
-// Route::get('trabajador/{id}/perfil', 'TrabajadorPerfilController@index')->name('trabajador_perfil');
+
+/*RUTAS DE OT*/
+Route::get('ot', 'OtController@index')->name('ot');
+Route::get('ot/crear', 'OtController@crear')->name('crear_ot');
+Route::post('ot', 'OtController@guardar')->name('guardar_ot');
+Route::get('ot/{id}/editar', 'OtController@editar')->name('editar_ot');
+Route::put('ot/{id}', 'OtController@actualizar')->name('actualizar_ot');
+Route::delete('ot/{id}', 'OtController@eliminar')->name('eliminar_ot');
 
 });
 
@@ -194,8 +174,26 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
 
     });
 
-// Auth::routes();
+    Route::group(['prefix' => 'usuario', 'namespace' => 'Usuario', 'middleware' =>['auth']], function () {
 
-// Auth::routes();
+        /*RUTAS DE OT*/
+        Route::get('ot/{id}', 'OtController@index')->name('usuario_ot');
+        Route::get('ot/{id}/crear', 'OtController@crear')->name('crear_usuario_ot');
+        Route::post('ot/{id}', 'OtController@guardar')->name('guardar_usuario_ot');
+        Route::get('ot/{id}/editar', 'OtController@editar')->name('editar_usuario_ot');
+        Route::put('ot/{id}', 'OtController@actualizar')->name('actualizar_usuario_ot');
+        Route::delete('ot/{id}', 'OtController@eliminar')->name('eliminar_usuario_ot');
+
+        Route::post('ot/combo/{contrato_id}', 'OtController@combo')->name('combo_usuario_ot');
+
+        /*RUTAS DE NOTIFICACIONES*/
+        Route::get('notificaciones/{id}', 'NotificacionesController@index')->middleware(['supervisor'])->name('usuario_notificaciones');
+
+    });
+
+
 
 Route::get('/inicio', 'HomeController@index')->name('home');
+Route::post('/inicio', 'HomeController@guardar')->name('guardar_imagen');
+
+

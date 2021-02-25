@@ -67,14 +67,14 @@ class Trabajador extends Authenticatable
     public static function setFoto($foto, $actual = false){
         if ($foto) {
             if ($actual) {
-                Storage::disk('public')->delete("imagenes/fotosTrabajadores/$actual");
+                Storage::disk('s3')->delete("photos/profilePhoto/$actual");
             }
             $imageName = Str::random(14) . '.jpg';
             $imagen = Image::make($foto)->encode('jpg', 75);
         $imagen->resize(600, 800, function ($constraint) {
                 $constraint->upsize();
             });
-            Storage::disk('public')->put("imagenes/fotosTrabajadores/$imageName", $imagen->stream());
+            Storage::disk('s3')->put("photos/profilePhoto/$imageName", $imagen->stream());
             return $imageName;
         } else {
             return false;

@@ -27,13 +27,14 @@ Equipos
                             <th>N° de equipo</th>
                             <th>Obra</th>
                             <th>OE</th>
-                            <th>Velocidad (m/s)</th>
+                            <th>Vel.(m/s)</th>
                             <th>Paradas</th>
                             <th>Carga (kg)</th>
                             <th>Marca</th>
                             <th>Modelo</th>
                             <th>Accesos</th>
                             <th>Cuarto de máq.</th>
+                            <th>Plano</th>
 
                             <th class="width70"></th>
                         </tr>
@@ -51,6 +52,11 @@ Equipos
                             <td>{{$equipo->modelo}}</td>
                             <td>{{$equipo->accesos}}</td>
                             <td>{{$equipo->cuarto_maquina}}</td>
+                            <td>
+                                @if (isset($equipo->plano))
+                                    <a href="{{Storage::disk('s3')->url('files/planes/'.$equipo->plano)}}"><i class="fas fa-file-pdf text-danger"></i></a>
+                                @endif
+                            </td>
 
                             <td>
                                 <a href="{{route('editar_equipo', ['id' => $equipo->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">

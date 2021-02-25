@@ -24,7 +24,7 @@ $(document).ready(function () {
             data: form.serialize(),
             success: function (respuesta) {
                 if (respuesta.mensaje == "ok") {
-                    $("#estado"+respuesta.id).html('<span class="badge bg-warning">cerrado</span>');
+                    $("#estado"+respuesta.id).html('<span class="badge bg-warning">Cerrado</span>');
                     $("#accion"+respuesta.id).html('Retomar');
                     form.attr('action',window.location+"/retomar/"+respuesta.id);
                     form.removeClass("form-finalizar");
@@ -70,7 +70,7 @@ $(document).ready(function () {
             data: form.serialize(),
             success: function (respuesta) {
                 if (respuesta.mensaje == "ok") {
-                    $("#estado"+respuesta.id).html( '<span class="badge bg-success">abierto</span>');
+                    $("#estado"+respuesta.id).html( '<span class="badge bg-success">Abierto</span>');
                     $("#accion"+respuesta.id).html('Finalizar');
                     form.attr('action',window.location+"/finalizar/"+respuesta.id);
                     form.removeClass("form-retomar");

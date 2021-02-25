@@ -4,7 +4,7 @@ $(document).ready(function () {
 
 
     $("#tabla-data").DataTable({
-        order: [[ 0, "desc" ]],
+        order: [[0 ]],
         language:{
 
             "lengthMenu": "Mostrar _MENU_ registros",

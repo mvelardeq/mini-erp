@@ -46,13 +46,13 @@ use Carbon\Carbon;
       <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                <img src="{{Storage::url("imagenes/fotosTrabajadores/".auth()->user()->foto."")}}" class="user-image" alt="User Image">
+                <img src="{{Storage::disk('s3')->url("photos/profilePhoto/".auth()->user()->foto."")}}" class="user-image" alt="User Image">
                 <span class="hidden-xs">{{session()->get('nombre_trabajador') ?? 'Invitado'}} </span><i class="fas fa-angle-down"> </i>
             </a>
             <ul class="dropdown-menu bg-lightblue">
                 <!-- User image -->
                 <li class="user-header">
-                    <img src="{{Storage::url("imagenes/fotosTrabajadores/".auth()->user()->foto."")}}" class="img-circle" alt="User Image">
+                    <img src="{{Storage::disk('s3')->url("photos/profilePhoto/".auth()->user()->foto."")}}" class="img-circle" alt="User Image">
                     <p>
                     {{session()->get('nombre_trabajador', 'Inivitado')}} - {{session()->get('rol_nombre', 'Guest')}}
                     @auth

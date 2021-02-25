@@ -48,8 +48,10 @@ class TrabajadorController extends Controller
         if ($foto = Trabajador::setFoto($request->foto_up))
             $request->request->add(['foto' => $foto]);
         $trabajador = Trabajador::create($request->all());
-        $trabajador->roles()->sync($request->rol_id);
-        return redirect()->route('trabajador')->with('mensaje', 'El trabajador se actualizó correctamente');
+
+        return dd($request->foto);
+        // $trabajador->roles()->sync($request->rol_id);
+        // return redirect()->route('trabajador')->with('mensaje', 'El trabajador se actualizó correctamente');
     }
 
     /**
@@ -94,6 +96,7 @@ class TrabajadorController extends Controller
             $trabajador=Trabajador::findOrFail($id);
             $trabajador->roles()->detach();
             $trabajador->delete();
+            Storage::disk('s3')->delete("photos/profilePhoto/$trabajador->foto");
             return response()->json(['mensaje'=>'ok']);
         } else {
             abort(404);

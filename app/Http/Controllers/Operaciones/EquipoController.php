@@ -43,21 +43,12 @@ class EquipoController extends Controller
      */
     public function guardar(Request $request)
     {
+        if ($plane = Equipo::setPlane($request->plano_up))
+        {
+            $request->request->add(['plano' => $plane]);
+        }
         Equipo::create($request->all());
         return redirect('operaciones/equipo')->with('mensaje', 'Equipo creado con éxito');
-        // dd($request->file("plano")->getClientOriginalName());
-        // $file= $request->file("plano");
-        // $name= $request->file("plano")->getClientOriginalName();
-        // Storage::disk('google')->put("$name", $request->file('plano'));
-        // Storage::disk('google')->makeDirectory('Planos');
-        // $path = $request->file('plano')->store(
-            // 'Planos/', 'google');
-            // $path = $request->file('plano')->store('planos');
-            // Storage::putFile('plano', $file, 'public');
-            // Storage::disk('google')->putFile('otro',$file);
-        // Storage::disk('google')->put($path, $file);
-        // dd($path);
-        // dd('done');
     }
 
     /**
@@ -93,8 +84,14 @@ class EquipoController extends Controller
      */
     public function actualizar(Request $request, $id)
     {
-        Equipo::findOrFail($id)->update($request->all());
+        // Equipo::findOrFail($id)->update($request->all());
+        $equipo = Equipo::findOrFail($id);
+        if ($plane = Equipo::setFoto($request->plano_up, $equipo->plano))
+            $request->request->add(['plano' => $plane]);
+        $equipo->update(array_filter($request->all()));
         return redirect('operaciones/equipo')->with('mensaje', 'Equipo actualizado con éxito');
+
+
     }
 
     /**
@@ -105,8 +102,10 @@ class EquipoController extends Controller
      */
     public function eliminar(Request $request, $id)
     {
+        $equipo = Equipo::findorFail($id);
         if ($request->ajax()) {
             if (Equipo::destroy($id)) {
+                Storage::disk('s3')->delete("files/planes/$equipo->plano");
                 return response()->json(['mensaje' => 'ok']);
             } else {
                 return response()->json(['mensaje' => 'ng']);

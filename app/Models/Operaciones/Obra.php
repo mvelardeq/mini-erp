@@ -14,4 +14,5 @@ class Obra extends Model
     {
         return $this->HasMany(Equipo::class);
     }
+    
 }

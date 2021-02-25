@@ -31,7 +31,7 @@ use Carbon\Carbon;
             <div class="card-body box-profile">
               <div class="text-center">
                 <img class="profile-user-img img-fluid img-circle"
-                     src="{{Storage::url("imagenes/fotosTrabajadores/".$data->foto."")}}"
+                     src="{{Storage::disk('s3')->url("photos/profilePhoto/".$data->foto."")}}"
                      alt="User profile picture">
               </div>
 

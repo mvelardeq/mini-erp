@@ -1,6 +1,6 @@
 @extends("theme.$theme.layout")
 @section('titulo')
-    Equipos
+    OT
 @endsection
 
 @section("styles")
@@ -20,6 +20,7 @@
 
 @section("script")
 <script src="{{asset("assets/pages/scripts/admin/trabajador/crear.js")}}" type="text/javascript"></script>
+<script src="{{asset("assets/pages/scripts/usuario/ot/crear.js")}}" type="text/javascript"></script>
 @endsection
 
 @section('contenido')
@@ -29,17 +30,17 @@
         @include('dinamica.includes.mensaje')
         <div class="card card-outline card-info">
             <div class="card-header">
-                <h3 class="card-title">Crear equipo</h3>
+                <h3 class="card-title">Crear Ot</h3>
                 <div class="card-tools">
-                    <a href="{{route('equipo')}}" class="btn btn-block btn-info btn-sm">
+                    <a href="{{route('usuario_ot', ['id' => auth()->user()->id])}}" class="btn btn-block btn-info btn-sm">
                         <i class="fa fa-fw fa-reply-all"></i> Volver al listado
                     </a>
                 </div>
             </div>
-            <form action="{{route('guardar_equipo')}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" files="true" enctype="multipart/form-data">
+            <form action="{{route('guardar_usuario_ot', ['id' => auth()->user()->id])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
-                    @include('dinamica.operaciones.equipo.form')
+                    @include('dinamica.usuario.ot.form')
                 </div>
                 <div class="card-footer">
                     @include('dinamica.includes.boton-form-crear')

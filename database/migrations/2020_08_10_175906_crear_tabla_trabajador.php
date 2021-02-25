@@ -29,6 +29,7 @@ class CrearTablaTrabajador extends Migration
             $table->string('foto',20)->nullable();
             $table->string('botas',5)->nullable();
             $table->string('overol',5)->nullable();
+            $table->string('supervisor_id',15)->nullable();
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

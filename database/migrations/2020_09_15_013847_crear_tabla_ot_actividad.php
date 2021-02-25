@@ -19,6 +19,7 @@ class CrearTablaOtActividad extends Migration
             $table->foreign('ot_id','fk_otactividad_ot')->references('id')->on('ot')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('actividad_id');
             $table->foreign('actividad_id','fk_otactividad_actividad')->references('id')->on('actividad')->onDelete('restrict')->onUpdate('restrict');
+            $table->double('horas');
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

@@ -340,7 +340,7 @@ class ContratoController extends Controller
     public function finalizar(Request $request, $id)
     {
         if ($request->ajax()) {
-            if (Contrato::findOrFail($id)->update(['estado' => "cerrado" ])) {
+            if (Contrato::findOrFail($id)->update(['estado' => "Cerrado" ])) {
                 return response()->json(['mensaje' => 'ok','id'=>$id]);
             } else {
                 return response()->json(['mensaje' => 'ng']);
@@ -352,7 +352,7 @@ class ContratoController extends Controller
     public function retomar(Request $request, $id)
     {
         if ($request->ajax()) {
-            if (Contrato::findOrFail($id)->update(['estado' => "abierto" ])) {
+            if (Contrato::findOrFail($id)->update(['estado' => "Abierto" ])) {
                 return response()->json(['mensaje' => 'ok', 'id'=>$id]);
             } else {
                 return response()->json(['mensaje' => 'ng']);

@@ -56,7 +56,7 @@ Contratos
                                 @endif
                             </td>
 
-                            @if ($contrato->estado=='abierto')
+                            @if ($contrato->estado =='Abierto')
                                 <td>
                                     <form action="{{route('finalizar_contrato', ['id' => $contrato->id])}}" class="d-inline form-finalizar" method="POST">
                                         @csrf
