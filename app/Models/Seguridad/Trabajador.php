@@ -17,7 +17,7 @@ class Trabajador extends Authenticatable
 {
     protected $remeber_token = false;
     protected $table = 'trabajador';
-    protected $fillable = ['usuario', 'password', 'primer_nombre', 'segundo_nombre','primer_apellido','segundo_apellido', 'correo', 'dni', 'direccion','celular', 'fecha_nacimiento','foto', 'botas', 'overol',];
+    protected $fillable = ['usuario', 'password', 'primer_nombre', 'segundo_nombre','primer_apellido','segundo_apellido', 'correo', 'dni', 'direccion','celular', 'fecha_nacimiento','foto', 'botas', 'overol', 'supervisor_id'];
 
     public function roles()
     {
@@ -42,7 +42,7 @@ class Trabajador extends Authenticatable
     public function setSession($roles)
     {
         Session::put([
-            'usuario' => $this->usuario,
+            // 'usuario' => $this->usuario,
             'trabajador_id' => $this->id,
             'nombre_trabajador' => $this->primer_nombre." ".$this->primer_apellido,
             // 'foto' => $this->foto

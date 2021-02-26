@@ -35,15 +35,15 @@
     </div>
 </div>
 <div class="form-group row">
-    <label for="usuario" class="col-lg-3 col-form-label requerido">Usuario</label>
+    <label for="usuario" class="col-lg-3 col-form-label requerido">Usuarios</label>
     <div class="col-lg-8">
-        <input type="text" name="usuario" id="usuario" class="form-control" value="{{old('usuario', $data->usuario ?? '')}}" required/>
+        <input type="text" name="usuario" id="usuario" class="form-control" value="{{old('usuario', $data->usuario ?? '')}}" autocomplete="off" required/>
     </div>
 </div>
 <div class="form-group row">
 <label for="password" class="col-lg-3 col-form-label {{!isset($data) ? 'requerido' : ''}}">Contraseña</label>
     <div class="col-lg-8">
-        <input type="password" name="password" id="password" class="form-control" value="" {{!isset($data) ? 'required' : ''}}/>
+        <input type="password" name="password" id="password" class="form-control" value="" {{!isset($data) ? 'required' : ''}} autocomplete="new-password"/>
     </div>
 </div>
 <div class="form-group row">
@@ -98,9 +98,24 @@
     </div>
 </div>
 <div class="form-group row">
+    <label for="overol" class="col-lg-3 col-form-label">Supervisor</label>
+    <div class="col-lg-8">
+        <select name="supervisor_id" id="supervisor_id" class="selectpicker form-control" data-live-search="true">
+            <option value="">Seleccione el supervisor</option>
+            @foreach($supervisores as $supervisor)
+            <option value="{{$supervisor->id}}" {{($supervisor->id==old('supervisor_id',$data->supervisor_id ?? ''))?'selected':''}}>
+                {{$supervisor->primer_nombre}} {{$supervisor->primer_apellido}}
+            </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+<div class="form-group row">
     <label for="foto" class="col-lg-3 control-form-label">Foto</label>
     <div class="col-lg-8">
         {{-- <input type="file" name="foto_up" id="foto" data-initial-preview="{{isset($data->imagen) ? Storage::url("imagenes/caratulas/$data->imagen") : "http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=Caratula+Libro"}}" accept="image/*"/> --}}
         <input type="file" name="foto_up" id="foto" data-initial-preview="{{isset($data->foto) ? Storage::disk('s3')->url("photos/profilePhoto/$data->foto") : "http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=Caratula+Libro"}}" accept="image/*"/>
     </div>
 </div>
+
+{{-- {{dd(old('usuario'))}} --}}

@@ -8,6 +8,7 @@ use App\Models\Admin\Rol;
 use App\Models\Seguridad\Trabajador;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use phpDocumentor\Reflection\Types\Object_;
 
 class TrabajadorController extends Controller
 {
@@ -30,7 +31,15 @@ class TrabajadorController extends Controller
     public function crear()
     {
         $rols = Rol::orderBy('id')->pluck('nombre', 'id')->toArray();
-        return view('dinamica.admin.trabajador.crear', compact('rols'));
+        $trabajadores = Trabajador::with('roles')->orderBy('id')->get();
+        $supervisores = collect();
+        foreach ($trabajadores as $trabajador) {
+            $roles = $trabajador->roles->pluck('nombre');
+            if ($roles->search('supervisor')) {
+                $supervisores->push($trabajador);
+            }
+        }
+        return view('dinamica.admin.trabajador.crear', compact('rols', 'supervisores'));
     }
 
     /**
@@ -49,9 +58,9 @@ class TrabajadorController extends Controller
             $request->request->add(['foto' => $foto]);
         $trabajador = Trabajador::create($request->all());
 
-        return dd($request->foto);
-        // $trabajador->roles()->sync($request->rol_id);
-        // return redirect()->route('trabajador')->with('mensaje', 'El trabajador se actualizó correctamente');
+        // return dd($request->foto);
+        $trabajador->roles()->sync($request->rol_id);
+        return redirect()->route('trabajador')->with('mensaje', 'El trabajador se actualizó correctamente');
     }
 
     /**
@@ -64,7 +73,15 @@ class TrabajadorController extends Controller
     {
         $rols = Rol::orderBy('id')->pluck('nombre', 'id')->toArray();
         $data = Trabajador::with('roles')->findOrFail($id);
-        return view('dinamica.admin.trabajador.editar', compact('data', 'rols'));
+        $trabajadores = Trabajador::with('roles')->orderBy('id')->get();
+        $supervisores = collect();
+        foreach ($trabajadores as $trabajador) {
+            $roles = $trabajador->roles->pluck('nombre');
+            if ($roles->search('supervisor')) {
+                $supervisores->push($trabajador);
+            }
+        }
+        return view('dinamica.admin.trabajador.editar', compact('data', 'rols','supervisores'));
     }
 
     /**

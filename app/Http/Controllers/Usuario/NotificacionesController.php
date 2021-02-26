@@ -16,15 +16,16 @@ class NotificacionesController extends Controller
     public function index($id)
     {
 
-        $ots = Ot::with('trabajdor')->get();
-        $ots_supervisor = array();
+        $ots = Ot::with('trabajador','actividades')->get();
+        $ots_supervisor = collect();
 
         foreach ($ots as $ot) {
             if ($ot->trabajador->supervisor_id == $id) {
-                array_push($ots_supervisor,$ot);
+                $ots_supervisor->push($ot);
             }
         }
-        return dd($ots_supervisor);
+        // return dd($ots_supervisor);
+        return view('dinamica.usuario.notificaciones.index', compact('ots_supervisor'));
     }
 
     /**

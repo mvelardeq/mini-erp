@@ -15,12 +15,12 @@ class Ot extends Model
     protected $guarded = ['id'];
 
     public function actividades(){
-        return $this->belongsToMany(Actividad::class, 'ot_actividad');
+        return $this->belongsToMany(Actividad::class, 'ot_actividad')->withPivot('horas');
     }
 
-    public function trabajdor()
+    public function trabajador()
     {
-        return $this->belongsTo(Trabajador::class, 'trabajdor_id');
+        return $this->belongsTo(Trabajador::class, 'trabajador_id');
     }
     public function contrato()
     {
