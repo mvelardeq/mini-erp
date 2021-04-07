@@ -23,8 +23,11 @@ class CrearTablaFactura extends Migration
             $table->date('fecha_facturacion',12);
             $table->string('observacion',400)->nullable();
             $table->date('fecha_pago',12)->nullable();
-            $table->double('costo');
-            $table->double('pago');
+            $table->double('pago')->nullable();
+            $table->date('fecha_detraccion',12)->nullable();
+            $table->double('pago_detraccion')->nullable();
+            $table->date('fecha_anulacion',12)->nullable();
+            $table->string('motivo_anulacion',400)->nullable();
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

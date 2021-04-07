@@ -24,6 +24,7 @@ class CrearTablaOt extends Migration
             $table->date('fecha',12);
             $table->unsignedBigInteger('adelanto')->nullable();
             $table->unsignedBigInteger('descuento')->nullable();
+            $table->string('motivo_descuento',300)->nullable();
             $table->string('pedido',300)->nullable();
             $table->timestamps();
             $table->charset = 'utf8mb4';

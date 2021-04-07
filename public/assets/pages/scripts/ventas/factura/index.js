@@ -1,26 +1,6 @@
 $(document).ready(function () {
-    $("#tabla-data").on('submit', '.form-procesar', function () {
-        event.preventDefault();
-        const form = $(this);
-        swal({
-            title: '¿ Está seguro que desea procesar la factura ?',
-            content: {
-                element: "input",
-                attributes: {
-                  placeholder: "Type your date",
-                  type: "date",
-                },
-              },
-        }).then((value) => {
-            if (value) {
-                ajaxRequest2(form);
-            }
-        });
-    });
-/*
-$(document).ready(function () {
-    $("#tabla-data").on('submit', '.form-procesar', function () {
-        event.preventDefault();
+    $("#tabla-data").on('submit', '.form-procesar', function (e) {
+        e.preventDefault();
         const form = $(this);
         swal({
             title: '¿ Está seguro que desea procesar la factura ?',
@@ -36,7 +16,7 @@ $(document).ready(function () {
             }
         });
     });
-    */
+
     function ajaxRequest2(form) {
         if (form.parents('tr').find('span').html()=='Emitida') {
             $.ajax({
@@ -63,9 +43,55 @@ $(document).ready(function () {
     }
 
 
+    $("#tabla-data").on('submit','.pagar-factura',function(e){
+        e.preventDefault();
+        $("#modalPagar").modal('show');
+        $('#modalPagarid').val(this.id);
+        console.log(this.id);
+    });
 
 
+    // function pagar_factura(id) {
+    //     $('#modalPagarid').val(id);
+    //     console.log($('#modalPagarid').val());
+    // }
 
+    $('#modalPagar').on('submit','.form-pagar',function (e) {
+        e.preventDefault();
+        // console.log('hello');
+        let id = $('#modalPagarid').val();
+        let data = {
+            id: $('#modalPagarid').val(),
+            _token: $('input[name=_token]').val(),
+            pago: $('#pagoModal').val(),
+            fecha_pago : $('#fecha_pagoModal').val()
+        };
+
+        $.post("factura/pagar/"+id,data,function (response) {
+            // $("#concepto_pago_id").html(res);
+            $("#estado"+response.id).html( '<span class="badge bg-success">Cobrada</span>');
+                $("#pagocliente"+response.id).html("hello");
+                // $("#pagocliente"+response.id).html( `
+                //     Pago: <strong>'${pago}'</strong> <br>
+                //     Detr: '${fecha_pago}' <br>
+                // `);
+        });
+
+        // $.ajax({
+        //     type: "POST",
+        //     url: "pagar/" + id,
+        //     data: data,
+        //     // dataType: "dataType",
+        //     success: function (response) {
+        //         $("#estado"+response.id).html( '<span class="badge bg-success">Cobrada</span>');
+        //         $("#pagocliente"+response.id).html( `
+        //             Pago: <strong>'${pago}'</strong> <br>
+        //             Detr: '${fecha_pago}' <br>
+        //         `);
+        //     }
+        // });
+    });
+/*
     $("#tabla-data").on('submit', '.form-pagar', function () {
         event.preventDefault();
         const form2 = $(this);
@@ -106,14 +132,49 @@ $(document).ready(function () {
             Biblioteca.notificaciones('La factura no pudo ser pagada debido a su estado actual', 'Ascensores Industriales', 'error');
         }
     }
+*/
+
+
+$("#modalAnular").on('submit', '.form-anular', function(e){
+    e.preventDefault();
+    const form = $(this);
+    var id = form.data('id');
+    // var data = {
+    //     adelanto = form.find("#adelanto").val(),
+    //     _token: $('input[name=_token]').val()
+    // }
+    ajaxRequestAnular(form);
+    // $.post("../adelanto/"+id,data,function (res) {
+    //     $("#modalAdelanto").hide();
+    //     $("#filaot"+id).find('span #adelanto').html(res);
+    // })
+});
+
+function ajaxRequestAnular(form){
+    $.ajax({
+        url: form.attr('action'),
+        type: 'POST',
+        data: form.serialize(),
+        success: function (respuesta) {
+            $("#modalAnular").hide();
+            $("#estado"+respuesta.id).html( '<span class="badge bg-danger">Anulada</span>');
+            Biblioteca.notificaciones('La factura fue anulada correctamente', 'Ascensores Industriales', 'success');
+
+            // location.reload();
+            // $("#filaot"+id).find('span #adelanto').html(res);
+        },
+        error: function () {
+
+        }
+    })
+}
 
 
 
 
 
-
-    $("#tabla-data").on('submit', '.form-anular', function () {
-        event.preventDefault();
+    $("#tabla-data").on('submit', '.form-anular', function (e) {
+        e.preventDefault();
         const form3 = $(this);
         swal({
             title: '¿ Está seguro que desea anular el pago de la factura ?',
@@ -155,3 +216,7 @@ $(document).ready(function () {
     }
 });
 
+// let element =document.getElementByClassName('pagar-factura');
+// element.addEventListener("click",function(){
+//     console.log(this.id);
+// }, false);

@@ -188,7 +188,12 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
 
         /*RUTAS DE NOTIFICACIONES*/
         Route::get('notificaciones/{id}', 'NotificacionesController@index')->middleware(['supervisor'])->name('usuario_notificaciones');
-
+        Route::post('notificaciones/aprobar/{id}', 'NotificacionesController@aprobar_ot')->middleware(['supervisor'])->name('aprobar_notificacion_ot');
+        Route::delete('notificaciones/eliminar/{id}', 'NotificacionesController@eliminar')->middleware(['supervisor'])->name('eliminar_ot');
+        Route::post('notificaciones/adelanto/{id}', 'NotificacionesController@adelanto')->middleware(['supervisor'])->name('adelanto_ot');
+        Route::post('notificaciones/descuento/{id}', 'NotificacionesController@descuento')->middleware(['supervisor'])->name('descuento_ot');
+        Route::get('notificaciones/crear-falta/{id}', 'NotificacionesController@crear_falta')->middleware(['supervisor'])->name('crear_falta_ot');
+        Route::post('notificaciones/guardar-falta/{id}', 'NotificacionesController@guardar_falta')->middleware(['supervisor'])->name('guardar_falta_ot');
     });
 
 

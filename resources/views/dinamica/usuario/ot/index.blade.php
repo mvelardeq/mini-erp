@@ -1,3 +1,6 @@
+@php
+    use Carbon\Carbon;
+@endphp
 @extends("theme.$theme.layout")
 @section('titulo')
 Ot
@@ -26,8 +29,7 @@ Ot
                         <tr>
                             <th>Equipo</th>
                             <th>Fecha</th>
-                            <th>Actividad</th>
-                            <th>Horas</th>
+                            <th>Actividad-Horas</th>
                             <th>Adelanto</th>
                             <th>Descuento</th>
                             <th>Pedido</th>
@@ -38,26 +40,36 @@ Ot
                     </thead>
                     <tbody>
                         @foreach ($ots as $ot)
-                        <tr>
+                        <tr class="{{($ot->estado_ot->nombre=='Falta') ? 'table-danger' : ''}}">
                             <td>{{$ot->contrato->equipo->obra->nombre}} (O.E: {{$ot->contrato->equipo->oe}}) {{$ot->contrato->servicio->nombre}}</td>
-                            <td>{{$ot->fecha}}</td>
-                            <td>{{$ot->actividad}}</td>
-                            <td>{{$ot->horas}}</td>
+                            <td>{{Carbon::parse($ot->created_at)->isoFormat('DD MMM')}}</td>
+                            <td>
+                                @foreach ($ot->actividades as $ot_actividad)
+                                    {{$ot_actividad->nombre.': '.$ot_actividad->pivot->horas.' hrs'}}<br>
+                                @endforeach
+                            </td>
                             <td>{{$ot->adelanto}}</td>
                             <td>{{$ot->descuento}}</td>
                             <td>{{$ot->pedido}}</td>
-                            <td>{{$ot->estado_ot->nombre}}</td>
+                            <td>
+                                @if ($ot->estado_ot->nombre=='Aprobado')
+                                    <span class="badge bg-success">Aprobado</span>
+                                @elseif ($ot->estado_ot->nombre=='Pendiente')
+                                    <span class="badge bg-warning">Pendiente</span>
+                                @else
+                                    <span class="badge bg-danger">Falta</span>
+                                @endif
+                            </td>
 
                             <td>
-                                <a href="{{route('editar_usuario_ot', ['id' => auth()->user()->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </a>
-                                <form action="{{route('eliminar_usuario_ot', ['id' => auth()->user()->id])}}" class="d-inline form-eliminar" method="POST">
-                                    @csrf @method("delete")
-                                    <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Eliminar este registro">
-                                        <i class="fa fa-fw fa-trash text-danger"></i>
-                                    </button>
-                                </form>
+                                @if ($ot->estado_ot->nombre=='Pendiente')
+                                    <form action="{{route('eliminar_usuario_ot', ['id' => auth()->user()->id])}}" class="d-inline form-eliminar" method="POST">
+                                        @csrf @method("delete")
+                                        <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Eliminar este registro">
+                                            <i class="fa fa-fw fa-trash text-danger"></i>
+                                        </button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

@@ -1,3 +1,6 @@
+@php
+    use Carbon\Carbon;
+@endphp
 <input type="hidden" name="trabajador_id" id="trabajador_id" class="form-control" value={{auth()->user()->id}} required/>
 
 <div class="form-group row">
@@ -17,7 +20,7 @@
 <div class="form-group row">
     <label for="fecha" class="col-lg-3 col-form-label">Fecha</label>
     <div class="col-lg-8">
-        <input type="date" name="fecha" id="fecha" class="form-control" value="{{old('fecha', $ot->fecha ?? '')}}"/>
+        <input type="date" name="fecha" id="fecha" class="form-control" value="{{date("Y-m-d")}}" readonly="readonly"/>
     </div>
 </div>
 

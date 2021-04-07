@@ -90,10 +90,10 @@ class FacturaController extends Controller
               }
 
               echo '                              <div class="form-group row">
-                                                      <label class="col-lg-3 col-form-label" for="form-field-1"> Costo </label>
+                                                      <label class="col-lg-3 col-form-label" for="subtotal"> Costo </label>
 
                                                       <div class="col-lg-8">
-                                                          <input type="number" id="costofac" disabled="disabled" value= "'.number_format($costo,2).'" placeholder= "'.number_format($costo,2).'" class="form-control" />
+                                                          <input type="number" id="subtotal" name="subtotal" disabled="disabled" value= "'.number_format($costo,2).'" placeholder= "'.number_format($costo,2).'" class="form-control" />
                                                       </div>
                                                   </div>
 
@@ -208,15 +208,20 @@ class FacturaController extends Controller
 
     public function pagar(Request $request, $id)
     {
-        if ($request->ajax()) {
-            if (Factura::findOrFail($id)->update(['estado_factura_id' => 3 ])) {
-                return response()->json(['mensaje' => 'ok','id'=>$id]);
-            } else {
-                return response()->json(['mensaje' => 'ng']);
-            }
-        } else {
-            abort(404);
-        }
+        $pago = $_POST['pago'];
+        $fecha_pago = $_POST['fecha_pago'];
+        Factura::findOrFail($id)->update(['estado_factura_id' => 3,'pago'=>$pago, 'fecha_pago'=>$fecha_pago]);
+        return response()->json(['mensaje'=>'ok','id'=>$id]);
+
+        // if ($request->ajax()) {
+        //     if (Factura::findOrFail($id)->update(['estado_factura_id' => 3, 'pago' => $request->pago, 'fecha_pago' => $request->fecha_pago ])) {
+        //         return response()->json(['mensaje' => 'ok','id'=>$id]);
+        //     } else {
+        //         return response()->json(['mensaje' => 'ng']);
+        //     }
+        // } else {
+        //     abort(404);
+        // }
     }
 
     public function anular(Request $request, $id)

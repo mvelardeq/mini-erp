@@ -1,3 +1,6 @@
+@php
+    use Carbon\Carbon;
+@endphp
 @extends("theme.$theme.layout")
 @section('titulo')
 OT
@@ -29,34 +32,39 @@ OT
                             <th>Fecha</th>
                             <th>Adelanto</th>
                             <th>Descuento</th>
+                            <th>Actividad-Horas</th>
                             <th>Pedido</th>
                             <th>Estado</th>
 
-                            <th class="width70"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($ots as $ot)
                         <tr>
-                            <td><a href="#">{{$ot->trabajdor->primer_nombre." ".$ot->trabajdor->primer_apellido}}</a></td>
+                            <td><a href="#">{{$ot->trabajador->primer_nombre." ".$ot->trabajador->primer_apellido}}</a></td>
                             <td>{{$ot->contrato->equipo->obra->nombre."-".$ot->contrato->equipo->oe}}</td>
-                            <td>{{$ot->fecha}}</td>
+                            <td>{{Carbon::parse($ot->fecha)->isoFormat('DD/MM/YYYY')}}</td>
                             <td>{{$ot->adelanto}}</td>
                             <td>{{$ot->descuento}}</td>
-                            <td>{{$ot->pedido}}</td>
-                            <td>{{$ot->estado}}</td>
-
                             <td>
-                                <a href="{{route('editar_ot', ['id' => $empresa->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </a>
-                                <form action="{{route('eliminar_ot', ['id' => $empresa->id])}}" class="d-inline form-eliminar" method="POST">
-                                    @csrf @method("delete")
-                                    <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Eliminar este registro">
-                                        <i class="fa fa-fw fa-trash text-danger"></i>
-                                    </button>
-                                </form>
+                                @foreach ($ot->actividades as $ot->actividad)
+                                            {{$ot->actividad->nombre.': '.$ot->actividad->pivot->horas.' hrs'}}<br>
+                                @endforeach
                             </td>
+                            <td>{{$ot->pedido}}</td>
+                            <td>
+                                @switch($ot->estado_ot->nombre)
+                                    @case('Aprobado')
+                                    <span class="badge bg-success">Aprobado</span>
+                                        @break
+                                    @case('Falta')
+                                    <span class="badge bg-danger">Falta</span>
+                                        @break
+                                    @default
+                                    <span class="badge bg-warning">Pendiente</span>
+                                @endswitch
+                            </td>
+
                         </tr>
                         @endforeach
 

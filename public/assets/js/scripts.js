@@ -4,7 +4,8 @@ $(document).ready(function () {
 
 
     $("#tabla-data").DataTable({
-        order: [[0 ]],
+        // order: [[0 ]],
+        "ordering": false,
         language:{
 
             "lengthMenu": "Mostrar _MENU_ registros",
@@ -22,7 +23,7 @@ $(document).ready(function () {
             "sProcessing": "Procesando..."
         },
         responsive: "true",
-        dom: "Bfrtilp",
+        dom: "Bftilp",
         buttons: [
             {
                 extend: "excelHtml5",

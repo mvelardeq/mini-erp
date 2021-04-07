@@ -18,7 +18,7 @@ class OtController extends Controller
      */
     public function index($id)
     {
-        $ots= Ot::with('contrato')->where('trabajador_id',$id)->orderBy('id')->get();
+        $ots= Ot::with('contrato')->where('trabajador_id',$id)->orderBy('fecha','Desc')->get();
         return view('dinamica.usuario.ot.index',compact('ots'));
         // $var = array();
         // foreach ($ots as $ot) {
