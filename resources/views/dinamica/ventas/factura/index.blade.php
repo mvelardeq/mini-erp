@@ -52,16 +52,16 @@ Facturas
                             <td>{{$factura->concepto_pago->concepto}}</td>
                             <td>{{Carbon::parse($factura->fecha_facturacion)->isoFormat('DD/MM /YYYY')}}</td>
                             <td align="right">
-                                Sub: <strong>{{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)/100,2) }}</strong> <br>
-                                Igv: {{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*0.18/100,2) }} <br>
-                                Total: {{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*1.18/100,2) }}
+                                <strong>{{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)/100,2) }}</strong> <br>
+                                {{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*0.18/100,2) }} <br>
+                                {{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*1.18/100,2) }}
                             </td>
                             <td align="right">
                                 @if (($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*1.18/100 < 700)
-                                    Pago: <strong>{{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*1.18/100,2) }}</strong> <br>
+                                    <strong>{{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*1.18/100,2) }}</strong> <br>
                                 @else
-                                    Pago: <strong>{{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*1.18*(1-$factura->concepto_pago->contrato->empresa->porcentaje_detraccion/100)/100,2) }}</strong> <br>
-                                    Detr: {{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*1.18*($factura->concepto_pago->contrato->empresa->porcentaje_detraccion/100)/100,2) }} <br>
+                                    <strong>{{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*1.18*(1-$factura->concepto_pago->contrato->empresa->porcentaje_detraccion/100)/100,2) }}</strong> <br>
+                                    {{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*1.18*($factura->concepto_pago->contrato->empresa->porcentaje_detraccion/100)/100,2) }} <br>
                                 @endif
                             </td>
                             {{-- <td>{{$factura->observacion}}</td> --}}
@@ -77,8 +77,12 @@ Facturas
                                 @endif
                             </td>
                             <td id="pagocliente{{$factura->id}}" align="right">
-                                Pago: <strong>{{$factura->pago ?? '' }}</strong> <br>
-                                Detr: {{($factura->pago_detraccion) ?? ''}} <br>
+                                <div>
+                                    <strong>{{$factura->pago ?? '' }}</strong>
+                                </div>
+                                <div class="detraccion">
+                                    {{($factura->pago_detraccion) ?? ''}}
+                                </div>
                             </td>
                             <td>
                                 @if (isset($factura->fecha_pago))
@@ -93,35 +97,28 @@ Facturas
                                         <i class="fas fa-share-square text-info"></i>
                                     </button>
                                 </form>
-                                <form class="d-inline pagar-factura" id="{{$factura->id}}">
+
+                                <form class="d-inline pagar-factura" data-id="{{$factura->id}}" data-estado="{{$factura->estado_factura->nombre}}">
                                     @csrf
                                     <button type="submit" class="btn-accion-tabla eliminar tooltipsC" data-toggle="{{($factura->estado_factura->nombre != 'Por cobrar') ? '#' : 'modal'}}" title="Pagar factura">
                                         <i class="fas fa-money-bill-alt text-success"></i>
                                     </button>
                                 </form>
 
-                                {{-- <span id="pagar">
-                                    <a href="{{($factura->estado_factura->nombre != 'Por cobrar') ? '#' : '#modalPagar'}}" data-toggle="{{($factura->estado_factura->nombre != 'Por cobrar') ? '#' : 'modal'}}" class="pagar-factura">
-                                        <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Pagar factura" id="{{$factura->id}}">
-                                            <i class="fas fa-money-bill-alt text-success"></i>
-                                        </button>
-                                    </a>
-                                </span> --}}
-
-                                {{-- <form action="{{route('anular_factura', ['id' => $factura->id])}}" class="d-inline form-anular" method="POST">
+                                <form class="d-inline detraer-factura" data-id="{{$factura->id}}" data-estado="{{$factura->estado_factura->nombre}}">
                                     @csrf
-                                    <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Anular factura">
+                                    <button type="submit" class="btn-accion-tabla eliminar tooltipsC" data-toggle="{{($factura->estado_factura->nombre != 'Por cobrar') ? '#' : 'modal'}}" title="Detraer factura">
+                                        <i class="fas fa-percent text-secondary"></i>
+                                    </button>
+                                </form>
+
+                                <form class="d-inline anular-factura" data-id="{{$factura->id}}" data-estado="{{$factura->estado_factura->nombre}}">
+                                    @csrf
+                                    <button type="submit" class="btn-accion-tabla eliminar tooltipsC" data-toggle="{{($factura->estado_factura->nombre != 'Por cobrar') ? '#' : 'modal'}}" title="Anular factura">
                                         <i class="fas fa-calendar-times text-danger"></i>
                                     </button>
-                                </form> --}}
+                                </form>
 
-                                <span id="anular">
-                                    <a href="{{($factura->estado_factura->nombre == 'Cobrada' or $factura->estado_factura->nombre == 'Anulada') ? '#' : '#modalAnular'}}" data-toggle="{{($factura->estado_factura->nombre == 'Cobrada' or $factura->estado_factura->nombre == 'Anulada') ? '#' : 'modal'}}" data-target="{{($factura->estado_factura->nombre == 'Cobrada' or $factura->estado_factura->nombre == 'Anulada') ? '#' : '#modalAnular'}}">
-                                        <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Anular factura">
-                                            <i class="fas fa-calendar-times text-danger"></i>
-                                        </button>
-                                    </a>
-                                </span>
                             </td>
 
                             <td>
@@ -181,7 +178,45 @@ Facturas
 
 
 
-                    {{-- Modal Anular --}}
+                    {{-- Modal Detraer --}}
+                        <div class="modal fade" id="modalDetraer" tabindex="-1" role="dialog" aria-labelledby="modalDetraerLabel" aria-hidden="true">
+
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalDetraerLabel">Registra la detracción</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form class="form-detraer">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <input type="hidden" id = "modalDetraerid" name="id">
+                                        <div class="form-group row">
+                                            <label for="pago_detraccionModal" class="col-lg-3 col-form-label">Detracción pagada</label>
+                                            <div class="col-lg-8">
+                                                <input type="number" step="0.01" name="pago_detraccionModal" id="pago_detraccionModal" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="fecha_detraccionModal" class="col-lg-3 col-form-label">Fecha de detracción</label>
+                                            <div class="col-lg-8">
+                                                <input type="date" name="fecha_detraccionModal" id="fecha_detraccionModal" class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                    </div>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        {{-- Modal Anular --}}
                         <div class="modal fade" id="modalAnular" tabindex="-1" role="dialog" aria-labelledby="modalAnularLabel" aria-hidden="true">
 
                             <div class="modal-dialog" role="document">
@@ -192,20 +227,20 @@ Facturas
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="{{route('anular_factura', ['id' => $factura->id])}}" method="POST" class="form-anular" data-id ="{{$factura->id}}">
+                                <form class="form-anular">
                                     @csrf
                                     <div class="modal-body">
-
+                                        <input type="hidden" id = "modalAnularid" name="id">
                                         <div class="form-group row">
-                                            <label for="fecha_anulacion" class="col-lg-3 col-form-label">Fecha de anulación</label>
+                                            <label for="fecha_anulacionModal" class="col-lg-3 col-form-label">Fecha de anulación</label>
                                             <div class="col-lg-8">
-                                                <input type="date" name="fecha_anulacion" id="fecha_anulacion" class="form-control"/>
+                                                <input type="date" name="fecha_anulacionModal" id="fecha_anulacionModal" class="form-control"/>
                                             </div>
                                         </div>
                                             <div class="form-group row">
-                                                <label for="motivo_anulacion" class="col-lg-3 col-form-label">Motivo de anulación</label>
+                                                <label for="motivo_anulacionModal" class="col-lg-3 col-form-label">Motivo de anulación</label>
                                                 <div class="col-lg-8">
-                                                    <textarea name="motivo_anulacion" id="motivo_anulacion" class="form-control" cols="30" rows="5"></textarea>
+                                                    <textarea name="motivo_anulacionModal" id="motivo_anulacionModal" class="form-control" cols="30" rows="5"></textarea>
                                                 </div>
                                             </div>
                                     </div>

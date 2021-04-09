@@ -211,30 +211,29 @@ class FacturaController extends Controller
         $pago = $_POST['pago'];
         $fecha_pago = $_POST['fecha_pago'];
         Factura::findOrFail($id)->update(['estado_factura_id' => 3,'pago'=>$pago, 'fecha_pago'=>$fecha_pago]);
-        return response()->json(['mensaje'=>'ok','id'=>$id]);
-
-        // if ($request->ajax()) {
-        //     if (Factura::findOrFail($id)->update(['estado_factura_id' => 3, 'pago' => $request->pago, 'fecha_pago' => $request->fecha_pago ])) {
-        //         return response()->json(['mensaje' => 'ok','id'=>$id]);
-        //     } else {
-        //         return response()->json(['mensaje' => 'ng']);
-        //     }
-        // } else {
-        //     abort(404);
-        // }
+        return response()->json(['mensaje'=>'ok','id'=>$id, 'pago'=>$pago,'fecha_pago'=>$fecha_pago]);
     }
+
+
+    public function detraer(Request $request, $id)
+    {
+        $pago_detraccion = $_POST['pago_detraccion'];
+        $fecha_detraccion = $_POST['fecha_detraccion'];
+        Factura::findOrFail($id)->update(['pago_detraccion'=>$pago_detraccion, 'fecha_detraccion'=>$fecha_detraccion]);
+        return response()->json(['mensaje'=>'ok','id'=>$id, 'pago_detraccion'=>$pago_detraccion]);
+    }
+
 
     public function anular(Request $request, $id)
     {
-        if ($request->ajax()) {
-            if (Factura::findOrFail($id)->update(['estado_factura_id' => 4 ])) {
-                return response()->json(['mensaje' => 'ok','id'=>$id]);
-            } else {
-                return response()->json(['mensaje' => 'ng']);
-            }
-        } else {
-            abort(404);
-        }
+        $fecha_anulacion = $_POST['fecha_anulacion'];
+        $motivo_anulacion = $_POST['motivo_anulacion'];
+        Factura::findOrFail($id)->update(['estado_factura_id' => 4,'fecha_anulacion'=>$fecha_anulacion, 'motivo_anulacion'=>$motivo_anulacion]);
+
+        $conceptopago_id = Factura::findOrFail($id)->concepto_pago_id;
+        Concepto_pago::findOrFail($conceptopago_id)->update(['estado_conceptopago_id' => 1 ]);
+
+        return response()->json(['mensaje'=>'ok','id'=>$id, 'fecha_anulacion'=>$fecha_anulacion,'motivo_anulacion'=>$motivo_anulacion]);
     }
 
 

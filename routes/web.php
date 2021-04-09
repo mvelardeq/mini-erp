@@ -166,6 +166,7 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
     Route::post('factura/costofac/{id}', 'FacturaController@costofac')->name('costofac_factura');
     Route::post('factura/procesar/{id}', 'FacturaController@procesar')->name('procesar_factura');
     Route::post('factura/pagar/{id}', 'FacturaController@pagar')->name('pagar_factura');
+    Route::post('factura/detraer/{id}', 'FacturaController@detraer')->name('detraer_factura');
     Route::post('factura/anular/{id}', 'FacturaController@anular')->name('anular_factura');
 
     // Route::get('factura/{id}/editar', 'FacturaController@editar')->name('editar_factura');
