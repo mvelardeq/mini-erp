@@ -18,4 +18,16 @@ class Factura extends Model
     {
         return $this->belongsTo(Estado_factura::class, 'estado_factura_id');
     }
+    public function pagar_factura()
+    {
+        return $this->hasOne(Pagar_factura::class);
+    }
+    public function detraer_factura()
+    {
+        return $this->hasOne(Detraer_factura::class);
+    }
+    public function anular_factura()
+    {
+        return $this->hasOne(Anular_factura::class);
+    }
 }

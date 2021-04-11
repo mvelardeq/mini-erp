@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Ventas;
 
 use App\Http\Controllers\Controller;
 use App\Models\Operaciones\Equipo;
+use App\Models\Ventas\Anular_factura;
 use App\Models\Ventas\Concepto_pago;
 use App\Models\Ventas\Contrato;
+use App\Models\Ventas\Detraer_factura;
 use App\Models\Ventas\Estado_conceptopago;
 use App\Models\Ventas\Factura;
+use App\Models\Ventas\Pagar_factura;
 use Illuminate\Http\Request;
 
 class FacturaController extends Controller
@@ -19,7 +22,7 @@ class FacturaController extends Controller
      */
     public function index()
     {
-        $facturas= Factura::with('concepto_pago')->orderBy('id','desc')->get();
+        $facturas= Factura::with('concepto_pago', 'pagar_factura', 'detraer_factura', 'anular_factura')->orderBy('id','desc')->get();
         // $contratos= Contrato::with('conceptos_pago','equipo')->where('estado','abierto')->orderBy('id')->get();
         $equipos= Equipo::orderBy('id')->get();
 
@@ -210,7 +213,8 @@ class FacturaController extends Controller
     {
         $pago = $_POST['pago'];
         $fecha_pago = $_POST['fecha_pago'];
-        Factura::findOrFail($id)->update(['estado_factura_id' => 3,'pago'=>$pago, 'fecha_pago'=>$fecha_pago]);
+        Pagar_factura::create(['factura_id'=>$id, 'pago'=>$pago, 'fecha'=>$fecha_pago]);
+        Factura::findOrFail($id)->update(['estado_factura_id' => 3]);
         return response()->json(['mensaje'=>'ok','id'=>$id, 'pago'=>$pago,'fecha_pago'=>$fecha_pago]);
     }
 
@@ -219,7 +223,8 @@ class FacturaController extends Controller
     {
         $pago_detraccion = $_POST['pago_detraccion'];
         $fecha_detraccion = $_POST['fecha_detraccion'];
-        Factura::findOrFail($id)->update(['pago_detraccion'=>$pago_detraccion, 'fecha_detraccion'=>$fecha_detraccion]);
+        Detraer_factura::create(['factura_id'=>$id, 'pago_detraccion'=>$pago_detraccion, 'fecha'=>$fecha_detraccion]);
+        // Factura::findOrFail($id)->update(['pago_detraccion'=>$pago_detraccion, 'fecha_detraccion'=>$fecha_detraccion]);
         return response()->json(['mensaje'=>'ok','id'=>$id, 'pago_detraccion'=>$pago_detraccion]);
     }
 
@@ -228,7 +233,8 @@ class FacturaController extends Controller
     {
         $fecha_anulacion = $_POST['fecha_anulacion'];
         $motivo_anulacion = $_POST['motivo_anulacion'];
-        Factura::findOrFail($id)->update(['estado_factura_id' => 4,'fecha_anulacion'=>$fecha_anulacion, 'motivo_anulacion'=>$motivo_anulacion]);
+        Anular_factura::create(['factura_id'=>$id, 'motivo'=>$motivo_anulacion, 'fecha'=>$fecha_anulacion]);
+        Factura::findOrFail($id)->update(['estado_factura_id' => 4]);
 
         $conceptopago_id = Factura::findOrFail($id)->concepto_pago_id;
         Concepto_pago::findOrFail($conceptopago_id)->update(['estado_conceptopago_id' => 1 ]);

@@ -17,7 +17,6 @@ class CrearTablaBoletaPago extends Migration
             $table->id();
             $table->unsignedBigInteger('trabajador_id');
             $table->foreign('trabajador_id','fk_boletapago_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
-            $table->double('pago_quincena', 6, 2);
             $table->string('periodo',10);
             $table->double('pago_mes', 6, 2)->nullable();
             $table->double('descuento_mes', 6, 2)->nullable();

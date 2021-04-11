@@ -63,7 +63,8 @@ $(document).ready(function () {
 
     $("#tabla-data").on("submit", ".pagar-factura", function (e) {
         e.preventDefault();
-        $("#modalPagarid").val($(".pagar-factura").attr("data-id"));
+        id= $(this).parent().find('.pagar-factura').attr("data-id");
+        $("#modalPagarid").val(id);
         estado = $(this).parent().parent().find('span').html();
         if (estado == "Por cobrar") {
             $("#modalPagar").modal("show");
@@ -72,7 +73,7 @@ $(document).ready(function () {
 
     $("#modalPagar").on("submit", ".form-pagar", function (e) {
         e.preventDefault();
-        // console.log('hello');
+        console.log('hello');
         let id = $("#modalPagarid").val();
         let data = {
             id: $("#modalPagarid").val(),
@@ -102,7 +103,8 @@ $(document).ready(function () {
 
     $("#tabla-data").on("submit", ".detraer-factura", function (e) {
         e.preventDefault();
-        $("#modalDetraerid").val($(".detraer-factura").attr("data-id"));
+        id= $(this).parent().find('.detraer-factura').attr("data-id");
+        $("#modalDetraerid").val(id);
         estado = $(this).parent().parent().find('span').html();
         detraccion = $(this).parent().parent().find('.detraccion').html();
         float_detraccion = parseFloat(detraccion);
@@ -139,7 +141,8 @@ $(document).ready(function () {
 
     $("#tabla-data").on("submit", ".anular-factura", function (e) {
         e.preventDefault();
-        $("#modalAnularid").val($(".anular-factura").attr("data-id"));
+        id= $(this).parent().find('.anular-factura').attr("data-id");
+        $("#modalAnularid").val(id);
         estado = $(this).parent().parent().find('span').html();
         if (estado == "Por cobrar" || estado == "Emitida") {
             $("#modalAnular").modal("show");

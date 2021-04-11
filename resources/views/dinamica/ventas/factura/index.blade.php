@@ -78,15 +78,15 @@ Facturas
                             </td>
                             <td id="pagocliente{{$factura->id}}" align="right">
                                 <div>
-                                    <strong>{{$factura->pago ?? '' }}</strong>
+                                    <strong>{{$factura->pagar_factura->pago ?? '' }}</strong>
                                 </div>
                                 <div class="detraccion">
-                                    {{($factura->pago_detraccion) ?? ''}}
+                                    {{($factura->detraer_factura->pago_detraccion) ?? ''}}
                                 </div>
                             </td>
                             <td>
-                                @if (isset($factura->fecha_pago))
-                                {{Carbon::parse($factura->fecha_pago)->isoFormat('DD/MM/YYYY')}}
+                                @if (isset($factura->pagar_factura->fecha))
+                                {{Carbon::parse($factura->pagar_factura->fecha)->isoFormat('DD/MM/YYYY')}}
                                 @endif
                             </td>
 
