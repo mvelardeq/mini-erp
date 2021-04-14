@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CrearTablaAdelanto extends Migration
+class CrearTablaAdelantoTrabajador extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CrearTablaAdelanto extends Migration
      */
     public function up()
     {
-        Schema::create('adelanto', function (Blueprint $table) {
+        Schema::create('adelanto_trabajador', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('trabajador_id')->unique();
-            $table->foreign('trabajador_id','fk_adelantotrabajador_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('ot_id')->unique();
+            $table->foreign('ot_id','fk_adelantotrabajadorot_ot')->references('id')->on('ot')->onDelete('restrict')->onUpdate('restrict');
             $table->double('pago',5,2);
-            $table->date('fecha');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CrearTablaAdelanto extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('adelanto');
+        Schema::dropIfExists('adelanto_trabajador');
     }
 }

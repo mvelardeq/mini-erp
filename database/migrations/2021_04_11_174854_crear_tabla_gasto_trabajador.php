@@ -15,14 +15,13 @@ class CrearTablaGastoTrabajador extends Migration
     {
         Schema::create('gasto_trabajador', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('trabajador_id')->unique();
-            $table->foreign('trabajador_id','fk_gastotrabajador_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('ot_id')->unique();
+            $table->foreign('ot_id','fk_gastotrabajadorot_ot')->references('id')->on('ot')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('tipo_gasto_id')->unique();
-            $table->foreign('tipo_gasto_id','fk_tipogastotrabajador_gastotrabajador')->references('id')->on('tipo_gasto')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('tipo_gasto_id','fk_gastotrabajador_tipogastotrabajador')->references('id')->on('tipo_gasto')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('estado_gasto_id')->unique();
-            $table->foreign('estado_gasto_id','fk_estadogastotrabajador_estadogasto')->references('id')->on('estado_gasto')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('estado_gasto_id','fk_gastotrabajador_estadogasto')->references('id')->on('estado_gasto')->onDelete('restrict')->onUpdate('restrict');
             $table->double('pago',5,2);
-            $table->date('fecha');
             $table->timestamps();
         });
     }

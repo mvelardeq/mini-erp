@@ -30,4 +30,12 @@ class Ot extends Model
     {
         return $this->belongsTo(Estado_ot::class, 'estado_ot_id');
     }
+    public function gasto_trabajador()
+    {
+        return $this->hasOne(Gasto_trabajador::class);
+    }
+    public function adelanto_trabajador()
+    {
+        return $this->hasOne(Adelanto_trabajador::class);
+    }
 }
