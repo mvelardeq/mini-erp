@@ -8,6 +8,7 @@ use App\Models\Operaciones\Ot;
 use App\Models\Operaciones\Ot_actividad;
 use App\Models\Ventas\Contrato;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OtController extends Controller
 {
@@ -16,15 +17,12 @@ class OtController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        $ots= Ot::with('contrato')->where('trabajador_id',$id)->orderBy('fecha','Desc')->get();
+        $id = Auth::user()->id;
+        $ots= Ot::with('contrato', 'adelanto_trabajador')->where('trabajador_id',$id)->orderBy('fecha','Desc')->get();
         return view('dinamica.usuario.ot.index',compact('ots'));
-        // $var = array();
-        // foreach ($ots as $ot) {
-        //     array_push($var, $ot->contrato);
-        // }
-        // return dd($var);
+
     }
 
     /**
@@ -32,7 +30,7 @@ class OtController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function crear($id)
+    public function crear()
     {
         $contratos= Contrato::with('conceptos_pago','equipo')->where('estado','Abierto')->orderBy('id')->get();
         return view('dinamica.usuario.ot.crear',compact('contratos'));
@@ -44,10 +42,12 @@ class OtController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request, $id)
+    public function guardar(Request $request)
     {
+        $id = Auth::user()->id;
+
         Ot::create([
-            'trabajador_id' => $request->trabajador_id,
+            'trabajador_id' => $id,
             'contrato_id' => $request->contrato_id,
             'estado_ot_id' => 1,
             'fecha' => $request->fecha,
@@ -79,7 +79,7 @@ class OtController extends Controller
                 ]);
             }
 
-        return redirect('usuario/ot/'.$id)->with('mensaje', 'OT creada con éxito');
+        return redirect('usuario/ot')->with('mensaje', 'OT creada con éxito');
     }
 
     public function combo($contrato_id)
@@ -135,8 +135,16 @@ class OtController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function eliminar($id)
+    public function eliminar(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            if (Ot::destroy($id)) {
+                return response()->json(['mensaje' => 'ok']);
+            } else {
+                return response()->json(['mensaje' => 'ng']);
+            }
+        } else {
+            abort(404);
+        }
     }
 }

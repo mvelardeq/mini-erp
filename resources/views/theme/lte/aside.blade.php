@@ -24,7 +24,7 @@
 
                 @include("theme.$theme.menu-item", ["item" => $item])
             @endforeach
-            <li class="nav-item {{getMenuOpen('usuario')}}">
+            {{-- <li class="nav-item {{getMenuOpen('usuario')}}">
                 <a href="javascript:;" class="nav-link {{getMenuActive('usuario')}}">
                   <i class="nav-icon fas fa-user"></i>
                     <p>
@@ -35,27 +35,24 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="#" class="nav-link {{getMenuActivo('usuario/perfil')}}">
-                            {{-- {{getMenuActivo($item["url"])}} --}}
                         <i class="nav-icon fas fa-address-card"></i> <p>Perfil</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{route('usuario_ot', ['id' => auth()->user()->id])}}" class="nav-link {{getMenuActivo('usuario/ot')}}">
-                            {{-- {{getMenuActivo($item["url"])}} --}}
                         <i class="nav-icon fas fa-file-contract"></i> <p>OT</p>
                         </a>
                     </li>
                     @if (session()->get('rol_nombre') == 'supervisor')
                         <li class="nav-item">
                             <a href="{{route('usuario_notificaciones', ['id' => auth()->user()->id])}}" class="nav-link {{getMenuActivo('usuario/notificaciones')}}">
-                                {{-- {{getMenuActivo($item["url"])}} --}}
                             <i class="nav-icon fas fa-bell"></i> <p>Notificaciones</p>
                             </a>
                         </li>
                     @endif
 
                 </ul>
-            </li>
+            </li> --}}
 
         </ul>
       </nav>

@@ -11,7 +11,7 @@ class Ot extends Model
 {
     use HasFactory;
     protected $table="ot";
-    protected $fillable = ['trabajador_id', 'contrato_id', 'estado_ot_id', 'fecha', 'adelanto', 'descuento', 'motivo_descuento', 'pedido'];
+    protected $fillable = ['trabajador_id', 'contrato_id', 'estado_ot_id', 'fecha', 'descuento', 'motivo_descuento', 'pedido'];
     protected $guarded = ['id'];
 
     public function actividades(){

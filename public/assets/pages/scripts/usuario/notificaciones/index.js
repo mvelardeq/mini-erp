@@ -70,6 +70,7 @@ $(document).ready(function () {
                             $("#filaot"+respuesta.id).addClass("table-success");
                             form.attr('action',window.location+"/aprobar/"+respuesta.id);
                             form.remove();
+                            location.reload();
 
                             Biblioteca.notificaciones('La OT fue aprobada correctamente', 'Ascensores Industriales', 'success');
                         } else {
@@ -82,69 +83,142 @@ $(document).ready(function () {
         }
 
 
-        $("#modalAdelanto").on('submit', '.form-adelanto', function(){
-            event.preventDefault();
-            const form = $(this);
-            var id = form.data('id');
-            // var data = {
-            //     adelanto = form.find("#adelanto").val(),
-            //     _token: $('input[name=_token]').val()
-            // }
-            ajaxRequestAdelanto(form);
-            // $.post("../adelanto/"+id,data,function (res) {
-            //     $("#modalAdelanto").hide();
-            //     $("#filaot"+id).find('span #adelanto').html(res);
-            // })
+        $("#notificaciones_ot").on("submit", ".adelanto", function (e) {
+            e.preventDefault();
+            let id= $(this).parent().find('.adelanto').attr("data-id");
+            $("#modalAdelantoid").val(id);
+            let estado = $(this).parent().find(".adelanto>span").html();
+            if (estado == "") {
+                $("#modalAdelanto").modal("show");
+            }
         });
 
-        function ajaxRequestAdelanto(form){
-            $.ajax({
-                url: form.attr('action'),
-                type: 'POST',
-                data: form.serialize(),
-                success: function (respuesta) {
-                    $("#modalAdelanto").hide();
-                    location.reload();
-                    // $("#filaot"+id).find('span #adelanto').html(res);
-                },
-                error: function () {
+        $("#modalAdelanto").on("submit", ".form-adelanto", function (e) {
+            e.preventDefault();
+            let id = $("#modalAdelantoid").val();
+            let data = {
+                id: $("#modalAdelantoid").val(),
+                _token: $("input[name=_token]").val(),
+                pago: $("#adelantoModal").val(),
+            };
+            $.post("adelanto/" + id, data, function (response) {
+                $("#modalAdelanto").find("form").trigger("reset");
+                $("#modalAdelanto").modal("hide");
+                location.reload();
+                Biblioteca.notificaciones(
+                    "El adelanto fue aplicado correctamente",
+                    "Ascensores Industriales",
+                    "success"
+                );
+            });
 
-                }
-            })
-        }
-
-
-
-        $("#modalDescuento").on('submit', '.form-descuento', function(){
-            event.preventDefault();
-            const form = $(this);
-            var id = form.data('id');
-            // var data = {
-            //     adelanto = form.find("#adelanto").val(),
-            //     _token: $('input[name=_token]').val()
-            // }
-            ajaxRequestDescuento(form);
-            // $.post("../adelanto/"+id,data,function (res) {
-            //     $("#modalAdelanto").hide();
-            //     $("#filaot"+id).find('span #adelanto').html(res);
-            // })
         });
 
-        function ajaxRequestDescuento(form){
-            $.ajax({
-                url: form.attr('action'),
-                type: 'POST',
-                data: form.serialize(),
-                success: function (respuesta) {
-                    $("#modalDescuento").hide();
-                    location.reload();
-                    // $("#filaot"+id).find('span #adelanto').html(res);
-                },
-                error: function () {
 
-                }
-            })
-        }
+
+
+        $("#notificaciones_ot").on("submit", ".descuento", function (e) {
+            e.preventDefault();
+            let id= $(this).parent().find('.descuento').attr("data-id");
+            $("#modalDescuentoid").val(id);
+            let estado = $(this).parent().find(".descuento>span").html();
+            if (estado == "") {
+                $("#modalDescuento").modal("show");
+            }
+        });
+
+        $("#modalDescuento").on("submit", ".form-descuento", function (e) {
+            e.preventDefault();
+            let id = $("#modalDescuentoid").val();
+            let data = {
+                id: $("#modalDescuentoid").val(),
+                _token: $("input[name=_token]").val(),
+                descuento: $("#descuentoModal").val(),
+                motivo_descuento: $("#motivo_descuentoModal").val(),
+            };
+            $.post("descuento/" + id, data, function (response) {
+                $("#modalDescuento").find("form").trigger("reset");
+                $("#modalDescuento").modal("hide");
+                location.reload();
+                Biblioteca.notificaciones(
+                    "El descuento fue aplicado correctamente",
+                    "Ascensores Industriales",
+                    "success"
+                );
+            });
+
+        });
+
+
+        $("#notificaciones_ot").on("submit", ".gastoi", function (e) {
+            e.preventDefault();
+            let id= $(this).parent().find('.gastoi').attr("data-id");
+            $("#modalGastoiid").val(id);
+            let estado = $(this).parent().find(".gastoi>span").html();
+            console.log(estado);
+            if (estado == "") {
+                $("#modalGastoi").modal("show");
+            }
+        });
+
+        $("#modalGastoi").on("submit", ".form-gastoi", function (e) {
+            e.preventDefault();
+            let id = $("#modalGastoiid").val();
+            let data = {
+                id: $("#modalGastoiid").val(),
+                _token: $("input[name=_token]").val(),
+                tipogasto_id: $("#tipogasto_id").val(),
+                gastoi: $("#gastoiModal").val(),
+            };
+            $.post("gastoi/" + id, data, function (response) {
+                $("#modalGastoi").find("form").trigger("reset");
+                $("#modalGastoi").modal("hide");
+                location.reload();
+                Biblioteca.notificaciones(
+                    "El gasto fue aplicado correctamente",
+                    "Ascensores Industriales",
+                    "success"
+                );
+            });
+
+        });
+
+
+
+
+        $("#notificaciones_ot").on("submit", ".gastom", function (e) {
+            e.preventDefault();
+            let id= $(this).parent().find('.gastom').attr("data-id");
+            $("#modalGastomid").val(id);
+            let estado = $(this).parent().find(".gastom>span").html();
+            console.log(estado);
+            if (estado == "") {
+                $("#modalGastom").modal("show");
+            }
+        });
+
+        $("#modalGastom").on("submit", ".form-gastom", function (e) {
+            e.preventDefault();
+            let id = $("#modalGastomid").val();
+            let data = {
+                id: $("#modalGastomid").val(),
+                _token: $("input[name=_token]").val(),
+                tipogasto_id: $("#tipogastom_id").val(),
+                gastom: $("#gastomModal").val(),
+            };
+            $.post("gastom/" + id, data, function (response) {
+                $("#modalGastom").find("form").trigger("reset");
+                $("#modalGastom").modal("hide");
+                location.reload();
+                Biblioteca.notificaciones(
+                    "El gasto fue aplicado correctamente",
+                    "Ascensores Industriales",
+                    "success"
+                );
+            });
+
+        });
+
 
 });
 

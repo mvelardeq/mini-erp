@@ -32,12 +32,12 @@
             <div class="card-header">
                 <h3 class="card-title">Crear Ot</h3>
                 <div class="card-tools">
-                    <a href="{{route('usuario_ot', ['id' => auth()->user()->id])}}" class="btn btn-block btn-info btn-sm">
+                    <a href="{{route('usuario_ot')}}" class="btn btn-block btn-info btn-sm">
                         <i class="fa fa-fw fa-reply-all"></i> Volver al listado
                     </a>
                 </div>
             </div>
-            <form action="{{route('guardar_usuario_ot', ['id' => auth()->user()->id])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
+            <form action="{{route('guardar_usuario_ot')}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                     @include('dinamica.usuario.ot.form')

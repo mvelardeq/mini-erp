@@ -169,31 +169,27 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
     Route::post('factura/detraer/{id}', 'FacturaController@detraer')->name('detraer_factura');
     Route::post('factura/anular/{id}', 'FacturaController@anular')->name('anular_factura');
 
-    // Route::get('factura/{id}/editar', 'FacturaController@editar')->name('editar_factura');
-    // Route::put('factura/{id}', 'FacturaController@actualizar')->name('actualizar_factura');
-    // Route::delete('factura/{id}', 'FacturaController@eliminar')->name('eliminar_factura');
-
     });
 
     Route::group(['prefix' => 'usuario', 'namespace' => 'Usuario', 'middleware' =>['auth']], function () {
 
         /*RUTAS DE OT*/
-        Route::get('ot/{id}', 'OtController@index')->name('usuario_ot');
-        Route::get('ot/{id}/crear', 'OtController@crear')->name('crear_usuario_ot');
-        Route::post('ot/{id}', 'OtController@guardar')->name('guardar_usuario_ot');
-        Route::get('ot/{id}/editar', 'OtController@editar')->name('editar_usuario_ot');
-        Route::put('ot/{id}', 'OtController@actualizar')->name('actualizar_usuario_ot');
+        Route::get('ot', 'OtController@index')->name('usuario_ot');
+        Route::get('ot/crear', 'OtController@crear')->name('crear_usuario_ot');
+        Route::post('ot', 'OtController@guardar')->name('guardar_usuario_ot');
         Route::delete('ot/{id}', 'OtController@eliminar')->name('eliminar_usuario_ot');
 
         Route::post('ot/combo/{contrato_id}', 'OtController@combo')->name('combo_usuario_ot');
 
         /*RUTAS DE NOTIFICACIONES*/
-        Route::get('notificaciones/{id}', 'NotificacionesController@index')->middleware(['supervisor'])->name('usuario_notificaciones');
+        Route::get('notificaciones', 'NotificacionesController@index')->middleware(['supervisor'])->name('usuario_notificaciones');
         Route::post('notificaciones/aprobar/{id}', 'NotificacionesController@aprobar_ot')->middleware(['supervisor'])->name('aprobar_notificacion_ot');
         Route::delete('notificaciones/eliminar/{id}', 'NotificacionesController@eliminar')->middleware(['supervisor'])->name('eliminar_ot');
         Route::post('notificaciones/adelanto/{id}', 'NotificacionesController@adelanto')->middleware(['supervisor'])->name('adelanto_ot');
         Route::post('notificaciones/descuento/{id}', 'NotificacionesController@descuento')->middleware(['supervisor'])->name('descuento_ot');
-        Route::get('notificaciones/crear-falta/{id}', 'NotificacionesController@crear_falta')->middleware(['supervisor'])->name('crear_falta_ot');
+        Route::post('notificaciones/gastoi/{id}', 'NotificacionesController@gastoi')->middleware(['supervisor'])->name('gastoi_ot');
+        Route::post('notificaciones/gastom/{id}', 'NotificacionesController@gastom')->middleware(['supervisor'])->name('gastom_ot');
+        Route::get('notificaciones/crear-falta', 'NotificacionesController@crear_falta')->middleware(['supervisor'])->name('crear_falta_ot');
         Route::post('notificaciones/guardar-falta/{id}', 'NotificacionesController@guardar_falta')->middleware(['supervisor'])->name('guardar_falta_ot');
     });
 
