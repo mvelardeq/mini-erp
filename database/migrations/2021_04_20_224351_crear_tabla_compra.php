@@ -19,7 +19,7 @@ class CrearTablaCompra extends Migration
             $table->foreign('producto_id','fk_compraproducto_producto')->references('id')->on('producto')->onDelete('restrict')->onUpdate('restrict');
             $table->date('fecha');
             $table->double('costo_con_igv',5,2);
-            $table->string('proveedor',45);
+            $table->string('proveedor',90);
             $table->double('cantidad',4,2);
             $table->string('ruc_proveedor',11)->nullable();
             $table->string('numero_serie',12)->nullable();

@@ -20,7 +20,7 @@ class CrearTablaProducto extends Migration
             $table->unsignedBigInteger('tipo_producto_id');
             $table->foreign('tipo_producto_id','fk_tipoproducto_tipo')->references('id')->on('tipo_producto')->onDelete('restrict')->onUpdate('restrict');
             $table->string('descripcion',80);
-            $table->string('unidades');
+            $table->string('unidades',15);
             $table->string('foto',28);
             $table->timestamps();
         });
