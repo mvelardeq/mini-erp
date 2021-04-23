@@ -24,9 +24,11 @@ class CategoriaProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function crear()
     {
-        //
+        $categorias_producto = Categoria_producto::orderBy('id')->get();
+        return  view('dinamica.administracion.logistica.categoria_producto.crear', compact('categorias_producto'));
+
     }
 
     /**
@@ -35,9 +37,10 @@ class CategoriaProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function guardar(Request $request)
     {
-        //
+        Categoria_producto::create($request->all());
+        return redirect('administracion/logistica/categoria')->with('mensaje','Categoría creada con éxito');
     }
 
     /**
@@ -57,9 +60,10 @@ class CategoriaProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editar($id)
     {
-        //
+        $categoria_producto = Categoria_producto::findOrFail($id);
+        return view('dinamica.administracion.logistica.categoria_producto.editar', compact('categoria_producto'));
     }
 
     /**
@@ -69,9 +73,11 @@ class CategoriaProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function actualizar(Request $request, $id)
     {
-        //
+        // return dd($request->all());
+        Categoria_producto::findOrFail($id)->update($request->all());
+        return redirect('administracion/logistica/categoria')->with('mensaje','categoria actualizada con éxito');
     }
 
     /**
@@ -80,8 +86,16 @@ class CategoriaProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function eliminar(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            if (Categoria_producto::destroy($id)) {
+                return response()->json(['mensaje'=>'ok']);
+            }else {
+                return response()->json(['mensaje'=>'ng']);
+            }
+        }else {
+            abort(404);
+        }
     }
 }

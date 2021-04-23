@@ -1,6 +1,6 @@
 @extends("theme.$theme.layout")
 @section('titulo')
-    Empresas
+    Categoria Producto
 @endsection
 
 @section("styles")
@@ -29,17 +29,17 @@
         @include('dinamica.includes.mensaje')
         <div class="card card-outline card-info">
             <div class="card-header">
-                <h3 class="card-title">Editar empresa {{$empresa->ruc}}</h3>
+                <h3 class="card-title">Editar categoría {{$categoria_producto->nombre}}</h3>
                 <div class="card-tools">
-                    <a href="{{route('empresa')}}" class="btn btn-block btn-info btn-sm">
+                    <a href="{{route('categoria_producto')}}" class="btn btn-block btn-info btn-sm">
                         <i class="fa fa-fw fa-reply-all"></i> Volver al listado
                     </a>
                 </div>
             </div>
-            <form action="{{route('actualizar_empresa', ['id' => $empresa->id])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
+            <form action="{{route('actualizar_categoria_producto', ['id' => $categoria_producto->id])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
                 @csrf @method("put")
                 <div class="card-body">
-                    @include('dinamica.operaciones.empresa.form')
+                    @include('dinamica.administracion.logistica.categoria_producto.form')
                 </div>
                 <div class="card-footer">
                     @include('dinamica.includes.boton-form-editar')

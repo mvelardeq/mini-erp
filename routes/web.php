@@ -197,12 +197,12 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
     Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion\Logistica', 'middleware' =>['auth','superadmin']], function () {
 
         /*RUTAS DE CATEGORIA_PRODUCTO*/
-        Route::get('logistica/categoria-producto', 'CategoriaProductoController@index')->name('categoria_producto');
-        Route::get('logistica/categoria-producto/crear', 'CategoriaProductoController@crear')->name('crear_categoria_producto');
-        Route::post('logistica/categoria-producto', 'CategoriaProductoController@guardar')->name('guardar_categoria_producto');
-        Route::get('logistica/categoria-producto/{id}/editar', 'CategoriaProductoController@editar')->name('editar_categoria_producto');
-        Route::put('logistica/categoria-producto/{id}', 'CategoriaProductoController@actualizar')->name('actualizar_categoria_producto');
-        Route::delete('logistica/categoria-producto/{id}', 'CategoriaProductoController@eliminar')->name('eliminar_categoria_producto');
+        Route::get('logistica/categoria', 'CategoriaProductoController@index')->name('categoria_producto');
+        Route::get('logistica/categoria/crear', 'CategoriaProductoController@crear')->name('crear_categoria_producto');
+        Route::post('logistica/categoria', 'CategoriaProductoController@guardar')->name('guardar_categoria_producto');
+        Route::get('logistica/categoria/{id}/editar', 'CategoriaProductoController@editar')->name('editar_categoria_producto');
+        Route::put('logistica/categoria/{id}', 'CategoriaProductoController@actualizar')->name('actualizar_categoria_producto');
+        Route::delete('logistica/categoria/{id}', 'CategoriaProductoController@eliminar')->name('eliminar_categoria_producto');
 
         });
 

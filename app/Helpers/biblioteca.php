@@ -21,7 +21,8 @@ if (!function_exists('getMenuOpen')) {
     {
         $n1 = request()->path();
         $nombre2 = Str::lower($nombre);
-        if (Str::is($nombre2.'*', $n1)) {
+        $nombre3 = Str::ascii($nombre2);
+        if (Str::is('*'.$nombre3.'/*', $n1)) {
             return 'menu-open';
         } else {
             return '';
@@ -34,7 +35,8 @@ if (!function_exists('getMenuActive')) {
     {
         $n1 = request()->path();
         $nombre2 = Str::lower($nombre);
-        if (Str::is($nombre2.'*', $n1)) {
+        $nombre3 = Str::ascii($nombre2);
+        if (Str::is($nombre3.'/*', $n1)) {
             return 'active';
         } else {
             return '';

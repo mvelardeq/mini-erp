@@ -9,6 +9,8 @@ class Categoria_producto extends Model
 {
     use HasFactory;
     protected $table="categoria_producto";
+    public $timestamps = false;
     protected $fillable = ['nombre'];
     protected $guarded = ['id'];
+
 }
