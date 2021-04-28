@@ -1,6 +1,6 @@
 @extends("theme.$theme.layout")
 @section('titulo')
-Categoria producto
+Productos
 @endsection
 
 @section("script")
@@ -13,9 +13,9 @@ Categoria producto
         @include('dinamica.includes.mensaje')
         <div class="card card-outline card-info">
             <div class="card-header">
-                <h3 class="card-title">Categorías de los productos</h3>
+                <h3 class="card-title">Lista de productos</h3>
                 <div class="card-tools">
-                    <a href="{{route('crear_categoria_producto')}}" class="btn btn-block btn-success btn-sm">
+                    <a href="{{route('crear_producto')}}" class="btn btn-block btn-success btn-sm">
                         <i class="fa fa-fw fa-plus-circle"></i> Nuevo registro
                     </a>
                 </div>
@@ -24,21 +24,39 @@ Categoria producto
                 <table class="table table-striped table-bordered table-hover table-responsive-lg" id="tabla-data">
                     <thead class="bg-dark">
                         <tr>
+                            <th>Producto</th>
+                            <th>Tipo</th>
                             <th>Categoría</th>
+                            <th>Unidades</th>
+                            <th>Foto</th>
 
                             <th class="width70"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($categorias_producto as $categoria_producto)
+                        @foreach ($productos as $producto)
                         <tr>
-                            <td>{{$categoria_producto->nombre}}</td>
+                            <td>{{$producto->descripcion}}</td>
+                            <td>
+                                @if ($producto->tipo_producto->nombre == 'Activo')
+                                    <span class="badge bg-primary">{{$producto->tipo_producto->nombre}}</span>
+                                @else
+                                    <span class="badge bg-warning">{{$producto->tipo_producto->nombre}}</span>
+                                @endif
+                            </td>
+                            <td>{{$producto->categoria_producto->nombre}}</td>
+                            <td>{{$producto->unidades}}</td>
+                            <td>
+                                <img class="profile-user-img"
+                                src="{{Storage::disk('s3')->url("photos/product/".$producto->foto."")}}"
+                                alt="Foto del producto">
+                            </td>
 
                             <td>
-                                <a href="{{route('editar_categoria_producto', ['id' => $categoria_producto->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
+                                <a href="{{route('editar_producto', ['id' => $producto->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
-                                <form action="{{route('eliminar_categoria_producto', ['id' => $categoria_producto->id])}}" class="d-inline form-eliminar" method="POST">
+                                <form action="{{route('eliminar_producto', ['id' => $producto->id])}}" class="d-inline form-eliminar" method="POST">
                                     @csrf @method("delete")
                                     <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Eliminar este registro">
                                         <i class="fa fa-fw fa-trash text-danger"></i>

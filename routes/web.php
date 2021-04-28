@@ -204,6 +204,14 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
         Route::put('logistica/categoria/{id}', 'CategoriaProductoController@actualizar')->name('actualizar_categoria_producto');
         Route::delete('logistica/categoria/{id}', 'CategoriaProductoController@eliminar')->name('eliminar_categoria_producto');
 
+        /*RUTAS DE PRODUCTO*/
+        Route::get('logistica/producto', 'ProductoController@index')->name('producto');
+        Route::get('logistica/producto/crear', 'ProductoController@crear')->name('crear_producto');
+        Route::post('logistica/producto', 'ProductoController@guardar')->name('guardar_producto');
+        Route::get('logistica/producto/{id}/editar', 'ProductoController@editar')->name('editar_producto');
+        Route::put('logistica/producto/{id}', 'ProductoController@actualizar')->name('actualizar_producto');
+        Route::delete('logistica/producto/{id}', 'ProductoController@eliminar')->name('eliminar_producto');
+
         });
 
 
