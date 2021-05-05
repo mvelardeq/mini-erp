@@ -22,6 +22,8 @@
 <div class="form-group row">
     <label for="foto" class="col-lg-3 control-form-label">Foto</label>
     <div class="col-lg-8">
-        <input type="file" name="foto_up" id="foto" data-initial-preview="{{isset($data->foto) ? Storage::url("imagenes/ObservacionesTrabajadores/$data->observaciones") : "http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=Observación"}}" accept="image/*"/>
+        <input type="file" name="foto_up" id="foto" data-initial-preview="{{isset($data->foto) ? Storage::disk('s3')->url("photos/workerObs/$data->foto") : "http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=Observación"}}" accept="image/*"/>
     </div>
 </div>
+
+

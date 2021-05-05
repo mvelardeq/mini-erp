@@ -1,6 +1,6 @@
 @extends("theme.$theme.layout")
 @section('titulo')
-    Equipos
+    Producto
 @endsection
 
 @section("styles")
@@ -14,7 +14,7 @@
 <script src="{{asset("assets/js/bootstrap-fileinput/js/locales/es.js")}}" type="text/javascript"></script>
 <script src="{{asset("assets/js/bootstrap-fileinput/themes/fas/theme.min.js")}}" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
 
 @endsection
 
@@ -29,20 +29,20 @@
         @include('dinamica.includes.mensaje')
         <div class="card card-outline card-info">
             <div class="card-header">
-                <h3 class="card-title">Crear equipo</h3>
+                <h3 class="card-title">Editar producto {{$producto->descripcion}}</h3>
                 <div class="card-tools">
-                    <a href="{{route('equipo')}}" class="btn btn-block btn-info btn-sm">
+                    <a href="{{route('producto')}}" class="btn btn-block btn-info btn-sm">
                         <i class="fa fa-fw fa-reply-all"></i> Volver al listado
                     </a>
                 </div>
             </div>
-            <form action="{{route('guardar_equipo')}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" files="true" enctype="multipart/form-data">
-                @csrf
+            <form action="{{route('actualizar_producto', ['id' => $producto->id])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
+                @csrf @method("put")
                 <div class="card-body">
-                    @include('dinamica.operaciones.equipo.form')
+                    @include('dinamica.administracion.logistica.producto.form')
                 </div>
                 <div class="card-footer">
-                    @include('dinamica.includes.boton-form-crear')
+                    @include('dinamica.includes.boton-form-editar')
                 </div>
             </form>
         </div>

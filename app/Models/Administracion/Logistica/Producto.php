@@ -29,7 +29,7 @@ class Producto extends Model
             }
             $imageName = Str::random(20). '.jpg';
             $imagen = Image::make($foto)->encode('jpg', 75);
-        $imagen->resize(600, 800, function ($constraint) {
+        $imagen->resize(500, 450, function ($constraint) {
                 $constraint->upsize();
             });
             Storage::disk('s3')->put("photos/product/$imageName", $imagen->stream());

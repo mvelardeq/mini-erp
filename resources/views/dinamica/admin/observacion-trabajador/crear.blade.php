@@ -24,7 +24,7 @@
                 </div>
             </div>
             <!-- /.card-header -->
-            <form action="{{route('guardar_observacion_trabajador', ['id' => $trabajador->id])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off">
+            <form action="{{route('guardar_observacion_trabajador', ['id' => $trabajador->id])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                     @include('dinamica.admin.observacion-trabajador.form')

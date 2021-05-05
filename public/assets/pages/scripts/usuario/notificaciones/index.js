@@ -101,7 +101,7 @@ $(document).ready(function () {
                 _token: $("input[name=_token]").val(),
                 pago: $("#adelantoModal").val(),
             };
-            $.post("adelanto/" + id, data, function (response) {
+            $.post("notificaciones/adelanto/" + id, data, function (response) {
                 $("#modalAdelanto").find("form").trigger("reset");
                 $("#modalAdelanto").modal("hide");
                 location.reload();
@@ -136,7 +136,7 @@ $(document).ready(function () {
                 descuento: $("#descuentoModal").val(),
                 motivo_descuento: $("#motivo_descuentoModal").val(),
             };
-            $.post("descuento/" + id, data, function (response) {
+            $.post("notificaciones/descuento/" + id, data, function (response) {
                 $("#modalDescuento").find("form").trigger("reset");
                 $("#modalDescuento").modal("hide");
                 location.reload();
@@ -170,7 +170,7 @@ $(document).ready(function () {
                 tipogasto_id: $("#tipogasto_id").val(),
                 gastoi: $("#gastoiModal").val(),
             };
-            $.post("gastoi/" + id, data, function (response) {
+            $.post("notificaciones/gastoi/" + id, data, function (response) {
                 $("#modalGastoi").find("form").trigger("reset");
                 $("#modalGastoi").modal("hide");
                 location.reload();
@@ -206,7 +206,7 @@ $(document).ready(function () {
                 tipogasto_id: $("#tipogastom_id").val(),
                 gastom: $("#gastomModal").val(),
             };
-            $.post("gastom/" + id, data, function (response) {
+            $.post("notificaciones/gastom/" + id, data, function (response) {
                 $("#modalGastom").find("form").trigger("reset");
                 $("#modalGastom").modal("hide");
                 location.reload();

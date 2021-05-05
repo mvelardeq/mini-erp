@@ -2,7 +2,6 @@
 $(document).ready(function () {
 
 
-
     $("#tabla-data").DataTable({
         // order: [[0 ]],
         "ordering": false,

@@ -1,15 +1,20 @@
 <div class="form-group row">
     <div class="col-lg-3">
-        <label for="" class="col-form-label">Tipo de producto</label>
+        <label for="" class="py-0 col-form-label">Tipo de producto</label>
     </div>
     <div class="col-lg-8 form-check">
         <div class="">
-            <input type="radio" name="tipo_producto_id" id="activo" class="form-check-input" value="1" @if(old('tipo_producto_id')) checked @endif />
+            <input type="radio" name="tipo_producto_id" id="activo_comun" class="form-check-input" value="1"/>
         </div>
-        <label for="activo" class="form-check-label">Activo</label>
+        <label for="activo_comun" class="form-check-label">Activo común</label>
 
         <div class="">
-            <input type="radio" name="tipo_producto_id" id="consumible" class="form-check-input" value="2"/>
+            <input type="radio" name="tipo_producto_id" id="activo_particular" class="form-check-input" value="2"/>
+        </div>
+        <label for="activo_particular" class="form-check-label">Activo particular</label>
+
+        <div class="">
+            <input type="radio" name="tipo_producto_id" id="consumible" class="form-check-input" value="3"/>
         </div>
         <label for="consumible" class="form-check-label">Consumible</label>
     </div>

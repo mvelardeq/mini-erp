@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Administracion\Logistica\Categoria_producto;
 use App\Models\Administracion\Logistica\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
@@ -95,13 +96,13 @@ class ProductoController extends Controller
     public function eliminar(Request $request, $id)
     {
         if ($request->ajax()) {
-            if (Producto::destroy($id)) {
-                return response()->json(['mensaje'=>'ok']);
-            }else {
-                return response()->json(['mensaje'=>'ng']);
-            }
-        }else {
+            $producto = Producto::findOrFail($id);
+            Storage::disk('s3')->delete("photos/product/$producto->foto");
+            $producto->delete();
+            return response()->json(['mensaje'=>'ok']);
+        } else {
             abort(404);
         }
+
     }
 }

@@ -9,7 +9,7 @@ class Compra extends Model
 {
     use HasFactory;
     protected $table="compra";
-    protected $fillable = ['proveedor', 'fecha','ruc_proveedor', 'observacion'];
+    protected $fillable = ['proveedor', 'fecha', 'total_con_igv','ruc_proveedor', 'observacion'];
     protected $guarded = ['id'];
 
     public function producto(){

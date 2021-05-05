@@ -212,6 +212,14 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
         Route::put('logistica/producto/{id}', 'ProductoController@actualizar')->name('actualizar_producto');
         Route::delete('logistica/producto/{id}', 'ProductoController@eliminar')->name('eliminar_producto');
 
+        /*RUTAS DE COMPRA*/
+        Route::get('logistica/compra', 'CompraController@index')->name('compra');
+        Route::get('logistica/compra/crear', 'CompraController@crear')->name('crear_compra');
+        Route::post('logistica/compra', 'CompraController@guardar')->name('guardar_compra');
+        Route::get('logistica/compra/{id}/editar', 'CompraController@editar')->name('editar_compra');
+        Route::put('logistica/compra/{id}', 'CompraController@actualizar')->name('actualizar_compra');
+        Route::delete('logistica/compra/{id}', 'CompraController@eliminar')->name('eliminar_compra');
+
         });
 
 

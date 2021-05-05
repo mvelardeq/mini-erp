@@ -30,7 +30,7 @@ Trabajadores
                             <th>Usuario</th>
                             <th>Roles</th>
                             <th>Estado</th>
-                            <th class="width70"></th>
+                            <th class="width60"></th>
                         </tr>
                     </thead>
                     <tbody>

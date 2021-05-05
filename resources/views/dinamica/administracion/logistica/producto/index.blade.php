@@ -38,11 +38,29 @@ Productos
                         <tr>
                             <td>{{$producto->descripcion}}</td>
                             <td>
+                                @switch($producto->tipo_producto->nombre)
+                                    @case('Activo común')
+                                    <span class="badge bg-primary">{{$producto->tipo_producto->nombre}}</span>
+
+                                        @break
+                                    @case('Activo particular')
+                                    <span class="badge bg-info">{{$producto->tipo_producto->nombre}}</span>
+
+                                        @break
+                                    @case('Consumible')
+                                    <span class="badge bg-warning">{{$producto->tipo_producto->nombre}}</span>
+
+                                        @break
+                                    @default
+                                    <span></span>
+                                @endswitch
+
+{{--
                                 @if ($producto->tipo_producto->nombre == 'Activo')
                                     <span class="badge bg-primary">{{$producto->tipo_producto->nombre}}</span>
                                 @else
                                     <span class="badge bg-warning">{{$producto->tipo_producto->nombre}}</span>
-                                @endif
+                                @endif --}}
                             </td>
                             <td>{{$producto->categoria_producto->nombre}}</td>
                             <td>{{$producto->unidades}}</td>
