@@ -44,7 +44,14 @@ class CompraController extends Controller
      */
     public function guardar(Request $request)
     {
-        //
+        Compra::create([
+            'proveedor' => $request->proveedor,
+            'fecha' => $request->fecha,
+            'total' => $request->total,
+            ]);
+
+            $idcompra = Compra::orderBy('created_at', 'desc')->first()->id;
+        return dd($request->id);
     }
 
     /**

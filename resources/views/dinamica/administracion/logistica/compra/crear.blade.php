@@ -39,8 +39,10 @@
                     </a>
                 </div>
             </div>
-            <form id="form-general" class="form-horizontal" autocomplete="off" enctype="multipart/form-data">
-                {{-- @csrf --}}
+            {{-- <form id="form-general" class="form-horizontal" autocomplete="off" enctype="multipart/form-data"> --}}
+            <form action="{{route('guardar_compra')}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
+
+                @csrf
                 {{-- <div class="card-body">
                     @include('dinamica.administracion.logistica.producto.form')
                 </div>
@@ -66,7 +68,7 @@
 
                         </tbody>
                         <tfoot id="compraFoot">
-
+                            <input id="total" type="hidden" name="total">
                         </tfoot>
                     </table>
                 </div>
@@ -75,6 +77,10 @@
                     <button id="addproductc" class="btn btn-success"><i class="fa fa-fw fa-plus-circle"></i> prod. común</button>
                     <button id="addproductp" class="btn btn-success"><i class="fa fa-fw fa-plus-circle"></i> prod. particular</button>
                     {{-- <button type="reset" class="btn btn-default float-right">Cancelar</button> --}}
+                </div>
+
+                <div class="card-footer">
+                    @include('dinamica.includes.boton-form-crear')
                 </div>
 
             </form>
