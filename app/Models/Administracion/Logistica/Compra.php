@@ -13,7 +13,7 @@ class Compra extends Model
     protected $guarded = ['id'];
 
     public function producto(){
-        return $this->belongsToMany(Producto::class, 'item_compra')->withPivot('costo_con_igv', 'cantidad', 'numero_serie', 'marca', 'modelo');
+        return $this->belongsToMany(Producto::class, 'item_compra')->withPivot('costo_con_igv', 'cantidad', 'capacidad', 'numero_serie', 'marca', 'modelo');
     }
 
 }

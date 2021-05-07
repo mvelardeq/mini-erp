@@ -1,6 +1,6 @@
 @extends("theme.$theme.layout")
 @section('titulo')
-    Productos
+    Compra
 @endsection
 
 @section("styles")
@@ -32,7 +32,7 @@
         @include('dinamica.includes.mensaje')
         <div class="card card-outline card-info">
             <div class="card-header">
-                <h3 class="card-title">Crear producto</h3>
+                <h3 class="card-title">Registrar compra</h3>
                 <div class="card-tools">
                     <a href="{{route('producto')}}" class="btn btn-block btn-info btn-sm">
                         <i class="fa fa-fw fa-reply-all"></i> Volver al listado
@@ -41,14 +41,7 @@
             </div>
             {{-- <form id="form-general" class="form-horizontal" autocomplete="off" enctype="multipart/form-data"> --}}
             <form action="{{route('guardar_compra')}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
-
                 @csrf
-                {{-- <div class="card-body">
-                    @include('dinamica.administracion.logistica.producto.form')
-                </div>
-                <div class="card-footer">
-                    @include('dinamica.includes.boton-form-crear')
-                </div> --}}
                 <div class="card-body">
                     @include('dinamica.administracion.logistica.compra.form')
 
@@ -68,15 +61,14 @@
 
                         </tbody>
                         <tfoot id="compraFoot">
-                            <input id="total" type="hidden" name="total">
                         </tfoot>
+                        <input id="total" type="hidden" name="total">
                     </table>
                 </div>
 
                 <div class="card-footer ">
                     <button id="addproductc" class="btn btn-success"><i class="fa fa-fw fa-plus-circle"></i> prod. común</button>
                     <button id="addproductp" class="btn btn-success"><i class="fa fa-fw fa-plus-circle"></i> prod. particular</button>
-                    {{-- <button type="reset" class="btn btn-default float-right">Cancelar</button> --}}
                 </div>
 
                 <div class="card-footer">

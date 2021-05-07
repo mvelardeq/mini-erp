@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administracion\Logistica;
 
 use App\Http\Controllers\Controller;
 use App\Models\Administracion\Logistica\Compra;
+use App\Models\Administracion\Logistica\Item_compra;
 use App\Models\Administracion\Logistica\Producto;
 use Illuminate\Http\Request;
 
@@ -47,11 +48,28 @@ class CompraController extends Controller
         Compra::create([
             'proveedor' => $request->proveedor,
             'fecha' => $request->fecha,
-            'total' => $request->total,
+            'ruc_proveedor' => $request->ruc_proveedor,
+            'total_con_igv' => $request->total,
+            'observacion' => $request->observacion,
             ]);
 
             $idcompra = Compra::orderBy('created_at', 'desc')->first()->id;
-        return dd($request->id);
+
+            for ($i=0; $i < count($request->producto_id); $i++) {
+                Item_compra::create([
+                    'compra_id' => $idcompra,
+                    'producto_id' => $request->producto_id[$i],
+                    'costo_con_igv' => $request->costo_con_igv[$i],
+                    'cantidad' => $request->cantidad[$i],
+                    'capacidad' => $request->capacidad[$i],
+                    'numero_serie' => $request->numero_serie[$i],
+                    'marca' => $request->marca[$i],
+                    'modelo' => $request->modelo[$i],
+                ]);
+            }
+        return redirect('administracion/logistica/compra')->with('mensaje', 'Compra realizada con éxito');
+
+        // return dd(count($request->producto_id));
     }
 
     /**
