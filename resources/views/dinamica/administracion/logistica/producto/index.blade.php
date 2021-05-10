@@ -60,7 +60,6 @@ Productos
                                 <td>{{$producto->categoria_producto->nombre}}</td>
                                 <td>{{$producto->unidades}}</td>
                                 <td>
-                                    {{-- <a href=""></a> --}}
                                     <img class="profile-user-img imagenproducto"
                                     src="{{Storage::disk('s3')->url("photos/product/".$producto->foto."")}}"
                                     alt="Foto del producto" type="button">

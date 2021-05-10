@@ -15,8 +15,9 @@ class CrearTablaPerdidaExistencia extends Migration
     {
         Schema::create('perdida_existencia', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('producto_id');
-            $table->foreign('producto_id','fk_perdidaexistenciaproducto_producto')->references('id')->on('producto')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('item_compra_id');
+            $table->foreign('item_compra_id','fk_perdidaexistenciaitemcompra_itemcompra')->references('id')->on('item_compra')->onDelete('restrict')->onUpdate('restrict');
+            $table->date('fecha');
             $table->text('motivo');
             $table->double('cantidad',4,2);
             $table->timestamps();

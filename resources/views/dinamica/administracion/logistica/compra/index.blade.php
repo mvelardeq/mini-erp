@@ -45,9 +45,6 @@ Compras
                             <td>{{$compra->observacion}}</td>
 
                             <td>
-                                <a href="{{route('editar_compra', ['id' => $compra->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </a>
                                 <form action="{{route('eliminar_compra', ['id' => $compra->id])}}" class="d-inline form-eliminar" method="POST">
                                     @csrf @method("delete")
                                     <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Eliminar este registro">

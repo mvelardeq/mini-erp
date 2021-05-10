@@ -220,6 +220,24 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
         Route::put('logistica/compra/{id}', 'CompraController@actualizar')->name('actualizar_compra');
         Route::delete('logistica/compra/{id}', 'CompraController@eliminar')->name('eliminar_compra');
 
+        /*RUTAS DE PERDIDA*/
+        Route::get('logistica/perdida', 'PerdidaExistenciaController@index')->name('perdida');
+        Route::get('logistica/perdida/comun/crear', 'PerdidaExistenciaController@crear_comun')->name('crear_perdida_comun');
+        Route::get('logistica/perdida/particular/crear', 'PerdidaExistenciaController@crear_particular')->name('crear_perdida_particular');
+        Route::post('logistica/perdida/comun', 'PerdidaExistenciaController@guardar_comun')->name('guardar_perdida_comun');
+        Route::post('logistica/perdida/particular', 'PerdidaExistenciaController@guardar_particular')->name('guardar_perdida_particular');
+        Route::get('logistica/perdida/{id}/editar', 'PerdidaExistenciaController@editar')->name('editar_perdida');
+        Route::put('logistica/perdida/{id}', 'PerdidaExistenciaController@actualizar')->name('actualizar_perdida');
+        Route::delete('logistica/perdida/{id}', 'PerdidaExistenciaController@eliminar')->name('eliminar_perdida');
+
+        /*RUTAS DE INVENTARIO*/
+        Route::get('logistica/inventario', 'InventarioController@index')->name('inventario');
+        Route::get('logistica/compra/crear', 'CompraController@crear')->name('crear_compra');
+        Route::post('logistica/compra', 'CompraController@guardar')->name('guardar_compra');
+        Route::get('logistica/compra/{id}/editar', 'CompraController@editar')->name('editar_compra');
+        Route::put('logistica/compra/{id}', 'CompraController@actualizar')->name('actualizar_compra');
+        Route::delete('logistica/compra/{id}', 'CompraController@eliminar')->name('eliminar_compra');
+
         });
 
 
