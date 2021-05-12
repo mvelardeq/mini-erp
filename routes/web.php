@@ -37,25 +37,25 @@ Route::post('ajax-sesion', 'AjaxController@setSession')->name('ajax')->middlewar
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' =>['auth','superadmin']], function () {
     Route::get('', 'AdminController@index');
     /*RUTAS DE TRABAJADOR*/
-    Route::get('trabajador', 'TrabajadorController@index')->name('trabajador');
-    Route::get('trabajador/crear', 'TrabajadorController@crear')->name('crear_trabajador');
-    Route::post('trabajador', 'TrabajadorController@guardar')->name('guardar_trabajador');
-    Route::get('trabajador/{id}/editar', 'TrabajadorController@editar')->name('editar_trabajador');
-    Route::put('trabajador/{id}', 'TrabajadorController@actualizar')->name('actualizar_trabajador');
-    Route::delete('trabajador/{id}', 'TrabajadorController@eliminar')->name('eliminar_trabajador');
-    Route::get('trabajador/{id}/perfil', 'TrabajadorPerfilController@index')->name('trabajador_perfil');
+    Route::get('usuario', 'UsuarioController@index')->name('usuario');
+    Route::get('usuario/crear', 'UsuarioController@crear')->name('crear_usuario');
+    Route::post('usuario', 'UsuarioController@guardar')->name('guardar_usuario');
+    Route::get('usuario/{id}/editar', 'UsuarioController@editar')->name('editar_usuario');
+    Route::put('usuario/{id}', 'UsuarioController@actualizar')->name('actualizar_usuario');
+    Route::delete('usuario/{id}', 'UsuarioController@eliminar')->name('eliminar_usuario');
+    // Route::get('trabajador/{id}/perfil', 'TrabajadorPerfilController@index')->name('trabajador_perfil');
 
-    Route::get('trabajador/{id}/periodo-trabajador', 'PeriodoTrabajadorController@crear')->name('crear_periodo_trabajador');
-    Route::post('trabajador/{id}/periodo-trabajador', 'PeriodoTrabajadorController@guardar')->name('guardar_periodo_trabajador');
+    // Route::get('trabajador/{id}/periodo-trabajador', 'PeriodoTrabajadorController@crear')->name('crear_periodo_trabajador');
+    // Route::post('trabajador/{id}/periodo-trabajador', 'PeriodoTrabajadorController@guardar')->name('guardar_periodo_trabajador');
 
-    Route::get('trabajador/{id}/fin-periodo-trabajador', 'PeriodoTrabajadorController@editar')->name('fin_periodo_trabajador');
-    Route::post('trabajador/{id}/fin-periodo-trabajador', 'PeriodoTrabajadorController@actualizar')->name('actualizar_periodo_trabajador');
+    // Route::get('trabajador/{id}/fin-periodo-trabajador', 'PeriodoTrabajadorController@editar')->name('fin_periodo_trabajador');
+    // Route::post('trabajador/{id}/fin-periodo-trabajador', 'PeriodoTrabajadorController@actualizar')->name('actualizar_periodo_trabajador');
 
-    Route::get('trabajador/{id}/observacion-trabajador', 'ObservacionTrabajadorController@crear')->name('crear_observacion_trabajador');
-    Route::post('trabajador/{id}/observacion-trabajador', 'ObservacionTrabajadorController@guardar')->name('guardar_observacion_trabajador');
+    // Route::get('trabajador/{id}/observacion-trabajador', 'ObservacionTrabajadorController@crear')->name('crear_observacion_trabajador');
+    // Route::post('trabajador/{id}/observacion-trabajador', 'ObservacionTrabajadorController@guardar')->name('guardar_observacion_trabajador');
 
-    Route::get('trabajador/{id}/ascenso-trabajador', 'AscensoTrabajadorController@crear')->name('crear_ascenso_trabajador');
-    Route::post('trabajador/{id}/ascenso-trabajador', 'AscensoTrabajadorController@guardar')->name('guardar_ascenso_trabajador');
+    // Route::get('trabajador/{id}/ascenso-trabajador', 'AscensoTrabajadorController@crear')->name('crear_ascenso_trabajador');
+    // Route::post('trabajador/{id}/ascenso-trabajador', 'AscensoTrabajadorController@guardar')->name('guardar_ascenso_trabajador');
 
     /*RUTAS DE PERMISO*/
     Route::get('permiso', 'PermisoController@index')->name('permiso');
@@ -237,6 +237,31 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
         Route::get('logistica/compra/{id}/editar', 'CompraController@editar')->name('editar_compra');
         Route::put('logistica/compra/{id}', 'CompraController@actualizar')->name('actualizar_compra');
         Route::delete('logistica/compra/{id}', 'CompraController@eliminar')->name('eliminar_compra');
+
+        });
+
+        Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion\RRHH', 'middleware' =>['auth','superadmin']], function () {
+
+        /*RUTAS DE TRABAJADOR*/
+        Route::get('rrhh/trabajador', 'TrabajadorController@index')->name('trabajador');
+        Route::get('rrhh/trabajador/crear', 'TrabajadorController@crear')->name('crear_trabajador');
+        Route::post('rrhh/trabajador', 'TrabajadorController@guardar')->name('guardar_trabajador');
+        Route::get('rrhh/trabajador/{id}/editar', 'TrabajadorController@editar')->name('editar_trabajador');
+        Route::put('rrhh/trabajador/{id}', 'TrabajadorController@actualizar')->name('actualizar_trabajador');
+        Route::delete('rrhh/trabajador/{id}', 'TrabajadorController@eliminar')->name('eliminar_trabajador');
+        Route::get('rrhh/trabajador/{id}/perfil', 'TrabajadorPerfilController@index')->name('trabajador_perfil');
+
+        Route::get('rrhh/trabajador/{id}/periodo-trabajador', 'PeriodoTrabajadorController@crear')->name('crear_periodo_trabajador');
+        Route::post('rrhh/trabajador/{id}/periodo-trabajador', 'PeriodoTrabajadorController@guardar')->name('guardar_periodo_trabajador');
+
+        Route::get('rrhh/trabajador/{id}/fin-periodo-trabajador', 'PeriodoTrabajadorController@editar')->name('fin_periodo_trabajador');
+        Route::post('rrhh/trabajador/{id}/fin-periodo-trabajador', 'PeriodoTrabajadorController@actualizar')->name('actualizar_periodo_trabajador');
+
+        Route::get('rrhh/trabajador/{id}/observacion-trabajador', 'ObservacionTrabajadorController@crear')->name('crear_observacion_trabajador');
+        Route::post('rrhh/trabajador/{id}/observacion-trabajador', 'ObservacionTrabajadorController@guardar')->name('guardar_observacion_trabajador');
+
+        Route::get('rrhh/trabajador/{id}/ascenso-trabajador', 'AscensoTrabajadorController@crear')->name('crear_ascenso_trabajador');
+        Route::post('rrhh/trabajador/{id}/ascenso-trabajador', 'AscensoTrabajadorController@guardar')->name('guardar_ascenso_trabajador');
 
         });
 

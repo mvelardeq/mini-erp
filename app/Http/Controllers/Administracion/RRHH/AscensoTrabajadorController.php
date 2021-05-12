@@ -1,31 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Administracion\RRHH;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Ascenso_trabajador;
 use App\Models\Admin\Cargo_trabajador;
-use App\Models\Admin\Obs_trabajador;
-use App\Models\Admin\Periodo_trabajador;
 use App\Models\Seguridad\Trabajador;
 use Illuminate\Http\Request;
 
-class TrabajadorPerfilController extends Controller
+class AscensoTrabajadorController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        $data = Trabajador::with('roles:id,nombre', 'observaciones', 'periodos', 'ascensos')->findOrFail($id);
-        $ascensos = Ascenso_trabajador::with('cargo')->where('trabajador_id', $id)->get();
-
-        $trabajador = Trabajador::with('ascensos')->findOrFail($id);
-        $cargo_trabajador = Cargo_trabajador::get();
-
-        return view('dinamica.admin.trabajador.perfilTrabajador.index', compact('data', 'ascensos', 'trabajador','cargo_trabajador'));
+        //
     }
 
     /**
@@ -33,9 +25,15 @@ class TrabajadorPerfilController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function crear($id)
     {
-        //
+        $trabajador = Trabajador::with('ascensos','periodos')->findOrFail($id);
+        $cargo_trabajador = Cargo_trabajador::get();
+        $ascensos = Ascenso_trabajador::with('cargo')->where('trabajador_id', $id)->get();
+
+        $data = Trabajador::with('roles:id,nombre', 'observaciones', 'periodos', 'ascensos')->findOrFail($id);
+
+        return view('dinamica.administracion.rrhh.ascenso-trabajador.crear', compact('trabajador', 'cargo_trabajador', 'ascensos', 'data'));
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Administracion\RRHH;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Ascenso_trabajador;
@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class PeriodoTrabajadorController extends Controller
 {
-    /**
+      /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -19,7 +19,7 @@ class PeriodoTrabajadorController extends Controller
     public function index()
     {
         $periodos = Periodo_trabajador::with('trabajador:id,primer_nombre, primer_apellido')->orderBy('id')->get();
-        return view('dinamica.admin.periodo-trabajador.index', compact('periodos'));
+        return view('dinamica.administracion.rrhh.periodo-trabajador.index', compact('periodos'));
     }
 
     /**
@@ -35,7 +35,7 @@ class PeriodoTrabajadorController extends Controller
         $data = Trabajador::with('roles:id,nombre', 'observaciones', 'periodos', 'ascensos')->findOrFail($id);
         $ascensos = Ascenso_trabajador::with('cargo')->where('trabajador_id', $id)->get();
 
-        return view('dinamica.admin.periodo-trabajador.crear', compact('trabajador','cargo_trabajador', 'data', 'ascensos'));
+        return view('dinamica.administracion.rrhh.periodo-trabajador.crear', compact('trabajador','cargo_trabajador', 'data', 'ascensos'));
     }
 
     /**
@@ -89,7 +89,7 @@ class PeriodoTrabajadorController extends Controller
         $data = Trabajador::with('roles:id,nombre', 'observaciones', 'periodos', 'ascensos')->findOrFail($id);
         $ascensos = Ascenso_trabajador::with('cargo')->where('trabajador_id', $id)->get();
 
-        return view('dinamica.admin.periodo-trabajador.fin', compact('data', 'trabajador', 'cargo_trabajador', 'ascensos'));
+        return view('dinamica.administracion.rrhh.periodo-trabajador.fin', compact('data', 'trabajador', 'cargo_trabajador', 'ascensos'));
     }
 
     /**
@@ -103,7 +103,7 @@ class PeriodoTrabajadorController extends Controller
     {
         $data = Trabajador::with('roles:id,nombre', 'observaciones', 'periodos', 'ascensos')->findOrFail($id);
         Periodo_trabajador::findOrFail($data->periodos->last()->id)->update($request->all());
-        return redirect('admin/permiso')->with('mensaje', 'Trabajador actualizado con exito');
+        return redirect('administracion/rrhh/trabajador/'.$id.'/perfil')->with('mensaje', 'Trabajador actualizado con exito');
     }
     /**
      * Remove the specified resource from storage.

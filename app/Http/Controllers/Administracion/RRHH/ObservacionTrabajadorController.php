@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Administracion\RRHH;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Ascenso_trabajador;
-use App\Models\Admin\Cargo_trabajador;
+use App\Models\Admin\Obs_trabajador;
 use App\Models\Seguridad\Trabajador;
 use Illuminate\Http\Request;
 
-class AscensoTrabajadorController extends Controller
+class ObservacionTrabajadorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,10 @@ class AscensoTrabajadorController extends Controller
      */
     public function index()
     {
-        //
+        // can('listar-libros');
+        // dd(session()->all());
+        $observaciones = Obs_trabajador::with('trabajador:id,primer_nombre, primer_apellido')->orderBy('id')->get();
+        return view('dinamica.administracion.rrhh.observacion-trabajador.index', compact('observaciones'));
     }
 
     /**
@@ -27,13 +30,13 @@ class AscensoTrabajadorController extends Controller
      */
     public function crear($id)
     {
-        $trabajador = Trabajador::with('ascensos','periodos')->findOrFail($id);
-        $cargo_trabajador = Cargo_trabajador::get();
-        $ascensos = Ascenso_trabajador::with('cargo')->where('trabajador_id', $id)->get();
+        // $trabajador = Trabajador::orderBy('id')->pluck('nombres', 'id')->toArray();
+        $trabajador = Trabajador::with('ascensos')->findOrFail($id);
 
         $data = Trabajador::with('roles:id,nombre', 'observaciones', 'periodos', 'ascensos')->findOrFail($id);
+        $ascensos = Ascenso_trabajador::with('cargo')->where('trabajador_id', $id)->get();
 
-        return view('dinamica.admin.ascenso-trabajador.crear', compact('trabajador', 'cargo_trabajador', 'ascensos', 'data'));
+        return view('dinamica.administracion.rrhh.observacion-trabajador.crear', compact('trabajador', 'data', 'ascensos'));
     }
 
     /**
@@ -42,9 +45,13 @@ class AscensoTrabajadorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request)
+    public function guardar(Request $request, $id)
     {
-        //
+        if ($foto = Obs_trabajador::setFoto($request->foto_up))
+            $request->request->add(['foto' => $foto]);
+        Obs_trabajador::create($request->all());
+        // return redirect()->route('observacion-trabajador')->with('mensaje', 'La observación se creo correctamente');
+        return redirect()->route('trabajador_perfil', ['id' => $id])->with('mensaje', 'La observación del trabajador se creó correctamente');
     }
 
     /**
@@ -53,7 +60,7 @@ class AscensoTrabajadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function ver($id)
+    public function show($id)
     {
         //
     }
@@ -64,7 +71,7 @@ class AscensoTrabajadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function editar($id)
+    public function edit($id)
     {
         //
     }
@@ -76,7 +83,7 @@ class AscensoTrabajadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function actualizar(Request $request, $id)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -87,7 +94,7 @@ class AscensoTrabajadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function eliminar($id)
+    public function destroy($id)
     {
         //
     }

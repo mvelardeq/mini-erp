@@ -1,7 +1,7 @@
 @php
 use Carbon\Carbon;
 @endphp
-@extends("dinamica.admin.trabajador.perfilTrabajador.loyout")
+@extends("dinamica.administracion.rrhh.trabajador.perfilTrabajador.loyout")
 @section('contenido2')
     <div class="card-header p-2">
         <ul class="nav nav-pills">

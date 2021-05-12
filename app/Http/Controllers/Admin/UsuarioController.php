@@ -8,9 +8,8 @@ use App\Models\Admin\Rol;
 use App\Models\Seguridad\Trabajador;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use phpDocumentor\Reflection\Types\Object_;
 
-class TrabajadorController extends Controller
+class UsuarioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +19,7 @@ class TrabajadorController extends Controller
     public function index()
     {
         $datas = Trabajador::with('roles:id,nombre', 'observaciones', 'periodos', 'ascensos')->orderBy('id')->get();
-        return view('dinamica.admin.trabajador.index', compact('datas'));
+        return view('dinamica.admin.usuario.index', compact('datas'));
     }
 
     /**
@@ -39,7 +38,7 @@ class TrabajadorController extends Controller
                 $supervisores->push($trabajador);
             }
         }
-        return view('dinamica.admin.trabajador.crear', compact('rols', 'supervisores'));
+        return view('dinamica.admin.usuario.crear', compact('rols', 'supervisores'));
     }
 
     /**
@@ -60,7 +59,7 @@ class TrabajadorController extends Controller
 
         // return dd($request->foto);
         $trabajador->roles()->sync($request->rol_id);
-        return redirect()->route('trabajador')->with('mensaje', 'El trabajador se actualizó correctamente');
+        return redirect()->route('usuario')->with('mensaje', 'El trabajador se actualizó correctamente');
     }
 
     /**
@@ -81,7 +80,7 @@ class TrabajadorController extends Controller
                 $supervisores->push($trabajador);
             }
         }
-        return view('dinamica.admin.trabajador.editar', compact('data', 'rols','supervisores'));
+        return view('dinamica.admin.usuario.editar', compact('data', 'rols','supervisores'));
     }
 
     /**
@@ -98,7 +97,7 @@ class TrabajadorController extends Controller
             $request->request->add(['foto' => $foto]);
         $trabajador->update(array_filter($request->all()));
         $trabajador->roles()->sync($request->rol_id);
-        return redirect()->route('trabajador')->with('mensaje', 'El trabajdor se actualizó correctamente');
+        return redirect()->route('usuario')->with('mensaje', 'El trabajdor se actualizó correctamente');
     }
 
     /**
