@@ -16,6 +16,8 @@ class CrearTablaServicioTercero extends Migration
         Schema::create('servicio_tercero', function (Blueprint $table) {
             $table->id();
             $table->string('nombre',45);
+            $table->string('cuenta',45);
+            $table->string('tipo_gasto',45);
             $table->string('dirigido_a',45);
             $table->timestamps();
         });

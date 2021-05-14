@@ -9,6 +9,6 @@ class Servicio_tercero extends Model
 {
     use HasFactory;
     protected $table="servicio_tercero";
-    protected $fillable = ['nombre', 'dirigido_a'];
+    protected $fillable = ['nombre','cuenta','tipo_gasto','dirigido_a'];
     protected $guarded = ['id'];
 }

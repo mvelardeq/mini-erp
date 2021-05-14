@@ -262,13 +262,21 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
 
     Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion', 'middleware' =>['auth','superadmin']], function () {
 
-        /*RUTAS DE CARGO*/
+        /*RUTAS DE SERVICIO TERCERO*/
         Route::get('servicio-tercero', 'ServicioTerceroController@index')->name('servicio_tercero');
         Route::get('servicio-tercero/crear', 'ServicioTerceroController@crear')->name('crear_servicio_tercero');
         Route::post('servicio-tercero', 'ServicioTerceroController@guardar')->name('guardar_servicio_tercero');
         Route::get('servicio-tercero/{id}/editar', 'ServicioTerceroController@editar')->name('editar_servicio_tercero');
         Route::put('servicio-tercero/{id}', 'ServicioTerceroController@actualizar')->name('actualizar_servicio_tercero');
         Route::delete('servicio-tercero/{id}', 'ServicioTerceroController@eliminar')->name('eliminar_servicio_tercero');
+
+        /*RUTAS DE PAGO SERVICIO*/
+        Route::get('pago-servicio', 'PagoServicioController@index')->name('pago_servicio');
+        Route::get('pago-servicio/crear', 'PagoServicioController@crear')->name('crear_pago_servicio');
+        Route::post('pago-servicio', 'PagoServicioController@guardar')->name('guardar_pago_servicio');
+        Route::get('pago-servicio/{id}/editar', 'PagoServicioController@editar')->name('editar_pago_servicio');
+        Route::put('pago-servicio/{id}', 'PagoServicioController@actualizar')->name('actualizar_pago_servicio');
+        Route::delete('pago-servicio/{id}', 'PagoServicioController@eliminar')->name('eliminar_pago_servicio');
 
     });
 

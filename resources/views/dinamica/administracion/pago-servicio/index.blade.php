@@ -1,6 +1,6 @@
 @extends("theme.$theme.layout")
 @section('titulo')
-Servicios tercero
+Pago servicio
 @endsection
 
 @section("script")
@@ -14,9 +14,9 @@ Servicios tercero
         @include('dinamica.includes.mensaje')
         <div class="card card-outline card-info">
             <div class="card-header">
-                <h3 class="card-title">Lista de servicios</h3>
+                <h3 class="card-title">Lista de pagos</h3>
                 <div class="card-tools">
-                    <a href="{{route('crear_servicio_tercero')}}" class="btn btn-block btn-success btn-sm">
+                    <a href="{{route('crear_pago_servicio')}}" class="btn btn-block btn-success btn-sm">
                         <i class="fa fa-fw fa-plus-circle"></i> Nuevo registro
                     </a>
                 </div>
@@ -26,26 +26,30 @@ Servicios tercero
                     <thead class="bg-dark">
                         <tr>
                             <th>Servicio</th>
-                            <th>Cuenta contable</th>
-                            <th>Tipo de gasto</th>
-                            <th>Dirigido a</th>
+                            <th>Pago</th>
+                            <th>Fecha pago</th>
+                            <th>Proveedor</th>
+                            <th>Ruc</th>
+                            <th>Observacion</th>
 
                             <th class="width70"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($servicios_tercero as $servicio_tercero)
+                        @foreach ($pagos_servicio as $pago_servicio)
                             <tr>
-                                <td>{{$servicio_tercero->nombre}}</td>
-                                <td>{{$servicio_tercero->cuenta}}</td>
-                                <td>{{$servicio_tercero->tipo_gasto}}</td>
-                                <td>{{$servicio_tercero->dirigido_a}}</td>
+                                <td>{{$pago_servicio->servicio_tercero->nombre}}-{{$pago_servicio->servicio_tercero->dirigido_a}}</td>
+                                <td>{{$pago_servicio->pago}}</td>
+                                <td>{{$pago_servicio->fecha_pago}}</td>
+                                <td>{{$pago_servicio->proveedor}}</td>
+                                <td>{{$pago_servicio->ruc_proveedor}}</td>
+                                <td>{{$pago_servicio->observacion}}</td>
 
                                 <td>
-                                    <a href="{{route('editar_servicio_tercero', ['id' => $servicio_tercero->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
+                                    <a href="{{route('editar_pago_servicio', ['id' => $pago_servicio->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    <form action="{{route('eliminar_servicio_tercero', ['id' => $servicio_tercero->id])}}" class="d-inline form-eliminar" method="POST">
+                                    <form action="{{route('eliminar_pago_servicio', ['id' => $pago_servicio->id])}}" class="d-inline form-eliminar" method="POST">
                                         @csrf @method("delete")
                                         <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Eliminar este registro">
                                             <i class="fa fa-fw fa-trash text-danger"></i>

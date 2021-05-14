@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Administracion;
 
 use App\Http\Controllers\Controller;
+use App\Models\Administracion\Pago_servicio;
+use App\Models\Administracion\Servicio_tercero;
 use Illuminate\Http\Request;
 
 class PagoServicioController extends Controller
@@ -14,7 +16,8 @@ class PagoServicioController extends Controller
      */
     public function index()
     {
-        //
+        $pagos_servicio = Pago_servicio::with('servicio_tercero')->orderBy('id')->get();
+        return view('dinamica.administracion.pago-servicio.index', compact('pagos_servicio'));
     }
 
     /**
@@ -22,9 +25,10 @@ class PagoServicioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function crear()
     {
-        //
+        $servicios_tercero = Servicio_tercero::orderBy('id')->get();
+        return view('dinamica.administracion.pago-servicio.crear', compact('servicios_tercero'));
     }
 
     /**
@@ -33,9 +37,10 @@ class PagoServicioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function guardar(Request $request)
     {
-        //
+        Pago_servicio::create($request->all());
+        return redirect('administracion/pago-servicio')->with('mensaje','Pago creado con éxito');
     }
 
     /**
@@ -55,9 +60,11 @@ class PagoServicioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editar($id)
     {
-        //
+        $servicios_tercero = Servicio_tercero::orderBy('id')->get();
+        $pago_servicio = Pago_servicio::findOrFail($id);
+        return view('dinamica.administracion.pago-servicio.editar',compact('pago_servicio','servicios_tercero'));
     }
 
     /**
@@ -67,9 +74,10 @@ class PagoServicioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function actualizar(Request $request, $id)
     {
-        //
+        Pago_servicio::findOrFail($id)->update($request->all());
+        return redirect('administracion/pago-servicio')->with('mensaje','Pago actualizado con éxito');
     }
 
     /**
@@ -78,8 +86,16 @@ class PagoServicioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function Eliminar(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            if (Pago_servicio::destroy($id)) {
+                return response()->json(['mensaje'=>'ok']);
+            }else {
+                return response()->json(['mensaje'=>'ng']);
+            }
+        }else {
+            abort(404);
+        }
     }
 }

@@ -37,8 +37,12 @@ class ServicioTerceroController extends Controller
      */
     public function guardar(Request $request)
     {
-        Servicio_tercero::create($request->all());
-        return redirect('administracion/servicio-tercero')->with('mensaje','Servicio creado con éxito');
+        if ($request->tipo_gasto=='Administrativo' || $request->tipo_gasto=='Ventas' || $request->tipo_gasto=='Producción') {
+            Servicio_tercero::create($request->all());
+            return redirect('administracion/servicio-tercero')->with('mensaje','Servicio creado con éxito');
+        }else {
+            abort(404);
+        }
     }
 
     /**
