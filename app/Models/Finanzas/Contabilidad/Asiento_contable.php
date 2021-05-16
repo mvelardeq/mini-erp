@@ -9,7 +9,7 @@ class Asiento_contable extends Model
 {
     use HasFactory;
     protected $table="asiento_contable";
-    protected $fillable = ['fecha', 'glosa','asientoable_id', 'asientoable_type'];
+    protected $fillable = ['fecha', 'glosa','asientoable_id','asientoable_type'];
     protected $guarded = ['id'];
 
     public function cuentas_contable(){

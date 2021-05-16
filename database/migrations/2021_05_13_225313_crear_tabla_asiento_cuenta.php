@@ -15,9 +15,9 @@ class CrearTablaAsientoCuenta extends Migration
     {
         Schema::create('asiento_cuenta', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('cuentacontable_id');
+            $table->unsignedBigInteger('cuenta_contable_id');
             $table->foreign('cuentacontable_id','fk_asientocuenta_cuentacontable')->references('id')->on('cuenta_contable')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('asientocontable_id');
+            $table->unsignedBigInteger('asiento_contable_id');
             $table->foreign('asientocontable_id','fk_asientocuenta_asientocontable')->references('id')->on('asiento_contable')->onDelete('restrict')->onUpdate('restrict');
             $table->double('debe',6,2)->nullable();
             $table->double('haber',6,2)->nullable();

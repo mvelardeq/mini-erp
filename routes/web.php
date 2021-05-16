@@ -280,6 +280,18 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
 
     });
 
+    Route::group(['prefix' => 'finanzas/contabilidad', 'namespace' => 'Finanzas\Contabilidad', 'middleware' =>['auth','superadmin']], function () {
+
+        /*RUTAS DE CUENTA CONTABLE*/
+        Route::get('cuenta-contable', 'CuentaContableController@index')->name('cuenta_contable');
+        Route::get('cuenta-contable/crear', 'CuentaContableController@crear')->name('crear_cuenta_contable');
+        Route::post('cuenta-contable', 'CuentaContableController@guardar')->name('guardar_cuenta_contable');
+        Route::get('cuenta-contable/{id}/editar', 'CuentaContableController@editar')->name('editar_cuenta_contable');
+        Route::put('cuenta-contable/{id}', 'CuentaContableController@actualizar')->name('actualizar_cuenta_contable');
+        Route::delete('cuenta-contable/{id}', 'CuentaContableController@eliminar')->name('eliminar_cuenta_contable');
+
+    });
+
 
 Route::get('/inicio', 'HomeController@index')->name('home');
 Route::post('/inicio', 'HomeController@guardar')->name('guardar_imagen');

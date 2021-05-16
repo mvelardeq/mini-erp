@@ -2,6 +2,7 @@
 
 namespace App\Models\Administracion;
 
+use App\Models\Finanzas\Contabilidad\Asiento_cuenta;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,5 +15,8 @@ class Pago_servicio extends Model
 
     public function servicio_tercero(){
         return $this->belongsTo(Servicio_tercero::class,'servicio_tercero_id');
+    }
+    public function asiento(){
+        return $this->morphOne(Asiento_cuenta::class,'asientoable');
     }
 }

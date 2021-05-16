@@ -20,7 +20,7 @@
                 <option value="">Seleccione el servicio</option>
                 @foreach($cuentas_contable as $cuenta_contable)
                 <option value="{{$cuenta_contable->id}}" {{($cuenta_contable->id==old('cuenta_contable_id',$pago_servicio->asiento->id ?? ''))?'selected':''}}>
-                    {{$cuenta_contable->nombre}}(*{{Str::substr($cuenta_contable->numero_cuenta,-4)}})
+                    {{$cuenta_contable->nombre}}(*{{Str::afterLast($cuenta_contable->codigo,'--')}})
                 </option>
                 @endforeach
             </select>

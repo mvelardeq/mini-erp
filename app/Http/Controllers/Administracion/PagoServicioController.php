@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Administracion;
 use App\Http\Controllers\Controller;
 use App\Models\Administracion\Pago_servicio;
 use App\Models\Administracion\Servicio_tercero;
+use App\Models\Finanzas\Contabilidad\Asiento_contable;
+use App\Models\Finanzas\Contabilidad\Asiento_cuenta;
+use App\Models\Finanzas\Contabilidad\Cuenta_contable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PagoServicioController extends Controller
 {
@@ -28,7 +32,8 @@ class PagoServicioController extends Controller
     public function crear()
     {
         $servicios_tercero = Servicio_tercero::orderBy('id')->get();
-        return view('dinamica.administracion.pago-servicio.crear', compact('servicios_tercero'));
+        $cuentas_contable = Cuenta_contable::where('responsable_id',Auth::user()->id)->orderBy('id')->get();
+        return view('dinamica.administracion.pago-servicio.crear', compact('servicios_tercero','cuentas_contable'));
     }
 
     /**
@@ -40,6 +45,32 @@ class PagoServicioController extends Controller
     public function guardar(Request $request)
     {
         Pago_servicio::create($request->all());
+        $idpago_servicio = Pago_servicio::orderBy('created_at','desc')->first()->id;
+        $servicio_tercero = Servicio_tercero::findOrFail($request->servicio_tercero_id);
+        Asiento_contable::create([
+            'fecha'=>$request->fecha_pago,
+            'glosa'=>'Pago por servicio de '.$servicio_tercero->nombre.' dirigido hacia '.$servicio_tercero->dirigido_a,
+            'asientoable_id'=>$idpago_servicio,
+            'asientoable_type'=>'App\Models\Administracion\Pago_servicio',
+        ]);
+        $idasientocontable = Asiento_contable::orderBy('created_at','desc')->first()->id;
+        Asiento_cuenta::create([
+            'asiento_contable_id'=>$idasientocontable,
+            'cuenta_contable_id'=>$request->cuenta_contable_id,
+            'haber'=>$request->pago,
+        ]);
+        $idcuentaservicio = Cuenta_contable::where('codigo',$servicio_tercero->cuenta)->value('id');
+
+        Asiento_cuenta::create([
+            'asiento_contable_id'=>$idasientocontable,
+            'cuenta_contable_id'=>$idcuentaservicio,
+            'debe'=>$request->pago,
+        ]);
+        $saldo1 = Cuenta_contable::findOrFail($request->cuenta_contable_id)->saldo;
+        Cuenta_contable::findOrFail($request->cuenta_contable_id)->update(['saldo'=>($saldo1-$request->pago)]);
+        $saldo2 = Cuenta_contable::findOrFail($idcuentaservicio)->saldo;
+        Cuenta_contable::findOrFail($idcuentaservicio)->update(['saldo'=>($saldo2+$request->pago)]);
+
         return redirect('administracion/pago-servicio')->with('mensaje','Pago creado con éxito');
     }
 
