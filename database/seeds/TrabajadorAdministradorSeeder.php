@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -22,6 +23,8 @@ class TrabajadorAdministradorSeeder extends Seeder
             'correo' => 'martin_v_q@hotmail.com',
             'dni' => '45325572',
             'foto' => 'JsxBDSBp3JYX7K.jpg',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
 
 

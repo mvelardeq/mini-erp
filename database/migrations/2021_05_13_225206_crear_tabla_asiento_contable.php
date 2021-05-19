@@ -17,7 +17,7 @@ class CrearTablaAsientoContable extends Migration
             $table->id();
             $table->date('fecha');
             $table->string('glosa', 100);
-            $table->unsignedBigInteger('asientoable_id',6);
+            $table->unsignedBigInteger('asientoable_id');
             $table->string('asientoable_type',45);
             $table->timestamps();
         });
