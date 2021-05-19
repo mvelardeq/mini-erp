@@ -1,7 +1,7 @@
 <?php
 
-use Database\Seeders\TablaMenuRolSeeder;
-use Database\Seeders\TablaMenuSeeder;
+// use Database\Seeders\TablaMenuRolSeeder;
+// use Database\Seeders\TablaMenuSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
