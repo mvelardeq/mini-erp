@@ -21,7 +21,7 @@ class TrabajadorAdministradorSeeder extends Seeder
             'password' => bcrypt('pass123'),
             'correo' => 'martin_v_q@hotmail.com',
             'dni' => '45325572',
-            'foto' => 'D0xeeZNeJogjv5.jpg',
+            'foto' => 'JsxBDSBp3JYX7K.jpg',
         ]);
 
 

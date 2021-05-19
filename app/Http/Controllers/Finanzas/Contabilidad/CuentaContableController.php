@@ -44,7 +44,7 @@ class CuentaContableController extends Controller
     public function guardar(Request $request)
     {
         Cuenta_contable::create($request->all());
-        
+
         return redirect('finanzas/contabilidad/cuenta-contable')->with('mensaje','Cuenta contable creada con éxito');
     }
 
@@ -65,9 +65,11 @@ class CuentaContableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editar($id)
     {
-        //
+        $cuenta_contable = Cuenta_contable::findOrFail($id);
+        $trabajadores = Trabajador::orderBy('id')->get();
+        return view('dinamica.finanzas.contabilidad.cuenta-contable.crear',compact('trabajadores','cuenta_contable'));
     }
 
     /**
