@@ -20,11 +20,11 @@ class DatabaseSeeder extends Seeder
             'trabajador',
             'trabajador_rol'
         ]);
-        $this->call(TablaMenuRolSeeder::class);
-        $this->call(TablaMenuSeeder::class);
         $this->call(TablaRolSeeder::class);
         $this->call(TablaPermisoSeeder::class);
         $this->call(TrabajadorAdministradorSeeder::class);
+        $this->call(TablaMenuSeeder::class);
+        $this->call(TablaMenuRolSeeder::class);
     }
     protected function truncateTablas(array $tablas){
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
