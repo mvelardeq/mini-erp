@@ -1,7 +1,6 @@
 <?php
 
-// use Database\Seeders\TablaMenuRolSeeder;
-// use Database\Seeders\TablaMenuSeeder;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -21,11 +20,11 @@ class DatabaseSeeder extends Seeder
             'trabajador',
             'trabajador_rol'
         ]);
+        $this->call(TablaMenuRolSeeder::class);
+        $this->call(TablaMenuSeeder::class);
         $this->call(TablaRolSeeder::class);
         $this->call(TablaPermisoSeeder::class);
         $this->call(TrabajadorAdministradorSeeder::class);
-        $this->call(TablaMenuRolSeeder::class);
-        $this->call(TablaMenuSeeder::class);
     }
     protected function truncateTablas(array $tablas){
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
