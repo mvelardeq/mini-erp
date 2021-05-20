@@ -245,7 +245,7 @@ class TablaMenuSeeder extends Seeder
             'nombre' => 'Productos',
             'url' => 'administracion/logistica/producto',
             'orden'=> 1,
-            'icono'=> 'bar-code',
+            'icono'=> 'barcode',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
@@ -376,7 +376,7 @@ class TablaMenuSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('menu')->insert([
-            'menu_id' => 39,
+            'menu_id' => 40,
             'nombre' => 'OTs',
             'url' => 'usuario/ot',
             'orden'=> 1,
@@ -385,7 +385,7 @@ class TablaMenuSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('menu')->insert([
-            'menu_id' => 39,
+            'menu_id' => 40,
             'nombre' => "Notificaciones",
             'url' => 'usuario/notificaciones',
             'orden'=> 2,

@@ -14,7 +14,7 @@
         <form action="{{route('actualizar_periodo_trabajador', ['id' => $trabajador->id])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off">
             @csrf
             <div class="card-body">
-                @include('dinamica.admin.periodo-trabajador.form2')
+                @include('dinamica.administracion.rrhh.periodo-trabajador.form2')
             </div>
             <div class="card-footer">
                 @include('dinamica.includes.boton-form-crear')

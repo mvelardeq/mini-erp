@@ -1,6 +1,6 @@
 <?php
 
-
+use Database\Seeders\TablaEstadoOtSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -25,6 +25,14 @@ class DatabaseSeeder extends Seeder
         $this->call(TrabajadorAdministradorSeeder::class);
         $this->call(TablaMenuSeeder::class);
         $this->call(TablaMenuRolSeeder::class);
+        $this->call(TablaCargoTrabajadorSeeder::class);
+        $this->call(TablaCategoriaProductoSeeder::class);
+        $this->call(TablaEstadoConceptoPagoSeeder::class);
+        $this->call(TablaEstadoFacturaSeeder::class);
+        $this->call(TablaEstadoGastoSeeder::class);
+        $this->call(TablaEstadoOtSeeder::class);
+        $this->call(TablaTipoGastoSeeder::class);
+        $this->call(TablaTipoProductoSeeder::class);
     }
     protected function truncateTablas(array $tablas){
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');

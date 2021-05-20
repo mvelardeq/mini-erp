@@ -1,4 +1,4 @@
-@extends("dinamica.admin.trabajador.perfilTrabajador.loyout")
+@extends("dinamica.administracion.rrhh.trabajador.perfilTrabajador.loyout")
 @section('titulo')
     Sistema Trabajador
 @endsection
@@ -14,7 +14,7 @@
     <form action="{{route('guardar_ascenso_trabajador', ['id' => $trabajador->id])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off">
         @csrf
         <div class="card-body">
-            @include('dinamica.admin.ascenso-trabajador.form')
+            @include('dinamica.administracion.rrhh.ascenso-trabajador.form')
         </div>
         <div class="card-footer">
             @include('dinamica.includes.boton-form-crear')

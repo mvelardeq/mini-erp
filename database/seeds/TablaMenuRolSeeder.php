@@ -178,5 +178,9 @@ class TablaMenuRolSeeder extends Seeder
             'menu_id' => 41,
             'rol_id' => 1,
         ]);
+        DB::table('menu_rol')->insert([
+            'menu_id' => 42,
+            'rol_id' => 1,
+        ]);
     }
 }

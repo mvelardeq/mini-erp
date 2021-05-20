@@ -31,7 +31,7 @@
             <form action="{{route('actualizar_permiso', ['id' => $data->id])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off">
                 @csrf @method("put")
                 <div class="card-body">
-                    @include('dinamica.admin.observacion-trabajador.form')
+                    @include('dinamica.administracion.rrhh.observacion-trabajador.form')
                 </div>
                 <div class="card-footer">
                         @include('dinamica.includes.boton-form-editar')

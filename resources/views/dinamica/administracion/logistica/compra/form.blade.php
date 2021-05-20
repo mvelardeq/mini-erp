@@ -1,4 +1,19 @@
+@if (isset($cuentas_contable))
+    <div class="form-group row">
+        <label for="cuenta_contable_id" class="col-lg-3 col-form-label requerido">Cuenta de cargo </label>
+        <div class="col-lg-8">
+            <select name="cuenta_contable_id" id="cuenta_contable_id" class="selectpicker form-control" data-live-search="true">
+                <option value="">Seleccione la cuenta</option>
+                @foreach($cuentas_contable as $cuenta_contable)
+                <option value="{{$cuenta_contable->id}}" {{($cuenta_contable->id==old('cuenta_contable_id',$compra->asiento->id ?? ''))?'selected':''}}>
+                    {{$cuenta_contable->nombre}}(*{{Str::substr($cuenta_contable->numero_cuenta,-4)}})
+                </option>
+                @endforeach
+            </select>
 
+        </div>
+    </div>
+@endif
 <div class="form-group row">
     <label for="proveedor" class="col-lg-3 col-form-label">Proveedor</label>
     <div class="col-lg-8">
