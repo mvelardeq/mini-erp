@@ -15,5 +15,8 @@ class Compra extends Model
     public function producto(){
         return $this->belongsToMany(Producto::class, 'item_compra')->withPivot('costo_con_igv', 'cantidad', 'capacidad', 'numero_serie', 'marca', 'modelo');
     }
+    public function  asiento(){
+        return $this->morphOne(Asiento_cuenta::class,'asientoable');
+    }
 
 }

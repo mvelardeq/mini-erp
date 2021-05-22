@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Administracion\Logistica\Compra;
 use App\Models\Administracion\Logistica\Item_compra;
 use App\Models\Administracion\Logistica\Perdida_existencia;
+use App\Models\Finanzas\Contabilidad\Asiento_contable;
+use App\Models\Finanzas\Contabilidad\Asiento_cuenta;
+use App\Models\Finanzas\Contabilidad\Cuenta_contable;
 use Illuminate\Http\Request;
 
 class PerdidaExistenciaController extends Controller
@@ -90,6 +93,39 @@ class PerdidaExistenciaController extends Controller
                         'motivo' => $request->motivo,
                         'cantidad' => $stock
                     ]);
+
+
+                    $idperdidaexistencia = Perdida_existencia::orderBy('created_at','desc')->first()->id;
+
+                        Asiento_contable::create([
+                            'fecha'=>$request->fecha,
+                            'glosa'=>'Pérdida o desuso de herramienta(s)',
+                            'asientoable_id'=>$idperdidaexistencia,
+                            'asientoable_type'=>'App\Models\Administracion\Logistica\Perdida_existencia'
+                        ]);
+                        $idasientocontable = Asiento_contable::orderBy('created_at','desc')->first()->id;
+                        $idcuentacontable = Cuenta_contable::where('codigo','3371')->value('id');
+                        $idcuentacontabledebe = Cuenta_contable::where('codigo','3647')->value('id');
+
+                        Asiento_cuenta::create([
+                            'asiento_contable_id'=>$idasientocontable,
+                            'cuenta_contable_id'=>$idcuentacontable,
+                            'haber'=>($stock)*($item->costo_con_igv)
+                        ]);
+                        $saldo1 = Cuenta_contable::findOrFail($idcuentacontable)->saldo;
+                        Cuenta_contable::findOrFail($idcuentacontable)->update(['saldo'=>($saldo1-($stock*$item->costo_con_igv))]);
+
+                        Asiento_cuenta::create([
+                            'asiento_contable_id'=>$idasientocontable,
+                            'cuenta_contable_id'=>$idcuentacontabledebe,
+                            'debe'=>($stock)*($item->costo_con_igv)
+                        ]);
+                        $saldo1 = Cuenta_contable::findOrFail($idcuentacontabledebe)->saldo;
+                        Cuenta_contable::findOrFail($idcuentacontabledebe)->update(['saldo'=>($saldo1+($stock*$item->costo_con_igv))]);
+
+
+
+
                 }else {
                     Item_compra::findOrFail($item->id)->update(['cantidad_perdida'=>$request->cantidad]);
                     Perdida_existencia::create([
@@ -98,6 +134,37 @@ class PerdidaExistenciaController extends Controller
                         'motivo' => $request->motivo,
                         'cantidad' => $request->cantidad
                     ]);
+
+
+                    $idperdidaexistencia = Perdida_existencia::orderBy('created_at','desc')->first()->id;
+
+                        Asiento_contable::create([
+                            'fecha'=>$request->fecha,
+                            'glosa'=>'Pérdida o desuso de herramienta(s)',
+                            'asientoable_id'=>$idperdidaexistencia,
+                            'asientoable_type'=>'App\Models\Administracion\Logistica\Perdida_existencia'
+                        ]);
+                        $idasientocontable = Asiento_contable::orderBy('created_at','desc')->first()->id;
+                        $idcuentacontable = Cuenta_contable::where('codigo','3371')->value('id');
+                        $idcuentacontabledebe = Cuenta_contable::where('codigo','3647')->value('id');
+
+                        Asiento_cuenta::create([
+                            'asiento_contable_id'=>$idasientocontable,
+                            'cuenta_contable_id'=>$idcuentacontable,
+                            'haber'=>($request->cantidad)*($item->costo_con_igv)
+                        ]);
+                        $saldo1 = Cuenta_contable::findOrFail($idcuentacontable)->saldo;
+                        Cuenta_contable::findOrFail($idcuentacontable)->update(['saldo'=>($saldo1-($stock*$item->costo_con_igv))]);
+
+                        Asiento_cuenta::create([
+                            'asiento_contable_id'=>$idasientocontable,
+                            'cuenta_contable_id'=>$idcuentacontabledebe,
+                            'debe'=>($request->cantidad)*($item->costo_con_igv)
+                        ]);
+                        $saldo1 = Cuenta_contable::findOrFail($idcuentacontabledebe)->saldo;
+                        Cuenta_contable::findOrFail($idcuentacontabledebe)->update(['saldo'=>($saldo1+($request->cantidad*$item->costo_con_igv))]);
+
+
                     break;
                 }
             }
@@ -118,6 +185,37 @@ class PerdidaExistenciaController extends Controller
                 'motivo' => $request->motivo,
                 'cantidad' => $request->cantidad,
             ]);
+
+            $item = Item_compra::findOrFail($request->item_compra_id);
+            $idperdidaexistencia = Perdida_existencia::orderBy('created_at','desc')->first()->id;
+
+            Cuenta_contable::create([
+                'fecha'=>$request->fecha,
+                'glosa'=>'Pérdida o desuso de equipo',
+                'asientoable_id'=>$idperdidaexistencia,
+                'asientoable_type'=>'App\Models\Administracion\Logistica\Perdida_existencia'
+            ]);
+            $idasientocontable = Asiento_contable::orderBy('created_at','desc')->first()->id;
+            $idcuentacontable = Cuenta_contable::where('codigo','3371')->value('id');
+            $idcuentacontabledebe = Cuenta_contable::where('codigo','3646')->value('id');
+
+            Asiento_cuenta::create([
+                'asiento_contable_id'=>$idasientocontable,
+                'cuenta_contable_id'=>$idcuentacontable,
+                'haber'=>($item->costo_con_igv)
+            ]);
+            $saldo1 = Cuenta_contable::findOrFail($idcuentacontable)->saldo;
+            Cuenta_contable::findOrFail($idcuentacontable)->update(['saldo'=>($saldo1-($item->costo_con_igv))]);
+
+            Asiento_cuenta::create([
+                'asiento_contable_id'=>$idasientocontable,
+                'cuenta_contable_id'=>$idcuentacontabledebe,
+                'debe'=>($item->costo_con_igv)
+            ]);
+            $saldo1 = Cuenta_contable::findOrFail($idcuentacontabledebe)->saldo;
+            Cuenta_contable::findOrFail($idcuentacontabledebe)->update(['saldo'=>($saldo1+($item->costo_con_igv))]);
+
+
             return redirect('administracion/logistica/perdida')->with('mensaje', 'Pérdida creada con éxito');
         }else {
             abort(404);

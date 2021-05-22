@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Factura extends Model
 {
     protected $table="factura";
-    protected $fillable = ['concepto_pago_id', 'estado_factura_id', 'numero', 'fecha_facturacion', 'obervacion'];
+    protected $fillable = ['concepto_pago_id', 'estado_factura_id', 'numero', 'fecha_facturacion', 'subtotal', 'total_con_igv', 'pago_sin_detraccion', 'obervacion'];
     protected $guarded = ['id'];
 
     public function concepto_pago()

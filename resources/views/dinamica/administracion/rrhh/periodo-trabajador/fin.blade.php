@@ -1,4 +1,4 @@
-@extends("dinamica.admin.trabajador.perfilTrabajador.loyout")
+@extends("dinamica.administracion.rrhh.trabajador.perfilTrabajador.loyout")
 @section('titulo')
     Sistema Trabajador
 @endsection

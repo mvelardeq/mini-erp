@@ -52,16 +52,16 @@ Facturas
                             <td>{{$factura->concepto_pago->concepto}}</td>
                             <td>{{Carbon::parse($factura->fecha_facturacion)->isoFormat('DD/MM /YYYY')}}</td>
                             <td align="right">
-                                <strong>{{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)/100,2) }}</strong> <br>
-                                {{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*0.18/100,2) }} <br>
-                                {{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*1.18/100,2) }}
+                                <strong>{{number_format($factura->subtotal,2)}}</strong> <br>
+                                {{number_format($factura->total_con_igv-$factura->subtotal,2)}} <br>
+                                {{number_format($factura->total_con_igv,2) }}
                             </td>
                             <td align="right">
-                                @if (($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*1.18/100 < 700)
-                                    <strong>{{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*1.18/100,2) }}</strong> <br>
+                                @if ($factura->pago_sin_detraccion < 700)
+                                    <strong>{{number_format($factura->total_con_igv,2) }}</strong> <br>
                                 @else
-                                    <strong>{{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*1.18*(1-$factura->concepto_pago->contrato->empresa->porcentaje_detraccion/100)/100,2) }}</strong> <br>
-                                    {{number_format(($factura->concepto_pago->contrato->costo_sin_igv) * ($factura->concepto_pago->porcentaje)*1.18*($factura->concepto_pago->contrato->empresa->porcentaje_detraccion/100)/100,2) }} <br>
+                                    <strong>{{number_format($factura->pago_sin_detraccion,2) }}</strong> <br>
+                                    {{number_format($factura->total_con_igv-$factura->pago_sin_detraccion,2) }} <br>
                                 @endif
                             </td>
                             {{-- <td>{{$factura->observacion}}</td> --}}

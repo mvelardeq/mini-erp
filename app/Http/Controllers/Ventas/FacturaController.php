@@ -51,10 +51,23 @@ class FacturaController extends Controller
      */
     public function guardar(Request $request)
     {
-        Factura::create($request->all());
-        $conceptopago_id = Factura::orderBy('created_at', 'desc')->first()->concepto_pago_id;
+        define("IGV",0.18);
+        $concepto_pago = Concepto_pago::with('contrato')->findOrFail($request->concepto_pago_id);
 
-        Concepto_pago::findOrFail($conceptopago_id)->update(['estado_conceptopago_id' => 2 ]);
+        $pago_sin_detraccion = $concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*(IGV+1)*(1-($concepto_pago->contrato->empresa->porcentaje_detraccion/100))/100;
+
+        Factura::create([
+            'concepto_pago_id'=>$request->concepto_pago_id,
+            'numero'=>$request->numero,
+            'fecha_facturacion'=>$request->fecha_facturacion,
+            'subtotal'=>$concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje/100,
+            'total_con_igv'=>$concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*(IGV+1)/100,
+            'pago_sin_detraccion'=>(($pago_sin_detraccion<700) ? $concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*(IGV+1)/100 : $pago_sin_detraccion),
+            'observacion'=>$request->observacion
+        ]);
+        // $conceptopago= Factura::orderBy('created_at', 'desc')->first();
+
+        Concepto_pago::findOrFail($request->concepto_pago_id)->update(['estado_conceptopago_id' => 2 ]);
         return redirect('ventas/factura')->with('mensaje', 'Factura creada con éxito');
 
     }

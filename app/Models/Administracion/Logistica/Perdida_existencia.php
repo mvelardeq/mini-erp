@@ -15,5 +15,8 @@ class Perdida_existencia extends Model
     public function item_compra(){
         return $this->belongsTo(Item_compra::class, 'item_compra_id');
     }
+    public function  asiento(){
+        return $this->morphOne(Asiento_cuenta::class,'asientoable');
+    }
 
 }
