@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Ventas;
 
 use App\Http\Controllers\Controller;
+use App\Models\Finanzas\Contabilidad\Asiento_contable;
+use App\Models\Finanzas\Contabilidad\Asiento_cuenta;
+use App\Models\Finanzas\Contabilidad\Cuenta_contable;
 use App\Models\Operaciones\Equipo;
 use App\Models\Ventas\Anular_factura;
 use App\Models\Ventas\Concepto_pago;
@@ -11,6 +14,7 @@ use App\Models\Ventas\Detraer_factura;
 use App\Models\Ventas\Estado_conceptopago;
 use App\Models\Ventas\Factura;
 use App\Models\Ventas\Pagar_factura;
+use CrearTablaAsientoCuenta;
 use Illuminate\Http\Request;
 
 class FacturaController extends Controller
@@ -53,7 +57,6 @@ class FacturaController extends Controller
     {
         define("IGV",0.18);
         $concepto_pago = Concepto_pago::with('contrato')->findOrFail($request->concepto_pago_id);
-
         $pago_sin_detraccion = $concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*(IGV+1)*(1-($concepto_pago->contrato->empresa->porcentaje_detraccion/100))/100;
 
         Factura::create([
@@ -65,7 +68,40 @@ class FacturaController extends Controller
             'pago_sin_detraccion'=>(($pago_sin_detraccion<700) ? $concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*(IGV+1)/100 : $pago_sin_detraccion),
             'observacion'=>$request->observacion
         ]);
-        // $conceptopago= Factura::orderBy('created_at', 'desc')->first();
+        $idfactura = Factura::orderBy('created_at','desc')->first()->id;
+
+        Asiento_contable::create([
+            'fecha'=>$request->fecha_facturacion,
+            'glosa'=>'facturación por servicios de la factura número: '.$request->numero.', por concepto de '.$concepto_pago->concepto.' de la obra '.$concepto_pago->contrato->equipo->obra->nombre,
+            'asientoable_id'=>$idfactura,
+            'asientoable_type'=>'App\Models\Ventas\Factura'
+        ]);
+        $asiento_contable_id = Asiento_contable::orderBy('created_at','desc')->first()->id;
+        $cuentas_por_cobrar = Cuenta_contable::where('codigo','1212')->value('id');
+        $igv_por_pagar = Cuenta_contable::where('codigo','40111')->value('id');
+        $ingresos_servicios_tercero = Cuenta_contable::where('codigo','70321')->value('id');
+        Asiento_cuenta::create([
+            'cuenta_contable_id'=>$cuentas_por_cobrar,
+            'asiento_contable_id'=>$asiento_contable_id,
+            'debe'=>$concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*(IGV+1)/100,
+        ]);
+        Asiento_cuenta::create([
+            'cuenta_contable_id'=>$igv_por_pagar,
+            'asiento_contable_id'=>$asiento_contable_id,
+            'haber'=>$concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*IGV/100,
+        ]);
+        Asiento_cuenta::create([
+            'cuenta_contable_id'=>$ingresos_servicios_tercero,
+            'asiento_contable_id'=>$asiento_contable_id,
+            'haber'=>$concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje/100,
+        ]);
+
+        $sueldo1 = Cuenta_contable::findOrFail($cuentas_por_cobrar)->saldo;
+        Cuenta_contable::findOrFail($cuentas_por_cobrar)->update(['saldo'=>$sueldo1+$concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*(IGV+1)/100]);
+        $sueldo2 = Cuenta_contable::findOrFail($igv_por_pagar)->saldo;
+        Cuenta_contable::findOrFail($igv_por_pagar)->update(['saldo'=>$sueldo2+$concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*IGV/100]);
+        $sueldo3 = Cuenta_contable::findOrFail($ingresos_servicios_tercero)->saldo;
+        Cuenta_contable::findOrFail($ingresos_servicios_tercero)->update(['saldo'=>$sueldo3+$concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje/100]);
 
         Concepto_pago::findOrFail($request->concepto_pago_id)->update(['estado_conceptopago_id' => 2 ]);
         return redirect('ventas/factura')->with('mensaje', 'Factura creada con éxito');
@@ -228,6 +264,36 @@ class FacturaController extends Controller
         $fecha_pago = $_POST['fecha_pago'];
         Pagar_factura::create(['factura_id'=>$id, 'pago'=>$pago, 'fecha'=>$fecha_pago]);
         Factura::findOrFail($id)->update(['estado_factura_id' => 3]);
+        $factura = Factura::findOrFail($id);
+        $pagar_factura_id = Pagar_factura::orderBy('created_at','desc')->first()->id;
+
+        Asiento_contable::create([
+            'fecha'=>$fecha_pago,
+            'glosa'=>'Pago de la factura número '.$factura->numero,
+            'asientoable_id'=>$pagar_factura_id,
+            'asientoable_type'=>'App\Models\Ventas\Pagar_factura'
+        ]);
+        $asiento_contable_id = Asiento_contable::orderBy('created_at','desc')->first()->id;
+        $cuenta_corriente_principal = Cuenta_contable::where('codigo','10411')->value('id');
+        $cuenta_por_cobrar = Cuenta_contable::where('codigo','1212')->value('id');
+
+        Asiento_cuenta::create([
+            'cuenta_contable_id'=>$cuenta_corriente_principal,
+            'asiento_contable_id'=>$asiento_contable_id,
+            'debe'=>$pago
+        ]);
+        Asiento_cuenta::create([
+            'cuenta_contable_id'=>$cuenta_por_cobrar,
+            'asiento_contable_id'=>$asiento_contable_id,
+            'haber'=>$pago
+        ]);
+
+        $sueldo1 = Cuenta_contable::findOrFail($cuenta_corriente_principal)->saldo;
+        Cuenta_contable::findOrFail($cuenta_corriente_principal)->update(['saldo'=>$sueldo1+$pago]);
+        $sueldo2 = Cuenta_contable::findOrFail($cuenta_por_cobrar)->saldo;
+        Cuenta_contable::findOrFail($cuenta_por_cobrar)->update(['saldo'=>$sueldo2-$pago]);
+
+
         return response()->json(['mensaje'=>'ok','id'=>$id, 'pago'=>$pago,'fecha_pago'=>$fecha_pago]);
     }
 
@@ -237,7 +303,6 @@ class FacturaController extends Controller
         $pago_detraccion = $_POST['pago_detraccion'];
         $fecha_detraccion = $_POST['fecha_detraccion'];
         Detraer_factura::create(['factura_id'=>$id, 'pago_detraccion'=>$pago_detraccion, 'fecha'=>$fecha_detraccion]);
-        // Factura::findOrFail($id)->update(['pago_detraccion'=>$pago_detraccion, 'fecha_detraccion'=>$fecha_detraccion]);
         return response()->json(['mensaje'=>'ok','id'=>$id, 'pago_detraccion'=>$pago_detraccion]);
     }
 

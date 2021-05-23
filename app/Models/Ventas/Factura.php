@@ -30,4 +30,7 @@ class Factura extends Model
     {
         return $this->hasOne(Anular_factura::class);
     }
+    public function  asiento(){
+        return $this->morphOne(Asiento_cuenta::class,'asientoable');
+    }
 }

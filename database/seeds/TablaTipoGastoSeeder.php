@@ -12,13 +12,13 @@ class TablaTipoGastoSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categoria_producto')->insert([
+        DB::table('tipo_gasto')->insert([
             'nombre' => 'Movilidad',
         ]);
-        DB::table('categoria_producto')->insert([
+        DB::table('tipo_gasto')->insert([
             'nombre' => 'Cena',
         ]);
-        DB::table('categoria_producto')->insert([
+        DB::table('tipo_gasto')->insert([
             'nombre' => 'Movilidad y cena',
         ]);
     }
