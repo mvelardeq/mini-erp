@@ -19,7 +19,7 @@ class CrearTablaAscensoTrabajador extends Migration
             $table->foreign('trabajador_id','fk_ascensotrabajador_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('cargo_trabajador_id');
             $table->foreign('cargo_trabajador_id','fk_ascensotrabajador_cargotrabajador')->references('id')->on('cargo_trabajador')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('sueldo');
+            $table->double('sueldo',5,2);
             $table->date('fecha',12);
             $table->string('observacion',400)->nullable();
             $table->timestamps();

@@ -21,12 +21,14 @@ class CrearTablaItemCompra extends Migration
             $table->foreign('producto_id','fk_productoitemcompra_producto')->references('id')->on('producto')->onDelete('restrict')->onUpdate('restrict');
             $table->double('costo_con_igv',5,2);
             $table->double('cantidad',4,2);
-            $table->double('cantidad_perdida',4,2);
-            $table->string('capacidad', 45);
+            $table->double('cantidad_perdida',4,2)->default(0);
+            $table->string('capacidad', 45)->nullable();
             $table->string('numero_serie',12)->nullable();
             $table->string('marca',45)->nullable();
             $table->string('modelo',45)->nullable();
             $table->timestamps();
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_spanish_ci';
         });
     }
 

@@ -19,9 +19,11 @@ class CrearTablaAsientoCuenta extends Migration
             $table->foreign('cuenta_contable_id','fk_asientocuenta_cuentacontable')->references('id')->on('cuenta_contable')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('asiento_contable_id');
             $table->foreign('asiento_contable_id','fk_asientocuenta_asientocontable')->references('id')->on('asiento_contable')->onDelete('restrict')->onUpdate('restrict');
-            $table->double('debe',6,2)->nullable();
-            $table->double('haber',6,2)->nullable();
+            $table->double('debe',6,2)->default(0);
+            $table->double('haber',6,2)->default(0);
             $table->timestamps();
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_spanish_ci';
         });
     }
 

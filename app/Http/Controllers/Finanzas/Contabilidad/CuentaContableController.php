@@ -19,7 +19,7 @@ class CuentaContableController extends Controller
      */
     public function index()
     {
-        $cuentas_contable = Cuenta_contable::orderBy('id')->get();
+        $cuentas_contable = Cuenta_contable::orderBy('codigo','asc')->get();
         $trabajadores = Trabajador::orderBy('id')->get();
         return view('dinamica.finanzas.contabilidad.cuenta-contable.index',compact('cuentas_contable','trabajadores'));
     }

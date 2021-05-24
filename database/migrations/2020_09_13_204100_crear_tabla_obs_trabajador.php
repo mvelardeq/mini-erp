@@ -20,7 +20,7 @@ class CrearTablaObsTrabajador extends Migration
             $table->string('titulo_observacion',80);
             $table->string('observacion',300);
             $table->date('fecha',12);
-            $table->string('foto',20)->nullable();
+            $table->string('foto',30)->nullable();
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

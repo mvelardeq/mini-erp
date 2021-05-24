@@ -22,6 +22,8 @@ class CrearTablaCuentaContable extends Migration
             $table->string('numero_cuenta',45)->nullable();
             $table->string('responsable_id',45)->nullable();
             $table->timestamps();
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_spanish_ci';
         });
     }
 

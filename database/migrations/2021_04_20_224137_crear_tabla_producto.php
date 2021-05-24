@@ -21,8 +21,10 @@ class CrearTablaProducto extends Migration
             $table->foreign('tipo_producto_id','fk_tipoproducto_tipo')->references('id')->on('tipo_producto')->onDelete('restrict')->onUpdate('restrict');
             $table->string('descripcion',80);
             $table->string('unidades',15);
-            $table->string('foto',28);
+            $table->string('foto',28)->nullable();
             $table->timestamps();
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_spanish_ci';
         });
     }
 

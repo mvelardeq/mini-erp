@@ -18,8 +18,10 @@ class CrearTablaServicioTercero extends Migration
             $table->string('nombre',45);
             $table->string('cuenta',45);
             $table->string('tipo_gasto',45);
-            $table->string('dirigido_a',45);
+            $table->string('dirigido_a',90);
             $table->timestamps();
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_spanish_ci';
         });
     }
 

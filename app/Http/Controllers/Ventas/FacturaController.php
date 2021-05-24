@@ -265,6 +265,7 @@ class FacturaController extends Controller
         Pagar_factura::create(['factura_id'=>$id, 'pago'=>$pago, 'fecha'=>$fecha_pago]);
         Factura::findOrFail($id)->update(['estado_factura_id' => 3]);
         $factura = Factura::findOrFail($id);
+        Concepto_pago::findOrFail($factura->concepto_pago_id)->update(['estado_conceptopago_id'=>3]);
         $pagar_factura_id = Pagar_factura::orderBy('created_at','desc')->first()->id;
 
         Asiento_contable::create([
@@ -303,6 +304,34 @@ class FacturaController extends Controller
         $pago_detraccion = $_POST['pago_detraccion'];
         $fecha_detraccion = $_POST['fecha_detraccion'];
         Detraer_factura::create(['factura_id'=>$id, 'pago_detraccion'=>$pago_detraccion, 'fecha'=>$fecha_detraccion]);
+
+        $detraccion_id = Detraer_factura::orderBy('created_at','desc')->first()->id;
+        $factura = Factura::findOrFail($id);
+        Asiento_contable::create([
+            'fecha'=>$fecha_detraccion,
+            'glosa'=>'pago de detracción de la factura N° '.$factura->numero,
+            'asientoable_id'=>$detraccion_id,
+            'asientoable_type'=>'App\Models\Ventas\Detraer_factura'
+        ]);
+        $asiento_contable_id = Asiento_contable::orderBy('created_at','desc')->first()->id;
+        $cuentas_fines_especificos = Cuenta_contable::where('codigo','1042')->value('id');
+        $cuentas_por_cobrar = Cuenta_contable::where('codigo','1212')->value('id');
+
+        Asiento_cuenta::create([
+            'cuenta_contable_id'=>$cuentas_fines_especificos,
+            'asiento_contable_id'=>$asiento_contable_id,
+            'debe'=>$pago_detraccion
+        ]);
+        Asiento_cuenta::create([
+            'cuenta_contable_id'=>$cuentas_por_cobrar,
+            'asiento_contable_id'=>$asiento_contable_id,
+            'haber'=>$pago_detraccion
+        ]);
+        $saldo1 = Cuenta_contable::findOrFail($cuentas_fines_especificos)->saldo;
+        Cuenta_contable::findOrFail($cuentas_fines_especificos)->update(['saldo'=>$saldo1 + $pago_detraccion]);
+        $saldo2 = Cuenta_contable::findOrFail($cuentas_por_cobrar)->saldo;
+        Cuenta_contable::findOrFail($cuentas_por_cobrar)->update(['saldo'=>$saldo2 - $pago_detraccion]);
+
         return response()->json(['mensaje'=>'ok','id'=>$id, 'pago_detraccion'=>$pago_detraccion]);
     }
 

@@ -20,6 +20,8 @@ class CrearTablaQuincena extends Migration
             $table->string('periodo',45);
             $table->double('pago',5,2);
             $table->timestamps();
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_spanish_ci';
         });
     }
 

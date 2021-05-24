@@ -20,6 +20,8 @@ class CrearTablaDetraerFactura extends Migration
             $table->double('pago_detraccion',6,2);
             $table->date('fecha');
             $table->timestamps();
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_spanish_ci';
         });
     }
 

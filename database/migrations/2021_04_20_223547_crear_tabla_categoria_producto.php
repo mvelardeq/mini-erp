@@ -16,6 +16,8 @@ class CrearTablaCategoriaProducto extends Migration
         Schema::create('categoria_producto', function (Blueprint $table) {
             $table->id();
             $table->string('nombre',45);
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_spanish_ci';
         });
     }
 

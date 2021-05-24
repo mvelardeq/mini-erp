@@ -22,10 +22,10 @@ class CrearTablaContrato extends Migration
             $table->unsignedBigInteger('equipo_id');
             $table->foreign('equipo_id','fk_contrato_equipo')->references('id')->on('equipo')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('horas');
-            $table->unsignedBigInteger('costo_sin_igv');
+            $table->double('costo_sin_igv',6,2);
             $table->date('fecha_inicio',12);
             $table->date('fecha_fin',12)->nullable();
-            $table->string('estado',20)->default('abierto');
+            $table->string('estado',20)->default('Abierto');
             $table->string('observacion',300)->nullable();
             $table->string('numero_oc',15)->nullable();
             $table->string('oc',100)->nullable();

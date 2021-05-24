@@ -19,6 +19,8 @@ class CrearTablaAdelantoTrabajador extends Migration
             $table->foreign('ot_id','fk_adelantotrabajadorot_ot')->references('id')->on('ot')->onDelete('restrict')->onUpdate('restrict');
             $table->double('pago',5,2);
             $table->timestamps();
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_spanish_ci';
         });
     }
 

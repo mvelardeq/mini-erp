@@ -16,10 +16,12 @@ class CrearTablaAsientoContable extends Migration
         Schema::create('asiento_contable', function (Blueprint $table) {
             $table->id();
             $table->date('fecha');
-            $table->string('glosa', 100);
+            $table->string('glosa', 200);
             $table->unsignedBigInteger('asientoable_id');
-            $table->string('asientoable_type',45);
+            $table->string('asientoable_type',80);
             $table->timestamps();
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_spanish_ci';
         });
     }
 
