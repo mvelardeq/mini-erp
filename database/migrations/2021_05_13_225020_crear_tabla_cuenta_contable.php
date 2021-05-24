@@ -16,7 +16,7 @@ class CrearTablaCuentaContable extends Migration
         Schema::create('cuenta_contable', function (Blueprint $table) {
             $table->id();
             $table->string('codigo',8);
-            $table->string('nombre',45);
+            $table->string('nombre',240);
             $table->double('saldo',8,2)->default(0);
             $table->string('banco',90)->nullable();
             $table->string('numero_cuenta',45)->nullable();
