@@ -64,20 +64,6 @@ class TablaCuentaContableSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('cuenta_contable')->insert([
-            'codigo' => '1042',
-            'nombre' => 'Cuenta corriente para fines específicos',
-            'saldo' => 0,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        ]);
-        DB::table('cuenta_contable')->insert([
-            'codigo' => '1042',
-            'nombre' => 'Cuenta corriente para fines específicos',
-            'saldo' => 0,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        ]);
-        DB::table('cuenta_contable')->insert([
             'codigo' => '40111',
             'nombre' => 'IGV-Cuenta propia',
             'saldo' => 0,
