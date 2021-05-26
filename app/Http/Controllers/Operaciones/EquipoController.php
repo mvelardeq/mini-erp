@@ -86,7 +86,7 @@ class EquipoController extends Controller
     {
         // Equipo::findOrFail($id)->update($request->all());
         $equipo = Equipo::findOrFail($id);
-        if ($plane = Equipo::setFoto($request->plano_up, $equipo->plano))
+        if ($plane = Equipo::setPlane($request->plano_up, $equipo->plano))
             $request->request->add(['plano' => $plane]);
         $equipo->update(array_filter($request->all()));
         return redirect('operaciones/equipo')->with('mensaje', 'Equipo actualizado con éxito');
@@ -113,5 +113,19 @@ class EquipoController extends Controller
         } else {
             abort(404);
         }
+    }
+
+
+
+    public function subir(Request $request, $id)
+    {
+        // $plano = $_POST['plano'];
+        $equipo = Equipo::findOrFail($id);
+        $plane = Equipo::setPlane($request->planoModal, $equipo->plano);
+        Equipo::findOrFail($id)->update(['plano'=>$plane]);
+
+        // return dd($request->planoModal);
+
+        return response()->json(['mensaje'=>'ok','id'=>$id, 'plano'=>$plane]);
     }
 }

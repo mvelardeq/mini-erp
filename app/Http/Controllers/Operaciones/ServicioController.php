@@ -17,6 +17,8 @@ class ServicioController extends Controller
     public function index()
     {
         $servicios= Servicio::with('actividades')->orderBy('id')->get();
+
+        // return dd($servicios->actividades->nombre);
         return view('dinamica.operaciones.servicio.index',compact('servicios'));
     }
 
@@ -326,7 +328,7 @@ class ServicioController extends Controller
         if (isset($actividades[6])) {
             if (isset($request->actividad7)) {
                 Actividad::findOrFail($actividades[6])->update([
-                    'nombre' => $request->actividad1,
+                    'nombre' => $request->actividad7,
                 ]);
             } else {
                 // Actividad::where('servicio_id',$id)->delete()

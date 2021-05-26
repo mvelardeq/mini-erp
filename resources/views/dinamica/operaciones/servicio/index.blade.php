@@ -25,6 +25,7 @@ Servicios
                     <thead class="bg-dark">
                         <tr>
                             <th>Nombre</th>
+                            <th class="w-50">Actividades</th>
                             <th>Observación</th>
                             <th class="width70"></th>
                         </tr>
@@ -33,6 +34,14 @@ Servicios
                         @foreach ($servicios as $servicio)
                         <tr>
                             <td><a href="#">{{$servicio->nombre}}</a></td>
+                            {{-- <td>{{$servicio->actividades[0]['nombre']}}</td> --}}
+                            <td>
+                                <ul class="pl-3">
+                                    @foreach ($servicio->actividades as $actividad)
+                                        <li>{{$actividad->nombre}}</li>
+                                    @endforeach
+                                </ul>
+                            </td>
                             <td>{{$servicio->observacion}}</td>
 
                             <td>

@@ -95,6 +95,7 @@ Route::post('equipo', 'EquipoController@guardar')->name('guardar_equipo');
 Route::get('equipo/{id}/editar', 'EquipoController@editar')->name('editar_equipo');
 Route::put('equipo/{id}', 'EquipoController@actualizar')->name('actualizar_equipo');
 Route::delete('equipo/{id}', 'EquipoController@eliminar')->name('eliminar_equipo');
+Route::post('equipo/subir/{id}', 'EquipoController@subir')->name('subir_equipo');
 // Route::get('trabajador/{id}/perfil', 'TrabajadorPerfilController@index')->name('trabajador_perfil');
 
 /*RUTAS DE EMPRESA*/

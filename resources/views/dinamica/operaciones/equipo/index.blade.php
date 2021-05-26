@@ -5,6 +5,7 @@ Equipos
 
 @section("script")
 <script src="{{asset("assets/pages/scripts/admin/index.js")}}" type="text/javascript"></script>
+<script src="{{asset("assets/pages/scripts/operaciones/equipo/index.js")}}" type="text/javascript"></script>
 @endsection
 
 @section('contenido')
@@ -52,9 +53,16 @@ Equipos
                             <td>{{$equipo->modelo}}</td>
                             <td>{{$equipo->accesos}}</td>
                             <td>{{$equipo->cuarto_maquina}}</td>
-                            <td>
+                            <td id="plano{{$equipo->id}}">
                                 @if (isset($equipo->plano))
-                                    <a href="{{Storage::disk('s3')->url('files/planes/'.$equipo->plano)}}"><i class="fas fa-file-pdf text-danger"></i></a>
+                                    <a href="{{Storage::disk('s3')->url('files/planes/'.$equipo->plano)}}" target="_blank"><i class="fas fa-file-pdf text-danger"></i></a>
+                                @else
+                                    <form class="d-inline subir-plano" data-id="{{$equipo->id}}">
+                                        @csrf
+                                        <button type="submit" class="btn-accion-tabla eliminar tooltipsC" data-toggle="modal" title="Subir plano">
+                                            <i class="fas fa-plus-circle text-success"></i>
+                                        </button>
+                                    </form>
                                 @endif
                             </td>
 
@@ -76,6 +84,41 @@ Equipos
                 </table>
             </div>
         </div>
+
+
+        {{-- Modal Subir plano --}}
+        <div class="modal fade" id="modalSubir" tabindex="-1" role="dialog" aria-labelledby="modalSubirLabel" aria-hidden="true">
+
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="modalSubirLabel">Subir plano</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <form class="form-subir" autocomplete="off" enctype="multipart/form-data" id="subirid">
+                        @csrf
+                        <div class="modal-body">
+                            <input type="hidden" id = "modalSubirid" name="id">
+                            <div class="form-group row">
+                                <label for="planoModal" class="col-lg-3 col-form-label">Cantidad pagada</label>
+                                <div class="col-lg-8">
+                                    <input type="file" name="planoModal" id="planoModal" data-initial-preview="{{isset($equipo->plano) ? Storage::disk('s3')->url("files/planes/$equipo->plano") : "http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=Plano"}}" accept="application/pdf"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button id="pagarfactura" type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
 </div>
 @endsection
