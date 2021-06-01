@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Ventas;
 
-
 use App\Http\Controllers\Controller;
 use App\Models\Ventas\Cotizacion;
 use App\Models\Operaciones\Equipo;
 use App\Models\Ventas\Linea_cotizacion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class CotizacionController extends Controller
 {
@@ -19,7 +19,14 @@ class CotizacionController extends Controller
     public function index()
     {
         $cotizaciones= Cotizacion::with('lineas_cotizacion','equipo')->orderBy('id')->get();
+
+        // $html =view('dinamica.ventas.cotizacion.pdf', compact('cotizaciones'));
         return view('dinamica.ventas.cotizacion.index',compact('cotizaciones'));
+
+        // $pdf = App::make('dompdf.wrapper');
+        // $pdf->loadView('dinamica.ventas.cotizacion.pdf3',compact('cotizaciones'));
+        // return $pdf->stream();
+
     }
 
     /**

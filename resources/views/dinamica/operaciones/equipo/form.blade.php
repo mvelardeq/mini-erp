@@ -19,6 +19,20 @@
     </div>
 </div>
 <div class="form-group row">
+    <label for="empresa_id" class="col-lg-3 col-form-label requerido">Empresa</label>
+    <div class="col-lg-8">
+        <select name="empresa_id" id="empresa_id" class="form-control" data-live-search="true">
+            <option value="">Seleccione la empresa</option>
+            @foreach($empresas as $empresa)
+        <option value="{{$empresa->id}}" {{($empresa->id==old('empresa_id',$equipo->empresa->id ?? ''))?'selected':''}}>
+                {{$empresa->razon_social}}
+            </option>
+            @endforeach
+        </select>
+
+    </div>
+</div>
+<div class="form-group row">
     <label for="oe" class="col-lg-3 col-form-label requerido">OE</label>
     <div class="col-lg-8">
         <input type="text" name="oe" id="oe" class="form-control" value="{{old('oe', $equipo->oe ?? '')}}" required/>

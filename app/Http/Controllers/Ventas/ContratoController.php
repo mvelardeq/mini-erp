@@ -21,9 +21,9 @@ class ContratoController extends Controller
     {
         $contratos= Contrato::with('conceptos_pago','equipo', 'servicio')->orderBy('id')->get();
         $servicios = Servicio::orderBy('id')->get();
-        $empresas = Empresa::orderBy('id')->get();
+        // $empresas = Empresa::orderBy('id')->get();
         $equipos = Equipo::with('obra')->orderBy('id')->get();
-        return view('dinamica.ventas.contrato.index',compact('contratos', 'servicios', 'empresas', 'equipos'));
+        return view('dinamica.ventas.contrato.index',compact('contratos', 'servicios', 'equipos'));
     }
 
     /**
@@ -36,9 +36,9 @@ class ContratoController extends Controller
         $contratos= Contrato::with('conceptos_pago','equipo')->orderBy('id')->get();
         $conceptos_pago= Concepto_pago::orderBy('id')->get();
         $servicios = Servicio::orderBy('id')->get();
-        $empresas = Empresa::orderBy('id')->get();
+        // $empresas = Empresa::orderBy('id')->get();
         $equipos= Equipo::orderBy('id')->get();
-        return  view('dinamica.ventas.contrato.crear',compact('contratos', 'conceptos_pago', 'servicios', 'empresas', 'equipos'));
+        return  view('dinamica.ventas.contrato.crear',compact('contratos', 'conceptos_pago', 'servicios', 'equipos'));
     }
 
     /**
@@ -51,7 +51,6 @@ class ContratoController extends Controller
     {
         Contrato::create([
             'servicio_id' => $request->servicio_id,
-            'empresa_id' => $request->empresa_id,
             'equipo_id' => $request->equipo_id,
             'horas' => $request->horas,
             'costo_sin_igv' => $request->costo_sin_igv,
@@ -138,9 +137,9 @@ class ContratoController extends Controller
         $conceptos = Concepto_pago::orderBy('id')->where('contrato_id', $id)->pluck('concepto')->toArray();
         $porcentajes = Concepto_pago::orderBy('id')->where('contrato_id', $id)->pluck('porcentaje')->toArray();
         $servicios = Servicio::orderBy('id')->get();
-        $empresas = Empresa::orderBy('id')->get();
+        // $empresas = Empresa::orderBy('id')->get();
         $equipos= Equipo::orderBy('id')->get();
-        return view('dinamica.ventas.contrato.editar', compact('contrato','conceptos', 'porcentajes', 'servicios', 'empresas', 'equipos'));
+        return view('dinamica.ventas.contrato.editar', compact('contrato','conceptos', 'porcentajes', 'servicios', 'equipos'));
     }
 
     /**
@@ -154,7 +153,6 @@ class ContratoController extends Controller
     {
         Contrato::findOrFail($id)->update([
             'servicio_id' => $request->servicio_id,
-            'empresa_id' => $request->empresa_id,
             'equipo_id' => $request->equipo_id,
             'horas' => $request->horas,
             'costo_sin_igv' => $request->costo_sin_igv,

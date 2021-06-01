@@ -2,6 +2,8 @@
 @section('contenido')
 <div class="row">
     <div class="col-lg-12">
+
+        {{-- <h2>Hola a todos</h2> --}}
         @include('dinamica.includes.mensaje')
 
 

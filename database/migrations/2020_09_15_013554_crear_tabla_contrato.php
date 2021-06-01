@@ -17,8 +17,6 @@ class CrearTablaContrato extends Migration
             $table->id();
             $table->unsignedBigInteger('servicio_id');
             $table->foreign('servicio_id','fk_contrato_servicio')->references('id')->on('servicio')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id','fk_contrato_empresa')->references('id')->on('empresa')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('equipo_id');
             $table->foreign('equipo_id','fk_contrato_equipo')->references('id')->on('equipo')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('horas');

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Dompdf\Adapter\PDFLib;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
+
+use Dompdf\Dompdf;
+
 
 class HomeController extends Controller
 {
@@ -26,6 +30,13 @@ class HomeController extends Controller
     public function index()
     {
         return view('dinamica.inicio');
+
+        // $dompdf = new Dompdf();
+        // $dompdf->loadHtml(view('dinamica.inicio'));
+        // $dompdf->setPaper('A4', 'landscape');
+        // $dompdf->render();
+        // return $dompdf->stream('inicio.pdf');
+
     }
     public function guardar(Request $request)
     {

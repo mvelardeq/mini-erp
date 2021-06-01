@@ -102,7 +102,7 @@ Equipos
                         <div class="modal-body">
                             <input type="hidden" id = "modalSubirid" name="id">
                             <div class="form-group row">
-                                <label for="planoModal" class="col-lg-3 col-form-label">Cantidad pagada</label>
+                                <label for="planoModal" class="col-lg-3 col-form-label">Seleccionar archivo</label>
                                 <div class="col-lg-8">
                                     <input type="file" name="planoModal" id="planoModal" data-initial-preview="{{isset($equipo->plano) ? Storage::disk('s3')->url("files/planes/$equipo->plano") : "http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=Plano"}}" accept="application/pdf"/>
                                 </div>

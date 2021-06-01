@@ -9,12 +9,16 @@ use Illuminate\Support\Facades\Storage;
 class Equipo extends Model
 {
     protected $table="equipo";
-    protected $fillable = ['obra_id', 'oe', 'velocidad', 'paradas', 'carga', 'marca', 'modelo', 'accesos', 'cuarto_maquina', 'numero_equipo', 'plano'];
+    protected $fillable = ['obra_id', 'empresa_id', 'oe', 'velocidad', 'paradas', 'carga', 'marca', 'modelo', 'accesos', 'cuarto_maquina', 'numero_equipo', 'plano'];
     protected $guarded = ['id'];
 
     public function obra()
     {
         return $this->belongsTo(Obra::class, 'obra_id');
+    }
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class, 'empresa_id');
     }
     public static function setPlane($plane, $actual = false){
         if ($plane) {

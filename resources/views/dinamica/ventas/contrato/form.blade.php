@@ -1,6 +1,3 @@
-{{-- {{dd(key($lineas_cotizacion))}}; --}}
-{{-- {{dd($descripciones)}}; --}}
-{{-- {{dd($subtotales)}}; --}}
 
 <div class="form-group row">
     <label for="equipo_id" class="col-lg-3 col-form-label requerido">Equipo</label>
@@ -24,20 +21,6 @@
             @foreach($servicios as $servicio)
         <option value="{{$servicio->id}}" {{($servicio->id==old('servicio_id',$contrato->servicio->id ?? ''))?'selected':''}}>
                 {{$servicio->nombre}}
-            </option>
-            @endforeach
-        </select>
-
-    </div>
-</div>
-<div class="form-group row">
-    <label for="empresa_id" class="col-lg-3 col-form-label requerido">Empresa</label>
-    <div class="col-lg-8">
-        <select name="empresa_id" id="empresa_id" class="form-control" data-live-search="true">
-            <option value="">Seleccione la empresa</option>
-            @foreach($empresas as $empresa)
-        <option value="{{$empresa->id}}" {{($empresa->id==old('empresa_id',$contrato->empresa->id ?? ''))?'selected':''}}>
-                {{$empresa->razon_social}}
             </option>
             @endforeach
         </select>

@@ -17,8 +17,10 @@ class CrearTablaEquipo extends Migration
             $table->id();
             $table->unsignedBigInteger('obra_id');
             $table->foreign('obra_id','fk_equipo_obra')->references('id')->on('obra')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('empresa_id');
+            $table->foreign('empresa_id','fk_equipo_empresa')->references('id')->on('empresa')->onDelete('restrict')->onUpdate('restrict');
             $table->string('oe',50);
-            $table->double('velocidad',2,2);
+            $table->string('velocidad',4);
             $table->unsignedBigInteger('paradas');
             $table->unsignedBigInteger('carga')->nullable();
             $table->string('marca',40)->nullable();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Operaciones;
 
 use App\Http\Controllers\Controller;
+use App\Models\Operaciones\Empresa;
 use App\Models\Operaciones\Equipo;
 use App\Models\Operaciones\Obra;
 use Illuminate\Http\File;
@@ -32,7 +33,8 @@ class EquipoController extends Controller
     {
         $equipos= Equipo::with('obra')->orderBy('id')->get();
         $obras= Obra::orderBy('id')->get();
-        return  view('dinamica.operaciones.equipo.crear',compact('equipos', 'obras'));
+        $empresas = Empresa::orderBy('id')->get();
+        return  view('dinamica.operaciones.equipo.crear',compact('equipos', 'obras','empresas'));
     }
 
     /**
@@ -72,7 +74,9 @@ class EquipoController extends Controller
     {
         $equipo = Equipo::findOrFail($id);
         $obras= Obra::orderBy('id')->get();
-        return view('dinamica.operaciones.equipo.editar', compact('equipo', 'obras'));
+        $empresas = Empresa::orderBy('id')->get();
+
+        return view('dinamica.operaciones.equipo.editar', compact('equipo', 'obras', 'empresas'));
     }
 
     /**

@@ -5,7 +5,6 @@ $(document).ready(function () {
         id= $(this).parent().find('.subir-plano').attr("data-id");
         $("#modalSubirid").val(id);
         $("#modalSubir").modal("show");
-
     });
 
     $("#modalSubir").on("submit", ".form-subir", function (e) {

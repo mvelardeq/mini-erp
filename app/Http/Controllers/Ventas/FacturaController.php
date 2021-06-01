@@ -57,7 +57,7 @@ class FacturaController extends Controller
     {
         define("IGV",0.18);
         $concepto_pago = Concepto_pago::with('contrato')->findOrFail($request->concepto_pago_id);
-        $pago_sin_detraccion = $concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*(IGV+1)*(1-($concepto_pago->contrato->empresa->porcentaje_detraccion/100))/100;
+        $pago_sin_detraccion = $concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*(IGV+1)*(1-($concepto_pago->contrato->equipo->empresa->porcentaje_detraccion/100))/100;
 
         Factura::create([
             'concepto_pago_id'=>$request->concepto_pago_id,
@@ -138,7 +138,7 @@ class FacturaController extends Controller
               if($costo*1.18 < 700){
                   $pago_proveedor=number_format($costo*1.18,2);
               }else{
-                  $pago_proveedor=number_format($costo*1.18*(100-$concepto_pago->contrato->empresa->porcentaje_detraccion)/100,2);
+                  $pago_proveedor=number_format($costo*1.18*(100-$concepto_pago->contrato->equipo->empresa->porcentaje_detraccion)/100,2);
               }
 
               echo '                              <div class="form-group row">

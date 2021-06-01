@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Contrato extends Model
 {
     protected $table="contrato";
-    protected $fillable = ['servicio_id', 'empresa_id', 'equipo_id', 'horas', 'costo_sin_igv', 'fecha_inicio', 'fecha_fin', 'estado', 'observacion', 'numero_oc', 'oc'];
+    protected $fillable = ['servicio_id', 'equipo_id', 'horas', 'costo_sin_igv', 'fecha_inicio', 'fecha_fin', 'estado', 'observacion', 'numero_oc', 'oc'];
     protected $guarded = ['id'];
 
     public function Conceptos_pago()
@@ -22,10 +22,7 @@ class Contrato extends Model
     {
         return $this->belongsTo(Servicio::class, 'servicio_id');
     }
-    public function empresa()
-    {
-        return $this->belongsTo(Empresa::class, 'empresa_id');
-    }
+    
     public function equipo()
     {
         return $this->belongsTo(Equipo::class, 'equipo_id');
