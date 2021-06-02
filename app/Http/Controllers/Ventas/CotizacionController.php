@@ -50,12 +50,14 @@ class CotizacionController extends Controller
      */
     public function guardar(Request $request)
     {
+        $equipo = Equipo::with('obra')->findOrFail($request->equipo_id);
         Cotizacion::create([
             'equipo_id' => $request->equipo_id,
             'numero' => $request->numero,
             'resumen' => $request->resumen,
             'fecha' => $request->fecha,
             'dirigido_a' => $request->dirigido_a,
+            'pdf' =>'Cotización '.$request->numero.' obra '.$equipo->obra->nombre.' '.$request->resumen.'.pdf',
             ]);
 
             $idcotizacion= Cotizacion::orderBy('created_at', 'desc')->first()->id;
@@ -63,6 +65,7 @@ class CotizacionController extends Controller
             Linea_cotizacion::create([
                 'cotizacion_id' => $idcotizacion,
                 'descripcion' => $request->descripcion1,
+                'cantidad' => $request->cantidad1,
                 'subtotal' => $request->subtotal1,
             ]);
 
@@ -71,6 +74,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::create([
                     'cotizacion_id' => $idcotizacion,
                     'descripcion' => $request->descripcion2,
+                    'cantidad' => $request->cantidad2,
                     'subtotal' => $request->subtotal2,
                 ]);
             }
@@ -79,6 +83,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::create([
                     'cotizacion_id' => $idcotizacion,
                     'descripcion' => $request->descripcion3,
+                    'cantidad' => $request->cantidad3,
                     'subtotal' => $request->subtotal3,
                 ]);
             }
@@ -87,6 +92,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::create([
                     'cotizacion_id' => $idcotizacion,
                     'descripcion' => $request->descripcion4,
+                    'cantidad' => $request->cantidad4,
                     'subtotal' => $request->subtotal4,
                 ]);
             }
@@ -95,6 +101,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::create([
                     'cotizacion_id' => $idcotizacion,
                     'descripcion' => $request->descripcion5,
+                    'cantidad' => $request->cantidad5,
                     'subtotal' => $request->subtotal5,
                 ]);
             }
@@ -103,12 +110,20 @@ class CotizacionController extends Controller
                 Linea_cotizacion::create([
                     'cotizacion_id' => $idcotizacion,
                     'descripcion' => $request->descripcion6,
+                    'cantidad' => $request->cantidad6,
                     'subtotal' => $request->subtotal6,
                 ]);
             }
 
 
+            $lineas_cotizacion = Linea_cotizacion::where('cotizacion_id',$idcotizacion)->orderBy('id')->get();
+            $cotizacion = Cotizacion::with('equipo')->findOrFail($idcotizacion);
 
+            $pdf = App::make('dompdf.wrapper');
+            $content = $pdf->loadView('dinamica.ventas.cotizacion.pdf3', compact('cotizacion','lineas_cotizacion'))->output();
+
+            // $name = 'Cotización '.$cotizacion->numero.' obra '.$cotizacion->equipo->obra->nombre.' '.$cotizacion->resumen.'.pdf';
+            Cotizacion::setQuotation($content,$cotizacion->pdf);
 
         return redirect('ventas/cotizacion')->with('mensaje', 'Cotización creada con éxito');
     }
@@ -134,9 +149,10 @@ class CotizacionController extends Controller
     {
         $cotizacion = Cotizacion::findOrFail($id);
         $descripciones = Linea_cotizacion::orderBy('id')->where('cotizacion_id', $id)->pluck('descripcion')->toArray();
+        $cantidades = Linea_cotizacion::orderBy('id')->where('cotizacion_id', $id)->pluck('cantidad')->toArray();
         $subtotales = Linea_cotizacion::orderBy('id')->where('cotizacion_id', $id)->pluck('subtotal')->toArray();
         $equipos= Equipo::orderBy('id')->get();
-        return view('dinamica.ventas.cotizacion.editar', compact('cotizacion','descripciones', 'subtotales', 'equipos'));
+        return view('dinamica.ventas.cotizacion.editar', compact('cotizacion','descripciones', 'cantidades', 'subtotales', 'equipos'));
     }
 
     /**

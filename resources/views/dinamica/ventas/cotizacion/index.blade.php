@@ -34,6 +34,7 @@ Cotizaciones
                             <th>Resumen</th>
                             <th>Fecha</th>
                             <th>Dirigido a</th>
+                            <th>PDF</th>
                             <th class="width70"></th>
                         </tr>
                     </thead>
@@ -46,6 +47,9 @@ Cotizaciones
                             <td>{{$cotizacion->resumen}}</td>
                             <td>{{$cotizacion->fecha}}</td>
                             <td>{{$cotizacion->dirigido_a}}</td>
+                            <td>
+                                <a href="{{Storage::disk('s3')->url('files/quotation/'.$cotizacion->pdf)}}" target="_blank"><i class="fas fa-file-pdf text-danger"></i></a>
+                            </td>
 
                             <td>
                                 <a href="{{route('editar_cotizacion', ['id' => $cotizacion->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">

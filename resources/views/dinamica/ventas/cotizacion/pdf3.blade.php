@@ -158,19 +158,19 @@ footer {
       <div id="logo">
         <img src="{{public_path('assets/sb/assets/img/logo5.jpg')}}">
       </div>
-      <h1>Cotización N° 013-2021</h1>
+      <h1>Cotización N° {{$cotizacion->numero}}</h1>
       <div id="company" class="clearfix">
-        <div>Company Name</div>
-        <div>455 Foggy Heights,<br /> AZ 85004, US</div>
-        <div>(602) 519-0450</div>
-        <div><a href="mailto:company@example.com">company@example.com</a></div>
+        <div>Ascensores Industriales SRL</div>
+        <div>Los Olivos - Lima<br /> Perú</div>
+        <div>(51) 994127770</div>
+        <div><a href="ascensores_industriales@hotmail.com">ascensores_industriales@hotmail.com</a></div>
       </div>
       <div id="project">
-        <div><span>REFERENCIA</span> Obra Mall Plaza Comas O.E: 2938381</div>
-        <div><span>CLIENTE</span> ThyssenKrupp Elevadores S.A.C</div>
-        <div><span>DIRECCIÓN</span> 796 Silver Harbour, TX 79273, US</div>
-        <div><span>DIRIGIDO A</span> Antony Ipanaque</div>
-        <div><span>FECHA</span> August 17, 2015</div>
+        <div><span>REFERENCIA</span>Obra {{$cotizacion->equipo->obra->nombre}} O.E {{$cotizacion->equipo->oe}}</div>
+        <div><span>CLIENTE</span>{{$cotizacion->equipo->empresa->razon_social}}</div>
+        <div><span>DIRECCIÓN</span> {{$cotizacion->equipo->empresa->direccion}}</div>
+        <div><span>DIRIGIDO A</span>{{$cotizacion->dirigido_a}}</div>
+        <div><span>FECHA</span>{{$cotizacion->fecha}}</div>
       </div>
     </header>
     <main>
@@ -185,7 +185,18 @@ footer {
           </tr>
         </thead>
         <tbody>
-          <tr>
+            @foreach ($lineas_cotizacion as $linea_cotizacion)
+
+            <tr>
+                <td>{{$loop->index+1}}</td>
+                <td>{{$linea_cotizacion->descripcion}}</td>
+                <td>{{$linea_cotizacion->cantidad}}</td>
+                <td>{{$linea_cotizacion->subtotal}}</td>
+                <td>{{$linea_cotizacion->subtotal*$linea_cotizacion->cantidad}}</td>
+            </tr>
+
+            @endforeach
+          {{-- <tr>
             <td class="service">Design</td>
             <td class="desc">Creating a recognizable design solution based on the company's existing visual identity</td>
             <td class="unit">$40.00</td>
@@ -212,7 +223,7 @@ footer {
             <td class="unit">$40.00</td>
             <td class="qty">4</td>
             <td class="total">$160.00</td>
-          </tr>
+          </tr> --}}
           <tr>
             <td colspan="4">SUBTOTAL</td>
             <td class="total">$5,200.00</td>

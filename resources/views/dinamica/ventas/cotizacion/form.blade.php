@@ -57,6 +57,12 @@
     </div>
 </div>
 <div class="form-group row">
+    <label for="cantidad1" class="col-lg-3 col-form-label">Cantidad 1</label>
+    <div class="col-lg-8">
+        <input type="number" name="cantidad1" id="cantidad1" class="form-control" value="{{old('cantidad1', $cantidades[0] ?? '')}}"/>
+    </div>
+</div>
+<div class="form-group row">
     <label for="subtotal1" class="col-lg-3 col-form-label">Sub total 1</label>
     <div class="col-lg-8">
         <input type="number" name="subtotal1" id="subtotal1" class="form-control" value="{{old('subtotal1', $subtotales[0] ?? '')}}"/>
@@ -67,6 +73,12 @@
     <label for="descripcion2" class="col-lg-3 col-form-label">Descripción 2</label>
     <div class="col-lg-8">
         <input type="text" name="descripcion2" id="descripcion2" class="form-control" value="{{old('descripcion2', $descripciones[1] ?? '')}}"/>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="cantidad2" class="col-lg-3 col-form-label">Cantidad 2</label>
+    <div class="col-lg-8">
+        <input type="number" name="cantidad2" id="cantidad2" class="form-control" value="{{old('cantidad2', $cantidades[1] ?? '')}}"/>
     </div>
 </div>
 <div class="form-group row">
@@ -83,6 +95,12 @@
     </div>
 </div>
 <div class="form-group row">
+    <label for="cantidad3" class="col-lg-3 col-form-label">Cantidad 3</label>
+    <div class="col-lg-8">
+        <input type="number" name="cantidad3" id="cantidad3" class="form-control" value="{{old('cantidad3', $cantidades[2] ?? '')}}"/>
+    </div>
+</div>
+<div class="form-group row">
     <label for="subtotal3" class="col-lg-3 col-form-label">Sub total 3</label>
     <div class="col-lg-8">
         <input type="number" name="subtotal3" id="subtotal3" class="form-control" value="{{old('subtotal3', $subtotales[2] ?? '')}}"/>
@@ -93,6 +111,12 @@
     <label for="descripcion4" class="col-lg-3 col-form-label">Descripción 4</label>
     <div class="col-lg-8">
         <input type="text" name="descripcion4" id="descripcion4" class="form-control" value="{{old('descripcion4', $descripciones[3] ?? '')}}"/>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="cantidad4" class="col-lg-3 col-form-label">Cantidad 4</label>
+    <div class="col-lg-8">
+        <input type="number" name="cantidad4" id="cantidad4" class="form-control" value="{{old('cantidad4', $cantidades[3] ?? '')}}"/>
     </div>
 </div>
 <div class="form-group row">
@@ -109,6 +133,12 @@
     </div>
 </div>
 <div class="form-group row">
+    <label for="cantidad5" class="col-lg-3 col-form-label">Cantidad 5</label>
+    <div class="col-lg-8">
+        <input type="number" name="cantidad5" id="cantidad5" class="form-control" value="{{old('cantidad5', $cantidades[4] ?? '')}}"/>
+    </div>
+</div>
+<div class="form-group row">
     <label for="subtotal5" class="col-lg-3 col-form-label">Sub total 5</label>
     <div class="col-lg-8">
         <input type="number" name="subtotal5" id="subtotal5" class="form-control" value="{{old('subtotal5', $subtotales[4] ?? '')}}"/>
@@ -119,6 +149,12 @@
     <label for="descripcion6" class="col-lg-3 col-form-label">Descripción 6</label>
     <div class="col-lg-8">
         <input type="text" name="descripcion6" id="descripcion6" class="form-control" value="{{old('descripcion6', $descripciones[5] ?? '')}}"/>
+    </div>
+</div>
+<div class="form-group row">
+    <label for="cantidad6" class="col-lg-3 col-form-label">Cantidad 6</label>
+    <div class="col-lg-8">
+        <input type="number" name="cantidad6" id="cantidad6" class="form-control" value="{{old('cantidad6', $cantidades[5] ?? '')}}"/>
     </div>
 </div>
 <div class="form-group row">
