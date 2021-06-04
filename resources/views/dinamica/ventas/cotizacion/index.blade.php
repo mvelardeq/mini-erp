@@ -41,7 +41,7 @@ Cotizaciones
                     <tbody>
                         @foreach ($cotizaciones as $cotizacion)
                         <tr>
-                            <td><a href="#">{{Str::padLeft($cotizacion->numero, 3, '0').'-'.Carbon::parse(now())->isoFormat('YYYY')}}</a></td>
+                            <td><a href="#">{{$cotizacion->numero}}</a></td>
                             <td>{{$cotizacion->equipo->obra->nombre}} - Asc-{{$cotizacion->equipo->numero_equipo}}</td>
 
                             <td>{{$cotizacion->resumen}}</td>

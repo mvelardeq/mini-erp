@@ -8,6 +8,8 @@ use App\Models\Operaciones\Equipo;
 use App\Models\Ventas\Linea_cotizacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CotizacionController extends Controller
 {
@@ -20,11 +22,10 @@ class CotizacionController extends Controller
     {
         $cotizaciones= Cotizacion::with('lineas_cotizacion','equipo')->orderBy('id')->get();
 
-        // $html =view('dinamica.ventas.cotizacion.pdf', compact('cotizaciones'));
         return view('dinamica.ventas.cotizacion.index',compact('cotizaciones'));
 
         // $pdf = App::make('dompdf.wrapper');
-        // $pdf->loadView('dinamica.ventas.cotizacion.pdf3',compact('cotizaciones'));
+        // $pdf->loadView('dinamica.ventas.cotizacion.pdf5',compact('cotizaciones'));
         // return $pdf->stream();
 
     }
@@ -57,7 +58,7 @@ class CotizacionController extends Controller
             'resumen' => $request->resumen,
             'fecha' => $request->fecha,
             'dirigido_a' => $request->dirigido_a,
-            'pdf' =>'Cotización '.$request->numero.' obra '.$equipo->obra->nombre.' '.$request->resumen.'.pdf',
+            'pdf' =>'Cotización_'.$request->numero.'_obra_'.$equipo->obra->nombre.'_'.$request->resumen.'.pdf',
             ]);
 
             $idcotizacion= Cotizacion::orderBy('created_at', 'desc')->first()->id;
@@ -117,10 +118,11 @@ class CotizacionController extends Controller
 
 
             $lineas_cotizacion = Linea_cotizacion::where('cotizacion_id',$idcotizacion)->orderBy('id')->get();
+            $cotizacion_total = Cotizacion::join('linea_cotizacion','cotizacion_id','=','cotizacion.id')->where('cotizacion_id',$idcotizacion)->select(DB::raw('SUM(cantidad*subtotal) as total'))->first();
             $cotizacion = Cotizacion::with('equipo')->findOrFail($idcotizacion);
 
             $pdf = App::make('dompdf.wrapper');
-            $content = $pdf->loadView('dinamica.ventas.cotizacion.pdf3', compact('cotizacion','lineas_cotizacion'))->output();
+            $content = $pdf->loadView('dinamica.ventas.cotizacion.pdf3', compact('cotizacion','lineas_cotizacion','cotizacion_total'))->output();
 
             // $name = 'Cotización '.$cotizacion->numero.' obra '.$cotizacion->equipo->obra->nombre.' '.$cotizacion->resumen.'.pdf';
             Cotizacion::setQuotation($content,$cotizacion->pdf);
@@ -164,12 +166,15 @@ class CotizacionController extends Controller
      */
     public function actualizar(Request $request, $id)
     {
+        $equipo = Equipo::with('obra')->findOrFail($request->equipo_id);
         Cotizacion::findOrFail($id)->update([
             'equipo_id' => $request->equipo_id,
             'numero' => $request->numero,
             'resumen' => $request->resumen,
             'fecha' => $request->fecha,
             'dirigido_a' => $request->dirigido_a,
+            'pdf' =>'Cotización_'.$request->numero.'_obra_'.$equipo->obra->nombre.'_'.$request->resumen.'.pdf',
+
         ]);
         $descripciones = Linea_cotizacion::orderBy('id')->where('cotizacion_id', $id)->pluck('descripcion')->toArray();
         $subtotales = Linea_cotizacion::orderBy('id')->where('cotizacion_id', $id)->pluck('subtotal')->toArray();
@@ -180,6 +185,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::findOrFail($lineas_cotizacion[0])->update([
                     'cotizacion_id' => $id,
                     'descripcion' => $request->descripcion1,
+                    'cantidad'=> $request->cantidad1,
                     'subtotal' => $request->subtotal1,
                 ]);
             } else {
@@ -191,6 +197,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::create([
                     'cotizacion_id' => $id,
                     'descripcion' => $request->descripcion1,
+                    'cantidad'=> $request->cantidad1,
                     'subtotal' => $request->subtotal1,
                 ]);
             } else {
@@ -205,6 +212,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::findOrFail($lineas_cotizacion[1])->update([
                     'cotizacion_id' => $id,
                     'descripcion' => $request->descripcion2,
+                    'cantidad'=> $request->cantidad2,
                     'subtotal' => $request->subtotal2,
                 ]);
             } else {
@@ -216,6 +224,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::create([
                     'cotizacion_id' => $id,
                     'descripcion' => $request->descripcion2,
+                    'cantidad'=> $request->cantidad2,
                     'subtotal' => $request->subtotal2,
                 ]);
             } else {
@@ -230,6 +239,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::findOrFail($lineas_cotizacion[2])->update([
                     'cotizacion_id' => $id,
                     'descripcion' => $request->descripcion3,
+                    'cantidad'=> $request->cantidad3,
                     'subtotal' => $request->subtotal3,
                 ]);
             } else {
@@ -241,6 +251,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::create([
                     'cotizacion_id' => $id,
                     'descripcion' => $request->descripcion3,
+                    'cantidad'=> $request->cantidad3,
                     'subtotal' => $request->subtotal3,
                 ]);
             } else {
@@ -255,6 +266,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::findOrFail($lineas_cotizacion[3])->update([
                     'cotizacion_id' => $id,
                     'descripcion' => $request->descripcion4,
+                    'cantidad'=> $request->cantidad4,
                     'subtotal' => $request->subtotal4,
                 ]);
             } else {
@@ -266,6 +278,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::create([
                     'cotizacion_id' => $id,
                     'descripcion' => $request->descripcion4,
+                    'cantidad'=> $request->cantidad4,
                     'subtotal' => $request->subtotal4,
                 ]);
             } else {
@@ -280,6 +293,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::findOrFail($lineas_cotizacion[4])->update([
                     'cotizacion_id' => $id,
                     'descripcion' => $request->descripcion5,
+                    'cantidad'=> $request->cantidad5,
                     'subtotal' => $request->subtotal5,
                 ]);
             } else {
@@ -291,6 +305,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::create([
                     'cotizacion_id' => $id,
                     'descripcion' => $request->descripcion5,
+                    'cantidad'=> $request->cantidad5,
                     'subtotal' => $request->subtotal5,
                 ]);
             } else {
@@ -305,6 +320,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::findOrFail($lineas_cotizacion[5])->update([
                     'cotizacion_id' => $id,
                     'descripcion' => $request->descripcion6,
+                    'cantidad'=> $request->cantidad6,
                     'subtotal' => $request->subtotal6,
                 ]);
             } else {
@@ -316,6 +332,7 @@ class CotizacionController extends Controller
                 Linea_cotizacion::create([
                     'cotizacion_id' => $id,
                     'descripcion' => $request->descripcion6,
+                    'cantidad'=> $request->cantidad6,
                     'subtotal' => $request->subtotal6,
                 ]);
             } else {
@@ -324,8 +341,16 @@ class CotizacionController extends Controller
 
         }
 
-        return redirect('ventas/cotizacion')->with('mensaje', 'Cotización actualizada con éxito');
+        $lineas_cotizacion = Linea_cotizacion::where('cotizacion_id',$id)->orderBy('id')->get();
+        $cotizacion_total = Cotizacion::join('linea_cotizacion','cotizacion_id','=','cotizacion.id')->where('cotizacion_id',$id)->select(DB::raw('SUM(cantidad*subtotal) as total'))->first();
+        $cotizacion = Cotizacion::with('equipo')->findOrFail($id);
 
+        $pdf = App::make('dompdf.wrapper');
+        $content = $pdf->loadView('dinamica.ventas.cotizacion.pdf3', compact('cotizacion','lineas_cotizacion','cotizacion_total'))->output();
+
+        Cotizacion::setQuotation($content,$cotizacion->pdf, true);
+
+        return redirect('ventas/cotizacion')->with('mensaje', 'Cotización actualizada con éxito');
 
     }
 
@@ -338,8 +363,10 @@ class CotizacionController extends Controller
     public function eliminar(Request $request, $id)
     {
         if ($request->ajax()) {
+            $name = Cotizacion::findOrFail($id)->pdf;
             if (Linea_cotizacion::where('cotizacion_id',$id)->delete()) {
                 if (Cotizacion::destroy($id)) {
+                    Storage::disk('s3')->delete("files/quotation/$name");
                     return response()->json(['mensaje' => 'ok']);
                 }
 
