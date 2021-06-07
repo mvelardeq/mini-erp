@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@yield('titulo','Ascensores Industriales')</title>
 
+  <link rel="icon" type="image/x-icon" href="{{asset("assets/sb/assets/img/favicon.ico")}}" />
+
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -38,7 +41,10 @@
 
 
   @yield('styles')
+  <link rel="stylesheet" href="{{asset('assets/css/estilos.css')}}">
   <link rel="stylesheet" href="{{asset("assets/css/custom.css")}}">
+  {{-- <link href="{{ asset('assets/css/around.css') }}" rel="stylesheet"> --}}
+
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm">

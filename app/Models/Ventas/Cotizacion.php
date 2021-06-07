@@ -26,7 +26,7 @@ class Cotizacion extends Model
     public static function setQuotation($pdf, $name, $actual = false){
         if ($pdf) {
             if ($actual) {
-                Storage::disk('s3')->delete("files/quotation/$name");
+                Storage::disk('s3')->delete("files/quotation/$actual");
             }
             // $planeName = Str::random(20) .'.pdf';
             Storage::disk('s3')->put("files/quotation/$name", $pdf);

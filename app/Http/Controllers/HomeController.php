@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Social\Post;
 use Dompdf\Adapter\PDFLib;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -29,13 +30,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dinamica.inicio');
+        $posts = Post::with('trabajador')->with('comentarios')->with('likes')->orderBy('created_at','desc')->get();
 
-        // $dompdf = new Dompdf();
-        // $dompdf->loadHtml(view('dinamica.inicio'));
-        // $dompdf->setPaper('A4', 'landscape');
-        // $dompdf->render();
-        // return $dompdf->stream('inicio.pdf');
+        return view('dinamica.inicio', compact('posts'));
 
     }
     public function guardar(Request $request)

@@ -167,6 +167,7 @@ class CotizacionController extends Controller
     public function actualizar(Request $request, $id)
     {
         $equipo = Equipo::with('obra')->findOrFail($request->equipo_id);
+        $name = Cotizacion::findOrFail($id)->pdf;
         Cotizacion::findOrFail($id)->update([
             'equipo_id' => $request->equipo_id,
             'numero' => $request->numero,
@@ -348,7 +349,7 @@ class CotizacionController extends Controller
         $pdf = App::make('dompdf.wrapper');
         $content = $pdf->loadView('dinamica.ventas.cotizacion.pdf3', compact('cotizacion','lineas_cotizacion','cotizacion_total'))->output();
 
-        Cotizacion::setQuotation($content,$cotizacion->pdf, true);
+        Cotizacion::setQuotation($content,$cotizacion->pdf, $name);
 
         return redirect('ventas/cotizacion')->with('mensaje', 'Cotización actualizada con éxito');
 

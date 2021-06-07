@@ -161,6 +161,9 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
 
     Route::group(['prefix' => 'usuario', 'namespace' => 'Usuario', 'middleware' =>['auth']], function () {
 
+        // RUTAS DE PERFIL
+        Route::get('perfil','PerfilController@index')->name('usuario_perfil');
+
         /*RUTAS DE OT*/
         Route::get('ot', 'OtController@index')->name('usuario_ot');
         Route::get('ot/crear', 'OtController@crear')->name('crear_usuario_ot');
@@ -307,6 +310,21 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
 
 
 Route::get('/inicio', 'HomeController@index')->name('home');
-Route::post('/inicio', 'HomeController@guardar')->name('guardar_imagen');
 
+Route::group(['prefix' => 'social', 'namespace' => 'Social', 'middleware' =>['auth']], function () {
+
+    /*RUTAS DE POST*/
+    Route::post('post', 'PostController@guardar')->name('guardar_post');
+    Route::delete('post/{id}', 'PostController@eliminar')->name('eliminar_post');
+
+    /*RUTAS DE LIKES*/
+    Route::get('notificaciones', 'NotificacionesController@index')->middleware(['supervisor'])->name('usuario_notificaciones');
+    Route::post('notificaciones/aprobar/{id}', 'NotificacionesController@aprobar_ot')->middleware(['supervisor'])->name('aprobar_notificacion_ot');
+    Route::post('notificaciones/guardar-falta/{id}', 'NotificacionesController@guardar_falta')->middleware(['supervisor'])->name('guardar_falta_ot');
+
+    /*RUTAS DE COMENTARIOS*/
+    Route::post('comentario/{id}', 'ComentarioController@guardar')->name('guardar_comentario');
+    Route::post('notificaciones/guardar-falta/{id}', 'NotificacionesController@guardar_falta')->middleware(['supervisor'])->name('guardar_falta_ot');
+
+});
 

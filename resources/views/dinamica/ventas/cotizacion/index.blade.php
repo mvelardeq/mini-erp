@@ -45,7 +45,7 @@ Cotizaciones
                             <td>{{$cotizacion->equipo->obra->nombre}} - Asc-{{$cotizacion->equipo->numero_equipo}}</td>
 
                             <td>{{$cotizacion->resumen}}</td>
-                            <td>{{$cotizacion->fecha}}</td>
+                            <td>{{Carbon::parse($cotizacion->fecha)->isoFormat('DD/MM/YYYY')}}</td>
                             <td>{{$cotizacion->dirigido_a}}</td>
                             <td>
                                 <a href="{{Storage::disk('s3')->url('files/quotation/'.$cotizacion->pdf)}}" target="_blank"><i class="fas fa-file-pdf text-danger"></i></a>

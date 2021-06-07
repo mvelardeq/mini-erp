@@ -377,8 +377,8 @@ class TablaMenuSeeder extends Seeder
         ]);
         DB::table('menu')->insert([
             'menu_id' => 40,
-            'nombre' => 'OTs',
-            'url' => 'usuario/ot',
+            'nombre' => 'Perfil',
+            'url' => 'usuario/perfil',
             'orden'=> 1,
             'icono'=> 'file-contract',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -386,9 +386,18 @@ class TablaMenuSeeder extends Seeder
         ]);
         DB::table('menu')->insert([
             'menu_id' => 40,
+            'nombre' => 'OTs',
+            'url' => 'usuario/ot',
+            'orden'=> 2,
+            'icono'=> 'id-badge',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('menu')->insert([
+            'menu_id' => 40,
             'nombre' => "Notificaciones",
             'url' => 'usuario/notificaciones',
-            'orden'=> 2,
+            'orden'=> 3,
             'icono'=> 'bell',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),

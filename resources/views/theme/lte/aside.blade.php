@@ -2,7 +2,8 @@
   <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/inicio" class="brand-link">
-      <img src="{{asset("assets/$theme/dist/img/AdminLTELogo.png")}}" class="brand-image img-circle elevation-3" style="opacity: .8">
+      {{-- <img src="{{asset("assets/$theme/dist/img/AdminLTELogo.png")}}" class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
+      <img src="{{asset("assets/sb/assets/img/favicon.ico")}}" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">Ascensores Industriales</span>
     </a>
 
@@ -24,35 +25,6 @@
 
                 @include("theme.$theme.menu-item", ["item" => $item])
             @endforeach
-            {{-- <li class="nav-item {{getMenuOpen('usuario')}}">
-                <a href="javascript:;" class="nav-link {{getMenuActive('usuario')}}">
-                  <i class="nav-icon fas fa-user"></i>
-                    <p>
-                      Usuario
-                      <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link {{getMenuActivo('usuario/perfil')}}">
-                        <i class="nav-icon fas fa-address-card"></i> <p>Perfil</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{route('usuario_ot', ['id' => auth()->user()->id])}}" class="nav-link {{getMenuActivo('usuario/ot')}}">
-                        <i class="nav-icon fas fa-file-contract"></i> <p>OT</p>
-                        </a>
-                    </li>
-                    @if (session()->get('rol_nombre') == 'supervisor')
-                        <li class="nav-item">
-                            <a href="{{route('usuario_notificaciones', ['id' => auth()->user()->id])}}" class="nav-link {{getMenuActivo('usuario/notificaciones')}}">
-                            <i class="nav-icon fas fa-bell"></i> <p>Notificaciones</p>
-                            </a>
-                        </li>
-                    @endif
-
-                </ul>
-            </li> --}}
 
         </ul>
       </nav>

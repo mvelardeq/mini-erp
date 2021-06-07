@@ -6,6 +6,9 @@ use App\Models\Admin\Ascenso_trabajador;
 use App\Models\Admin\Obs_trabajador;
 use App\Models\Admin\Periodo_trabajador;
 use App\Models\Admin\Rol;
+use App\Models\Social\Comentario;
+use App\Models\Social\Likes;
+use App\Models\Social\Post;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -37,6 +40,17 @@ class Trabajador extends Authenticatable
     public function ascensos()
     {
         return $this->HasMany(Ascenso_trabajador::class);
+    }
+
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+    public function comentarios(){
+        return $this->hasMany(Comentario::class);
+    }
+
+    public function likes(){
+        return $this->hasMany(Likes::class);
     }
 
     public function setSession($roles)
