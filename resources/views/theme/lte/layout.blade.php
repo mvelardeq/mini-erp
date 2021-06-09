@@ -41,9 +41,7 @@
 
 
   @yield('styles')
-  <link rel="stylesheet" href="{{asset('assets/css/estilos.css')}}">
   <link rel="stylesheet" href="{{asset("assets/css/custom.css")}}">
-  {{-- <link href="{{ asset('assets/css/around.css') }}" rel="stylesheet"> --}}
 
 
 </head>
@@ -63,7 +61,7 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <div class="container-fluid">
-                        <div class="row mb-2">
+                        {{-- <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1>E-commerce</h1>
                         </div>
@@ -73,8 +71,8 @@
                             <li class="breadcrumb-item active">E-commerce</li>
                             </ol>
                         </div>
-                        </div>
-                    </div><!-- /.container-fluid -->
+                        </div> --}}
+                    </div>
                 </section>
 
                 <!-- Main content -->

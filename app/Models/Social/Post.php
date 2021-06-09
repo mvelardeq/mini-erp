@@ -25,7 +25,7 @@ class Post extends Model
     }
 
     public function comentarios(){
-        return $this->hasMany(Comentario::class);
+        return $this->hasMany(Comentario::class)->orderBy('created_at','desc');
     }
 
     public static function setFoto($foto, $actual = false){
@@ -35,7 +35,8 @@ class Post extends Model
             }
             $imageName = Str::random(14) . '.jpg';
             $imagen = Image::make($foto)->encode('jpg', 75);
-        $imagen->resize(600, 800, function ($constraint) {
+        $imagen->resize(600, null, function ($constraint) {
+            $constraint->aspectRatio();
                 $constraint->upsize();
             });
             Storage::disk('s3')->put("photos/postPhoto/$imageName", $imagen->stream());

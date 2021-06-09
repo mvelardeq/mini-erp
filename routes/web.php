@@ -318,9 +318,8 @@ Route::group(['prefix' => 'social', 'namespace' => 'Social', 'middleware' =>['au
     Route::delete('post/{id}', 'PostController@eliminar')->name('eliminar_post');
 
     /*RUTAS DE LIKES*/
-    Route::get('notificaciones', 'NotificacionesController@index')->middleware(['supervisor'])->name('usuario_notificaciones');
-    Route::post('notificaciones/aprobar/{id}', 'NotificacionesController@aprobar_ot')->middleware(['supervisor'])->name('aprobar_notificacion_ot');
-    Route::post('notificaciones/guardar-falta/{id}', 'NotificacionesController@guardar_falta')->middleware(['supervisor'])->name('guardar_falta_ot');
+    Route::post('like/guardar/{id}', 'LikesController@guardar')->name('guardar_like');
+    Route::post('like/eliminar/{id}', 'LikesController@eliminar')->name('eliminar_like');
 
     /*RUTAS DE COMENTARIOS*/
     Route::post('comentario/{id}', 'ComentarioController@guardar')->name('guardar_comentario');
