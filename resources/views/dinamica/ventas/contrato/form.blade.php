@@ -32,13 +32,13 @@
 <div class="form-group row">
     <label for="horas" class="col-lg-3 col-form-label">Horas</label>
     <div class="col-lg-8">
-        <input type="number" name="horas" id="horas" class="form-control" value="{{old('horas', $contrato->horas ?? '')}}"/>
+        <input type="number" step="0.01" name="horas" id="horas" class="form-control" value="{{old('horas', $contrato->horas ?? '')}}"/>
     </div>
 </div>
 <div class="form-group row">
     <label for="costo_sin_igv" class="col-lg-3 col-form-label">Costo sin IGV</label>
     <div class="col-lg-8">
-        <input type="number" name="costo_sin_igv" id="costo_sin_igv" class="form-control" value="{{old('costo_sin_igv', $contrato->costo_sin_igv ?? '')}}"/>
+        <input type="number" step="0.01" name="costo_sin_igv" id="costo_sin_igv" class="form-control" value="{{old('costo_sin_igv', $contrato->costo_sin_igv ?? '')}}"/>
     </div>
 </div>
 

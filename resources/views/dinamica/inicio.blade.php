@@ -60,38 +60,18 @@
 
                       <p>{{$post->descripcion}}</p>
 
-                      @if ($post->likes->where('trabajador_id',auth()->user()->id)->count() == 1)
-                      {{-- {{dd($post->likes->where('trabajador_id',auth()->user()->id)->count())}} --}}
-                        <form action="{{route('eliminar_like', ['id' => $post->id])}}" class="d-inline form-dislike" method="POST">
+                        <form class="d-inline {{($post->likes->where('trabajador_id',auth()->user()->id)->count() == 1) ? 'form-dislike' : 'form-like'}}" data-id="{{$post->id}}">
                             @csrf
-                            <button type="submit" class="btn btn-default btn-sm text-primary">
+                            <button type="submit" class="btn btn-default btn-sm {{($post->likes->where('trabajador_id',auth()->user()->id)->count() == 1) ? 'text-primary' : ''}}">
                                 <i class="far fa-thumbs-up"></i> Me gusta
                             </button>
                         </form>
-                      @else
-                        <form action="{{route('guardar_like', ['id' => $post->id])}}" class="d-inline form-like" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-default btn-sm">
-                                <i class="far fa-thumbs-up"></i> Me gusta
-                            </button>
-                        </form>
-                      @endif
 
                       <span class="float-right text-muted">
-                          @if ($post->likes->count()==0 && $post->comentarios->count()>0)
-                            {{$post->comentarios->count()}} comentarios
-                          @elseif ($post->likes->count()>0 && $post->comentarios->count()==0)
-                            {{$post->likes->count()}} me gusta
-                          @elseif ($post->likes->count()==0 && $post->comentarios->count()==0)
-
-                          @else
-                            {{$post->likes->count()}} me gusta - {{$post->comentarios->count()}} comentarios
-                          @endif
+                          <a href="#" class="d-inline me-gusta" data-id="{{$post->id}}">{{($post->likes->count()>0) ? ($post->likes->count().' me gusta') : ''}}</a>
+                          <a href="#bloque{{$post->id}}" aria-expanded="false" aria-controls="bloque{{$post->id}}" data-toggle="collapse" class="d-inline pl-2">{{($post->comentarios->count()>0) ? ($post->comentarios->count().' comentario(s)') : ''}}</a>
                       </span>
                     </div>
-
-                    <a href="#bloque{{$post->id}}" class="pl-4 pb-2" aria-expanded="false" aria-controls="bloque{{$post->id}}" data-toggle="collapse">Cargar más comentarios...</a>
-
 
                     <!-- /.card-body -->
                     <div class="card-footer card-comments">
@@ -151,6 +131,26 @@
         </div>
     </div>
 
+</div>
+
+{{-- Modal Agregar producto particular --}}
+<div class="modal fade" id="modalMegusta" tabindex="-1" role="dialog" aria-labelledby="modalProductopLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalProductopLabel">Lista de me gusta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-0 m-0">
+
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection

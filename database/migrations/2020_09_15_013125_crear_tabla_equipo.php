@@ -21,11 +21,11 @@ class CrearTablaEquipo extends Migration
             $table->foreign('empresa_id','fk_equipo_empresa')->references('id')->on('empresa')->onDelete('restrict')->onUpdate('restrict');
             $table->string('oe',50);
             $table->string('velocidad',4);
-            $table->unsignedBigInteger('paradas');
-            $table->unsignedBigInteger('carga')->nullable();
+            $table->string('paradas',4);
+            $table->string('carga',8)->nullable();
             $table->string('marca',40)->nullable();
             $table->string('modelo',40)->nullable();
-            $table->unsignedBigInteger('accesos')->nullable();
+            $table->string('accesos',4)->nullable();
             $table->string('cuarto_maquina',5)->nullable();
             $table->string('numero_equipo',60)->nullable();
             $table->string('plano',40)->nullable();

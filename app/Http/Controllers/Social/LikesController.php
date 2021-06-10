@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Social;
 
 use App\Http\Controllers\Controller;
+use App\Models\Seguridad\Trabajador;
 use App\Models\Social\Likes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +47,34 @@ class LikesController extends Controller
         } else {
             abort(404);
         }
+    }
+
+    public function listar($id){
+
+        $likes = Likes::with('trabajador')->where("post_id",$id)->orderBy("created_at",'desc')->get();
+
+        $lista = '';
+
+        foreach ($likes as $like) {
+            // $lista .= '<h5> '.$like->trabajador->primer_nombre.' </h5>';
+            $lista .=   '<div class="card-comment">
+                            <div class="comment-text">
+                                <span class="username">
+                                    <span class="text-muted float-right">
+                                        <button type="submit" class="btn btn-default btn-sm text-primary">
+                                        <i class="far fa-thumbs-up"></i> Le gusta
+                                        </button>
+                                    </span>
+                                </span>
+
+                                '.$like->trabajador->primer_nombre.' '.$like->trabajador->primer_apellido.'
+                            </div>
+                        </div>';
+
+        }
+
+        echo '<div class="card-footer card-comments">'.$lista.'</div>';
+        // echo $lista;
     }
 
     /**

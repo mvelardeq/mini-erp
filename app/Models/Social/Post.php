@@ -36,7 +36,7 @@ class Post extends Model
             $imageName = Str::random(14) . '.jpg';
             $imagen = Image::make($foto)->encode('jpg', 75);
         $imagen->resize(600, null, function ($constraint) {
-            $constraint->aspectRatio();
+                $constraint->aspectRatio();
                 $constraint->upsize();
             });
             Storage::disk('s3')->put("photos/postPhoto/$imageName", $imagen->stream());

@@ -320,6 +320,7 @@ Route::group(['prefix' => 'social', 'namespace' => 'Social', 'middleware' =>['au
     /*RUTAS DE LIKES*/
     Route::post('like/guardar/{id}', 'LikesController@guardar')->name('guardar_like');
     Route::post('like/eliminar/{id}', 'LikesController@eliminar')->name('eliminar_like');
+    Route::get('like/listar/{id}', 'LikesController@listar')->name('listar_like');
 
     /*RUTAS DE COMENTARIOS*/
     Route::post('comentario/{id}', 'ComentarioController@guardar')->name('guardar_comentario');

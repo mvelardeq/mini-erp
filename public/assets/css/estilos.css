@@ -305,11 +305,11 @@ footer p {
 		color: #fff;
 	}
 
-	.modal-body {
+	/* .modal-body {
 		background: rgba(0,0,0,.85);
 		height: 100vh;
 		z-index: 1050;
-	}
+	} */
 
 	.is-clicked {
 		animation-name: navEffect;
