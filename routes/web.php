@@ -260,6 +260,9 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
         Route::post('rrhh/trabajador/{id}/ascenso-trabajador', 'AscensoTrabajadorController@guardar')->name('guardar_ascenso_trabajador');
 
 
+        Route::get('rrhh/trabajador/{id}/perfil/calendario', 'TrabajadorPerfilController@mostrarc')->name('mostrar_calendario_trabajador');
+
+
         /*RUTAS DE CARGO*/
         Route::get('rrhh/cargo', 'CargoController@index')->name('cargo');
         Route::get('rrhh/cargo/crear', 'CargoController@crear')->name('crear_cargo');

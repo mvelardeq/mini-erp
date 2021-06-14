@@ -23,10 +23,9 @@ class CalendarioController extends Controller
 
     public function mostrar(){
 
-        $ots = Ot::with('trabajador','actividades', 'adelanto_trabajador','estado_ot')->whereHas('trabajador',function(Builder $query){
+        $ots = Ot::with('trabajador','actividades','contrato', 'adelanto_trabajador','estado_ot', 'gasto_trabajador')->whereHas('trabajador',function(Builder $query){
             return $query->where('id',Auth::user()->id);
         })->get();
-
         $evento = collect();
 
         foreach ($ots as $ot) {
@@ -52,20 +51,29 @@ class CalendarioController extends Controller
                     }
                     $actividades = '<div class="card-footer">'.$lista.'</div>';
                     $evento->push(['start'=>$ot->fecha,'color'=>'#228E3B', 'title'=>$ot->contrato->equipo->obra->nombre, 'url'=>$actividades]);
+
+                    if ($ot->adelanto_trabajador) {
+                        $evento->push(['start'=>$ot->fecha .' 01:00','color'=>'#DCA606', 'title'=>'adelanto '.$ot->adelanto_trabajador->pago.' soles', 'url'=>'<div class="card-footer">Se adelantó '.$ot->adelanto_trabajador->pago.' Soles</div>']);
+                    }
+                    if ($ot->descuento) {
+                        $evento->push(['start'=>$ot->fecha .' 01:00','color'=>'#F56954', 'title'=>'descuento de '.$ot->descuento.' soles', 'url'=>'<div class="card-footer">Motivo: '.$ot->motivo_descuento.'</div>']);
+                    }
+                    if (($ot->gasto_trabajador->estado_gasto->nombre ?? '') == 'Mensual') {
+                        $evento->push(['start'=>$ot->fecha .' 01:00','color'=>'#6C757D', 'title'=>'Gasto de '.$ot->gasto_trabajador->tipo_gasto->nombre, 'url'=>'<div class="card-footer">Gasto: '.$ot->gasto_trabajador->pago.' soles</div>']);
+                    }
+
                     break;
+
                 case 'Falta':
-                    $evento->push(['start'=>$ot->fecha,'color'=>'red', 'title'=>$ot->contrato->equipo->obra->nombre, 'url'=>'se registró la falta']);
+                    $evento->push(['start'=>$ot->fecha,'color'=>'#BB2D3A', 'title'=>$ot->contrato->equipo->obra->nombre, 'url'=>'<div class="card-footer">Se registró la falta</div>']);
                     break;
 
                 default:
                     # code...
                     break;
             }
-            if ($ot->adelanto_trabajador) {
-                $evento->push(['start'=>$ot->fecha .' 01:00','color'=>'#DCA606', 'title'=>'adelanto '.$ot->adelanto_trabajador->pago.' soles', 'url'=>'<div class="card-footer">Se adelantó '.$ot->adelanto_trabajador->pago.' Soles</div>']);
 
-            }
-    }
+        }
 
         return response()->json($evento);
     }
