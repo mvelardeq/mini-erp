@@ -19,7 +19,7 @@ class CrearTablaPerdidaExistencia extends Migration
             $table->foreign('item_compra_id','fk_perdidaexistenciaitemcompra_itemcompra')->references('id')->on('item_compra')->onDelete('restrict')->onUpdate('restrict');
             $table->date('fecha');
             $table->text('motivo');
-            $table->double('cantidad',4,2);
+            $table->double('cantidad',6,2);
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

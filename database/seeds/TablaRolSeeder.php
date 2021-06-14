@@ -17,8 +17,9 @@ class TablaRolSeeder extends Seeder
     {
         $rols=[
             'administrador',
-            'editor',
-            'supervisor'
+            'técnico',
+            'supervisor',
+            'asistente-admin',
         ];
         foreach($rols as $key=>$value){
             DB::table('rol')->insert([

@@ -14,16 +14,16 @@ class CrearTablaFactura extends Migration
     public function up()
     {
         Schema::create('factura', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('concepto_pago_id');
             $table->foreign('concepto_pago_id','fk_factura_conceptopago')->references('id')->on('concepto_pago')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('estado_factura_id');
+            $table->unsignedBigInteger('estado_factura_id')->default(1);
             $table->foreign('estado_factura_id','fk_factura_estadofactura')->references('id')->on('estado_factura')->onDelete('restrict')->onUpdate('restrict');
             $table->string('numero',6);
             $table->date('fecha_facturacion');
-            $table->double('subtotal',6,2);
-            $table->double('total_con_igv',6,2);
-            $table->double('pago_sin_detraccion',6,2);
+            $table->double('subtotal',8,2);
+            $table->double('total_con_igv',8,2);
+            $table->double('pago_sin_detraccion',8,2);
             $table->string('observacion',400)->nullable();
             $table->timestamps();
             $table->charset = 'utf8mb4';

@@ -59,7 +59,7 @@ Equipos
                                 @else
                                     <form class="d-inline subir-plano" data-id="{{$equipo->id}}">
                                         @csrf
-                                        <button type="submit" class="btn-accion-tabla eliminar tooltipsC" data-toggle="modal" title="Subir plano">
+                                        <button type="submit" class="btn-accion-tabla eliminar tooltips" data-toggle="modal" title="Subir plano">
                                             <i class="fas fa-plus-circle text-success"></i>
                                         </button>
                                     </form>
@@ -67,7 +67,7 @@ Equipos
                             </td>
 
                             <td>
-                                <a href="{{route('editar_equipo', ['id' => $equipo->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
+                                <a href="{{route('editar_equipo', ['id' => $equipo->id])}}" class="btn-accion-tabla tooltips" title="Editar este registro">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
                                 <form action="{{route('eliminar_equipo', ['id' => $equipo->id])}}" class="d-inline form-eliminar" method="POST">

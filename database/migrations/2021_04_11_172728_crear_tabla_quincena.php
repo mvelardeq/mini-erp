@@ -18,7 +18,7 @@ class CrearTablaQuincena extends Migration
             $table->unsignedBigInteger('trabajador_id')->unique();
             $table->foreign('trabajador_id','fk_quincenatrabajador_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
             $table->string('periodo',45);
-            $table->double('pago',5,2);
+            $table->double('pago',7,2);
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

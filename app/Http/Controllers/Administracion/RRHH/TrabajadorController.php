@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidacionTrabajador;
 use App\Models\Admin\Rol;
 use App\Models\Seguridad\Trabajador;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -31,13 +32,9 @@ class TrabajadorController extends Controller
     {
         $rols = Rol::orderBy('id')->pluck('nombre', 'id')->toArray();
         $trabajadores = Trabajador::with('roles')->orderBy('id')->get();
-        $supervisores = collect();
-        foreach ($trabajadores as $trabajador) {
-            $roles = $trabajador->roles->pluck('nombre');
-            if ($roles->search('supervisor')) {
-                $supervisores->push($trabajador);
-            }
-        }
+        $supervisores = Trabajador::whereHas('roles',function(Builder $query){
+            $query->where('nombre','=','supervisor');
+        })->get();
         return view('dinamica.administracion.rrhh.trabajador.crear', compact('rols', 'supervisores'));
     }
 
@@ -72,14 +69,9 @@ class TrabajadorController extends Controller
     {
         $rols = Rol::orderBy('id')->pluck('nombre', 'id')->toArray();
         $data = Trabajador::with('roles')->findOrFail($id);
-        $trabajadores = Trabajador::with('roles')->orderBy('id')->get();
-        $supervisores = collect();
-        foreach ($trabajadores as $trabajador) {
-            $roles = $trabajador->roles->pluck('nombre');
-            if ($roles->search('supervisor')) {
-                $supervisores->push($trabajador);
-            }
-        }
+        $supervisores = Trabajador::whereHas('roles',function(Builder $query){
+            $query->where('nombre','=','supervisor');
+        })->get();
         return view('dinamica.administracion.rrhh.trabajador.editar', compact('data', 'rols','supervisores'));
     }
 

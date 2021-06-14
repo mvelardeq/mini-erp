@@ -20,7 +20,7 @@ class CotizacionController extends Controller
      */
     public function index()
     {
-        $cotizaciones= Cotizacion::with('lineas_cotizacion','equipo')->orderBy('id')->get();
+        $cotizaciones= Cotizacion::with('lineas_cotizacion','equipo')->orderBy('fecha','desc')->get();
 
         return view('dinamica.ventas.cotizacion.index',compact('cotizaciones'));
 

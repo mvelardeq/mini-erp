@@ -17,7 +17,7 @@ class CrearTablaPagarFactura extends Migration
             $table->id();
             $table->unsignedBigInteger('factura_id')->unique();
             $table->foreign('factura_id','fk_pagarfactura_factura')->references('id')->on('factura')->onDelete('restrict')->onUpdate('restrict');
-            $table->double('pago',6,2);
+            $table->double('pago',8,2);
             $table->date('fecha');
             $table->timestamps();
             $table->charset = 'utf8mb4';

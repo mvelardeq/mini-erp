@@ -21,8 +21,8 @@ class CrearTablaOt extends Migration
             $table->foreign('contrato_id','fk_ot_contrato')->references('id')->on('contrato')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('estado_ot_id');
             $table->foreign('estado_ot_id','fk_ot_estadoot')->references('id')->on('estado_ot')->onDelete('restrict')->onUpdate('restrict');
-            $table->date('fecha',12);
-            $table->unsignedBigInteger('descuento')->nullable();
+            $table->date('fecha');
+            $table->double('descuento',7,2)->nullable();        
             $table->string('motivo_descuento',300)->nullable();
             $table->string('pedido',300)->nullable();
             $table->timestamps();

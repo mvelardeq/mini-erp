@@ -14,7 +14,7 @@ class TablaEstadoConceptoPagoSeeder extends Seeder
     public function run()
     {
         DB::table('estado_conceptopago')->insert([
-            'nombre' => 'Sin Facturar',
+            'nombre' => 'Sin facturar',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);

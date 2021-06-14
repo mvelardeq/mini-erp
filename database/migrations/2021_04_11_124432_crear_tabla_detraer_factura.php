@@ -17,7 +17,7 @@ class CrearTablaDetraerFactura extends Migration
             $table->id();
             $table->unsignedBigInteger('factura_id')->unique();
             $table->foreign('factura_id','fk_detraerfactura_factura')->references('id')->on('factura')->onDelete('restrict')->onUpdate('restrict');
-            $table->double('pago_detraccion',6,2);
+            $table->double('pago_detraccion',8,2);
             $table->date('fecha');
             $table->timestamps();
             $table->charset = 'utf8mb4';

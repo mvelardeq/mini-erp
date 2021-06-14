@@ -18,7 +18,7 @@ class CrearTablaAsientoContable extends Migration
             $table->date('fecha');
             $table->string('glosa', 200);
             $table->unsignedBigInteger('asientoable_id');
-            $table->string('asientoable_type',80);
+            $table->string('asientoable_type',100);
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

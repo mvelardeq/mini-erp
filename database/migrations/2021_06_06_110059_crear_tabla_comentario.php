@@ -19,7 +19,7 @@ class CrearTablaComentario extends Migration
             $table->foreign('trabajador_id','fk_comentario_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('post_id');
             $table->foreign('post_id','fk_comentario_post')->references('id')->on('post')->onDelete('restrict')->onUpdate('restrict');
-            $table->string('contenido',200);
+            $table->string('contenido',400);
             $table->timestamps();
         });
     }

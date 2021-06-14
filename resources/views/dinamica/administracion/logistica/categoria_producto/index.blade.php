@@ -35,12 +35,12 @@ Categoria producto
                             <td>{{$categoria_producto->nombre}}</td>
 
                             <td>
-                                <a href="{{route('editar_categoria_producto', ['id' => $categoria_producto->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
+                                <a href="{{route('editar_categoria_producto', ['id' => $categoria_producto->id])}}" class="btn-accion-tabla tooltips" title="Editar este registro">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
                                 <form action="{{route('eliminar_categoria_producto', ['id' => $categoria_producto->id])}}" class="d-inline form-eliminar" method="POST">
                                     @csrf @method("delete")
-                                    <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Eliminar este registro">
+                                    <button type="submit" class="btn-accion-tabla eliminar tooltips" title="Eliminar este registro">
                                         <i class="fa fa-fw fa-trash text-danger"></i>
                                     </button>
                                 </form>

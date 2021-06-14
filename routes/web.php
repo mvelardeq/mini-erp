@@ -182,6 +182,11 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
         Route::post('notificaciones/gastom/{id}', 'NotificacionesController@gastom')->middleware(['supervisor'])->name('gastom_ot');
         Route::get('notificaciones/crear-falta', 'NotificacionesController@crear_falta')->middleware(['supervisor'])->name('crear_falta_ot');
         Route::post('notificaciones/guardar-falta/{id}', 'NotificacionesController@guardar_falta')->middleware(['supervisor'])->name('guardar_falta_ot');
+
+        // RUTAS DE CALENDARIO
+        Route::get('calendario','CalendarioController@index')->name('usuario_calendario');
+        Route::get('calendario/mostrar','CalendarioController@mostrar')->name('mostrar_calendario');
+
     });
 
 
@@ -324,7 +329,6 @@ Route::group(['prefix' => 'social', 'namespace' => 'Social', 'middleware' =>['au
 
     /*RUTAS DE COMENTARIOS*/
     Route::post('comentario/{id}', 'ComentarioController@guardar')->name('guardar_comentario');
-    Route::post('notificaciones/guardar-falta/{id}', 'NotificacionesController@guardar_falta')->middleware(['supervisor'])->name('guardar_falta_ot');
 
 });
 

@@ -17,7 +17,7 @@ class CrearTablaPagoServicio extends Migration
             $table->id();
             $table->unsignedBigInteger('servicio_tercero_id');
             $table->foreign('servicio_tercero_id','fk_pagoserviciotercero_pagoservicio')->references('id')->on('servicio_tercero')->onDelete('restrict')->onUpdate('restrict');
-            $table->double('pago',5,2);
+            $table->double('pago',7,2);
             $table->date('fecha_pago');
             $table->string('proveedor',200)->nullable();
             $table->string('ruc_proveedor',11)->nullable();

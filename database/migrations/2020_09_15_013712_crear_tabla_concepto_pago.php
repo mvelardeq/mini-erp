@@ -20,7 +20,7 @@ class CrearTablaConceptoPago extends Migration
             $table->unsignedBigInteger('estado_conceptopago_id')->default(1);
             $table->foreign('estado_conceptopago_id','fk_conceptopago_estadoconceptopago')->references('id')->on('estado_conceptopago')->onDelete('restrict')->onUpdate('restrict');
             $table->string('concepto',400);
-            $table->unsignedInteger('porcentaje');
+            $table->double('porcentaje',5,2);
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

@@ -380,7 +380,7 @@ class TablaMenuSeeder extends Seeder
             'nombre' => 'Perfil',
             'url' => 'usuario/perfil',
             'orden'=> 1,
-            'icono'=> 'file-contract',
+            'icono'=> 'id-badge',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
@@ -389,7 +389,7 @@ class TablaMenuSeeder extends Seeder
             'nombre' => 'OTs',
             'url' => 'usuario/ot',
             'orden'=> 2,
-            'icono'=> 'id-badge',
+            'icono'=> 'file-contract',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);

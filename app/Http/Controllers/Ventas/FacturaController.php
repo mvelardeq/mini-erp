@@ -26,7 +26,7 @@ class FacturaController extends Controller
      */
     public function index()
     {
-        $facturas= Factura::with('concepto_pago', 'pagar_factura', 'detraer_factura', 'anular_factura')->orderBy('id','desc')->get();
+        $facturas= Factura::with('concepto_pago', 'pagar_factura', 'detraer_factura', 'anular_factura')->orderBy('numero','desc')->get();
         // $contratos= Contrato::with('conceptos_pago','equipo')->where('estado','abierto')->orderBy('id')->get();
         $equipos= Equipo::orderBy('id')->get();
 
@@ -41,9 +41,9 @@ class FacturaController extends Controller
      */
     public function crear()
     {
-        $contratos= Contrato::with('conceptos_pago','equipo')->where('estado','Abierto')->orderBy('id')->get();
+        $contratos= Contrato::with('conceptos_pago','equipo')->where('estado','Abierto')->orderBy('fecha_inicio','desc')->get();
         $conceptos_pago= Concepto_pago::orderBy('id')->get();
-        $equipos= Equipo::orderBy('id')->get();
+        $equipos= Equipo::orderBy('created_at','desc')->get();
         return  view('dinamica.ventas.factura.crear',compact('contratos', 'conceptos_pago', 'equipos'));
     }
 

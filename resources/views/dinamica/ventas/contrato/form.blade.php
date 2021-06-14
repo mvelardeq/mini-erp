@@ -32,7 +32,7 @@
 <div class="form-group row">
     <label for="horas" class="col-lg-3 col-form-label">Horas</label>
     <div class="col-lg-8">
-        <input type="number" step="0.01" name="horas" id="horas" class="form-control" value="{{old('horas', $contrato->horas ?? '')}}"/>
+        <input type="number" name="horas" id="horas" class="form-control" value="{{old('horas', $contrato->horas ?? '')}}"/>
     </div>
 </div>
 <div class="form-group row">

@@ -37,12 +37,12 @@
                                 <td>{{$permiso->nombre}}</td>
                                 <td>{{$permiso->slug}}</td>
                                 <td>
-                                    <a href="{{route("editar_permiso", ['id' => $permiso->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
+                                    <a href="{{route("editar_permiso", ['id' => $permiso->id])}}" class="btn-accion-tabla tooltips" title="Editar este registro">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <form action="{{route("eliminar_permiso",  ['id' => $permiso->id])}}" class="d-inline form-eliminar" method="POST">
                                         @csrf @method("delete")
-                                        <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Eliminar este registro">
+                                        <button type="submit" class="btn-accion-tabla eliminar tooltips" title="Eliminar este registro">
                                             <i class="fas fa-times-circle text-danger"></i>
                                         </button>
                                     </form>

@@ -93,28 +93,28 @@ Facturas
                             <td id="accion{{$factura->id}}">
                                 <form action="{{route('procesar_factura', ['id' => $factura->id])}}" class="d-inline form-procesar" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Procesar factura">
+                                    <button type="submit" class="btn-accion-tabla eliminar tooltips" title="Procesar factura">
                                         <i class="fas fa-share-square text-info"></i>
                                     </button>
                                 </form>
 
                                 <form class="d-inline pagar-factura" data-id="{{$factura->id}}" data-estado="{{$factura->estado_factura->nombre}}">
                                     @csrf
-                                    <button type="submit" class="btn-accion-tabla eliminar tooltipsC" data-toggle="{{($factura->estado_factura->nombre != 'Por cobrar') ? '#' : 'modal'}}" title="Pagar factura">
+                                    <button type="submit" class="btn-accion-tabla eliminar tooltips" data-toggle="{{($factura->estado_factura->nombre != 'Por cobrar') ? '#' : 'modal'}}" title="Pagar factura">
                                         <i class="fas fa-money-bill-alt text-success"></i>
                                     </button>
                                 </form>
 
                                 <form class="d-inline detraer-factura" data-id="{{$factura->id}}" data-estado="{{$factura->estado_factura->nombre}}">
                                     @csrf
-                                    <button type="submit" class="btn-accion-tabla eliminar tooltipsC" data-toggle="{{($factura->estado_factura->nombre != 'Por cobrar') ? '#' : 'modal'}}" title="Detraer factura">
+                                    <button type="submit" class="btn-accion-tabla eliminar tooltips" data-toggle="{{($factura->estado_factura->nombre != 'Por cobrar') ? '#' : 'modal'}}" title="Detraer factura">
                                         <i class="fas fa-percent text-secondary"></i>
                                     </button>
                                 </form>
 
                                 <form class="d-inline anular-factura" data-id="{{$factura->id}}" data-estado="{{$factura->estado_factura->nombre}}">
                                     @csrf
-                                    <button type="submit" class="btn-accion-tabla eliminar tooltipsC" data-toggle="{{($factura->estado_factura->nombre != 'Por cobrar') ? '#' : 'modal'}}" title="Anular factura">
+                                    <button type="submit" class="btn-accion-tabla eliminar tooltips" data-toggle="{{($factura->estado_factura->nombre != 'Por cobrar') ? '#' : 'modal'}}" title="Anular factura">
                                         <i class="fas fa-calendar-times text-danger"></i>
                                     </button>
                                 </form>
@@ -124,7 +124,7 @@ Facturas
                             <td>
                                 <form action="{{route('eliminar_factura', ['id' => $factura->id])}}" class="d-inline form-eliminar" method="POST">
                                     @csrf @method("delete")
-                                    <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Eliminar este registro">
+                                    <button type="submit" class="btn-accion-tabla eliminar tooltips" title="Eliminar este registro">
                                         <i class="fa fa-fw fa-trash text-danger"></i>
                                     </button>
                                 </form>

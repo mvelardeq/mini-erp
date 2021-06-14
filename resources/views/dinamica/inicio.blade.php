@@ -14,11 +14,11 @@
         @include('dinamica.includes.mensaje')
 
         <div class="row">
-            <div class="col-md-2 publicity hidden-md-down mt-3"></div>
+            <div class="col-md-2 publicity hidden-md-down"></div>
 
 
             <!-- col principal-container -->
-            <div class="col mt-1" id="muro">
+            <div class="col" id="muro">
                 <div class="card card-primary card-outline">
                     <form action="{{route('guardar_post')}}" method="POST" autocomplete="off" enctype="multipart/form-data" >
                         @csrf
@@ -31,8 +31,8 @@
                                 </div>
                             </div>
                             <div class="col-9 p-0 m-0">
-                                    <textarea name="descripcion" id="" class="form-control border-0 textarea p-3" placeholder="Publicar Mensaje" required></textarea>
-                                    <div class="" id="preview" style="display:block; margin-top:20px;"></div>
+                                <textarea name="descripcion" id="" class="form-control border-0 textarea p-3" placeholder="Publicar Mensaje" required></textarea>
+                                <div class="" id="preview" style="display:block; margin-top:20px;"></div>
                             </div>
                         </div>
                         <div class="card-footer">
@@ -55,19 +55,19 @@
                       </div>
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body">
+                    <div class="card-body px-0 mx-0">
                       <img class="img-fluid pad mx-auto d-block pb-2" src="{{Storage::disk('s3')->url('photos/postPhoto/'.$post->foto)}}" alt="Photo">
 
-                      <p>{{$post->descripcion}}</p>
+                      <p class="px-3">{{$post->descripcion}}</p>
 
-                        <form class="d-inline {{($post->likes->where('trabajador_id',auth()->user()->id)->count() == 1) ? 'form-dislike' : 'form-like'}}" data-id="{{$post->id}}">
+                        <form class="d-inline px-3 {{($post->likes->where('trabajador_id',auth()->user()->id)->count() == 1) ? 'form-dislike' : 'form-like'}}" data-id="{{$post->id}}">
                             @csrf
                             <button type="submit" class="btn btn-default btn-sm {{($post->likes->where('trabajador_id',auth()->user()->id)->count() == 1) ? 'text-primary' : ''}}">
                                 <i class="far fa-thumbs-up"></i> Me gusta
                             </button>
                         </form>
 
-                      <span class="float-right text-muted">
+                      <span class="float-right px-3 text-muted">
                           <a href="#" class="d-inline me-gusta" data-id="{{$post->id}}">{{($post->likes->count()>0) ? ($post->likes->count().' me gusta') : ''}}</a>
                           <a href="#bloque{{$post->id}}" aria-expanded="false" aria-controls="bloque{{$post->id}}" data-toggle="collapse" class="d-inline pl-2">{{($post->comentarios->count()>0) ? ($post->comentarios->count().' comentario(s)') : ''}}</a>
                       </span>
@@ -133,13 +133,13 @@
 
 </div>
 
-{{-- Modal Agregar producto particular --}}
+{{-- Modal Me gusta --}}
 <div class="modal fade" id="modalMegusta" tabindex="-1" role="dialog" aria-labelledby="modalProductopLabel" aria-hidden="true">
 
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalProductopLabel">Lista de me gusta</h5>
+                <h6 class="modal-title" id="modalProductopLabel">Les gusta esta publicación</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>

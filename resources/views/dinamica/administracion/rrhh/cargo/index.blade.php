@@ -36,12 +36,12 @@ Cargos
                                 <td>{{$cargo_trabajador->nombre}}</td>
 
                                 <td>
-                                    <a href="{{route('editar_cargo', ['id' => $cargo_trabajador->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
+                                    <a href="{{route('editar_cargo', ['id' => $cargo_trabajador->id])}}" class="btn-accion-tabla tooltips" title="Editar este registro">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
                                     <form action="{{route('eliminar_cargo', ['id' => $cargo_trabajador->id])}}" class="d-inline form-eliminar" method="POST">
                                         @csrf @method("delete")
-                                        <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Eliminar este registro">
+                                        <button type="submit" class="btn-accion-tabla eliminar tooltips" title="Eliminar este registro">
                                             <i class="fa fa-fw fa-trash text-danger"></i>
                                         </button>
                                     </form>

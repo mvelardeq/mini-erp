@@ -1,7 +1,5 @@
 <?php
 
-use Database\Seeders\TablaCuentaContable;
-use Database\Seeders\TablaEstadoOtSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -37,6 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TablaCuentaContableSeeder::class);
         $this->call(TablaServicioSeeder::class);
         $this->call(TablaActividadSeeder::class);
+        $this->call(TablaEmpresaSeeder::class);
     }
     protected function truncateTablas(array $tablas){
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');

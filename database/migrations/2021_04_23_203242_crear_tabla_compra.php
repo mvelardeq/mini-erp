@@ -17,7 +17,7 @@ class CrearTablaCompra extends Migration
             $table->id();
             $table->string('proveedor',90);
             $table->date('fecha');
-            $table->double('total_con_igv',5,2);
+            $table->double('total_con_igv',7,2);
             $table->string('ruc_proveedor',11)->nullable();
             $table->text('observacion')->nullable();
             $table->timestamps();

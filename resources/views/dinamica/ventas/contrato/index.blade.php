@@ -30,7 +30,7 @@ Contratos
                 <table class="table table-striped table-bordered table-hover table-responsive-lg" id="tabla-data">
                     <thead class="bg-dark">
                         <tr>
-                            <th>Equipo-Servicio</th>
+                            <th clas="w-25">Equipo-Servicio</th>
                             <th>Horas</th>
                             <th>Costo (sin igv)</th>
                             <th>Fecha inicio</th>
@@ -60,7 +60,7 @@ Contratos
                                 <td>
                                     <form action="{{route('finalizar_contrato', ['id' => $contrato->id])}}" class="d-inline form-finalizar" method="POST">
                                         @csrf
-                                        <button id="accion{{$contrato->id}}" type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Finalizar contrato">
+                                        <button id="accion{{$contrato->id}}" type="submit" class="btn-accion-tabla eliminar tooltips" title="Finalizar contrato">
                                             {{-- <i class="fa fa-flag-checkered"></i> --}}
                                             Finalizar
                                         </button>
@@ -70,7 +70,7 @@ Contratos
                                 <td>
                                     <form action="{{route('retomar_contrato', ['id' => $contrato->id])}}" class="d-inline form-retomar" method="POST">
                                         @csrf
-                                        <button id="accion{{$contrato->id}}" type="submit" class="btn-accion-tabla tooltipsC" title="Retomar contrato">
+                                        <button id="accion{{$contrato->id}}" type="submit" class="btn-accion-tabla tooltips" title="Retomar contrato">
                                             {{-- <i class="fa fa-hourglass-start text-danger"></i> --}}
                                             Retomar
                                         </button>
@@ -79,12 +79,12 @@ Contratos
                             @endif
 
                             <td>
-                                <a href="{{route('editar_contrato', ['id' => $contrato->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
+                                <a href="{{route('editar_contrato', ['id' => $contrato->id])}}" class="btn-accion-tabla tooltips" title="Editar este registro">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
                                 <form action="{{route('eliminar_contrato', ['id' => $contrato->id])}}" class="d-inline form-eliminar" method="POST">
                                     @csrf @method("delete")
-                                    <button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Eliminar este registro">
+                                    <button type="submit" class="btn-accion-tabla eliminar tooltips" title="Eliminar este registro">
                                         <i class="fa fa-fw fa-trash text-danger"></i>
                                     </button>
                                 </form>

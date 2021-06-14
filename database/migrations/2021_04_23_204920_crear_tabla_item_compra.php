@@ -19,9 +19,9 @@ class CrearTablaItemCompra extends Migration
             $table->foreign('compra_id','fk_compraitemcompra_compra')->references('id')->on('compra')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('producto_id');
             $table->foreign('producto_id','fk_productoitemcompra_producto')->references('id')->on('producto')->onDelete('restrict')->onUpdate('restrict');
-            $table->double('costo_con_igv',5,2);
-            $table->double('cantidad',4,2);
-            $table->double('cantidad_perdida',4,2)->default(0);
+            $table->double('costo_con_igv',7,2);
+            $table->double('cantidad',6,2);
+            $table->double('cantidad_perdida',6,2)->default(0);
             $table->string('capacidad', 45)->nullable();
             $table->string('numero_serie',12)->nullable();
             $table->string('marca',45)->nullable();

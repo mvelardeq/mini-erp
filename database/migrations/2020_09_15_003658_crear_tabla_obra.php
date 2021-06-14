@@ -15,9 +15,9 @@ class CrearTablaObra extends Migration
     {
         Schema::create('obra', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre',40);
+            $table->string('nombre',100);
             $table->string('direccion',400);
-            $table->string('cliente',60)->nullable();
+            $table->string('cliente',100)->nullable();
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

@@ -17,8 +17,8 @@ class CrearTablaEmpresa extends Migration
             $table->id();
             $table->string('razon_social',200);
             $table->string('ruc',11);
-            $table->double('porcentaje_detraccion',2,2);
-            $table->double('pago_hora',3,2)->nullable();
+            $table->double('porcentaje_detraccion',5,2);
+            $table->double('pago_hora',7,2)->nullable();
             $table->string('direccion',300);
             $table->string('actividad',90);
             $table->string('observacion',400)->nullable();

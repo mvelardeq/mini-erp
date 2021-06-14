@@ -14,7 +14,7 @@ class CrearTablaAnularFactura extends Migration
     public function up()
     {
         Schema::create('anular_factura', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('factura_id')->unique();
             $table->foreign('factura_id','fk_anularfactura_factura')->references('id')->on('factura')->onDelete('restrict')->onUpdate('restrict');
             $table->text('motivo');

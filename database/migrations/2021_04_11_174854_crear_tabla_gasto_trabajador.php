@@ -21,7 +21,7 @@ class CrearTablaGastoTrabajador extends Migration
             $table->foreign('tipo_gasto_id','fk_gastotrabajador_tipogastotrabajador')->references('id')->on('tipo_gasto')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('estado_gasto_id')->unique();
             $table->foreign('estado_gasto_id','fk_gastotrabajador_estadogasto')->references('id')->on('estado_gasto')->onDelete('restrict')->onUpdate('restrict');
-            $table->double('pago',5,2);
+            $table->double('pago',6,2);
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

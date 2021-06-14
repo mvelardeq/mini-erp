@@ -112,7 +112,7 @@ class NotificacionesController extends Controller
             'fecha' => Carbon::now()->isoFormat('YYYY-MM-DD')
 
         ]);
-        return redirect('usuario/notificaciones/'.$id)->with('mensaje', 'Falta creada con éxito');
+        return redirect('usuario/notificaciones')->with('mensaje', 'Falta creada con éxito');
     }
 
     /**

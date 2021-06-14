@@ -23,7 +23,10 @@ class TablaCategoriaProductoSeeder extends Seeder
             'nombre' => 'Seguridad',
         ]);
         DB::table('categoria_producto')->insert([
-            'nombre' => 'Material',
+            'nombre' => 'Material de montaje',
+        ]);
+        DB::table('categoria_producto')->insert([
+            'nombre' => 'Material de oficina',
         ]);
     }
 }

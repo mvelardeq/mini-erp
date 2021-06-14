@@ -19,10 +19,10 @@ class ContratoController extends Controller
      */
     public function index()
     {
-        $contratos= Contrato::with('conceptos_pago','equipo', 'servicio')->orderBy('id')->get();
+        $contratos= Contrato::with('conceptos_pago','equipo', 'servicio')->orderBy('fecha_inicio','desc')->get();
         $servicios = Servicio::orderBy('id')->get();
         // $empresas = Empresa::orderBy('id')->get();
-        $equipos = Equipo::with('obra')->orderBy('id')->get();
+        $equipos = Equipo::with('obra')->orderBy('created_at','desc')->get();
         return view('dinamica.ventas.contrato.index',compact('contratos', 'servicios', 'equipos'));
     }
 
@@ -37,7 +37,7 @@ class ContratoController extends Controller
         $conceptos_pago= Concepto_pago::orderBy('id')->get();
         $servicios = Servicio::orderBy('id')->get();
         // $empresas = Empresa::orderBy('id')->get();
-        $equipos= Equipo::orderBy('id')->get();
+        $equipos= Equipo::orderBy('created_at','desc')->get();
         return  view('dinamica.ventas.contrato.crear',compact('contratos', 'conceptos_pago', 'servicios', 'equipos'));
     }
 
@@ -138,7 +138,7 @@ class ContratoController extends Controller
         $porcentajes = Concepto_pago::orderBy('id')->where('contrato_id', $id)->pluck('porcentaje')->toArray();
         $servicios = Servicio::orderBy('id')->get();
         // $empresas = Empresa::orderBy('id')->get();
-        $equipos= Equipo::orderBy('id')->get();
+        $equipos= Equipo::orderBy('created_at','desc')->get();
         return view('dinamica.ventas.contrato.editar', compact('contrato','conceptos', 'porcentajes', 'servicios', 'equipos'));
     }
 
