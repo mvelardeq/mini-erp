@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Administracion\RRHH;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Ascenso_trabajador;
-use App\Models\Admin\Cargo_trabajador;
 use App\Models\Seguridad\Trabajador;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class AscensoTrabajadorController extends Controller
+class BoletaPagoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +16,10 @@ class AscensoTrabajadorController extends Controller
      */
     public function index()
     {
-        //
+        $year =Carbon::now()->year;
+        // return dd(Carbon::create($year,3,15)->toDateString());
+        $trabajadores = Trabajador::with('boleta_pago','quincena')->orderBy('id')->get();
+        return view('dinamica.administracion.rrhh.boleta-pago.index',compact('year','trabajadores'));
     }
 
     /**
@@ -25,15 +27,9 @@ class AscensoTrabajadorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function crear($id)
+    public function crear($id,$periodo)
     {
-        $trabajador = Trabajador::with('ascensos','periodos')->findOrFail($id);
-        $cargo_trabajador = Cargo_trabajador::get();
-        $ascensos = Ascenso_trabajador::with('cargo')->where('trabajador_id', $id)->get();
-
-        $data = Trabajador::with('roles:id,nombre', 'observaciones', 'periodos', 'ascensos')->findOrFail($id);
-
-        return view('dinamica.administracion.rrhh.ascenso-trabajador.crear', compact('trabajador', 'cargo_trabajador', 'ascensos', 'data'));
+        return view('dinamica.administracion.rrhh.boleta-pago.crearboleta');
     }
 
     /**
@@ -42,10 +38,9 @@ class AscensoTrabajadorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request,$id)
+    public function guardar(Request $request,$id,$periodo)
     {
-        Ascenso_trabajador::create($request->all());
-        return redirect('administracion/rrhh/trabajador/'.$id.'/perfil')->with('mensaje','Ascenso creado con éxito');
+        //
     }
 
     /**

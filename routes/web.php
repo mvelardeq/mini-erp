@@ -246,23 +246,15 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
         Route::put('rrhh/trabajador/{id}', 'TrabajadorController@actualizar')->name('actualizar_trabajador');
         Route::delete('rrhh/trabajador/{id}', 'TrabajadorController@eliminar')->name('eliminar_trabajador');
         Route::get('rrhh/trabajador/{id}/perfil', 'TrabajadorPerfilController@index')->name('trabajador_perfil');
-
         Route::get('rrhh/trabajador/{id}/periodo-trabajador', 'PeriodoTrabajadorController@crear')->name('crear_periodo_trabajador');
         Route::post('rrhh/trabajador/{id}/periodo-trabajador', 'PeriodoTrabajadorController@guardar')->name('guardar_periodo_trabajador');
-
         Route::get('rrhh/trabajador/{id}/fin-periodo-trabajador', 'PeriodoTrabajadorController@editar')->name('fin_periodo_trabajador');
         Route::post('rrhh/trabajador/{id}/fin-periodo-trabajador', 'PeriodoTrabajadorController@actualizar')->name('actualizar_periodo_trabajador');
-
         Route::get('rrhh/trabajador/{id}/observacion-trabajador', 'ObservacionTrabajadorController@crear')->name('crear_observacion_trabajador');
         Route::post('rrhh/trabajador/{id}/observacion-trabajador', 'ObservacionTrabajadorController@guardar')->name('guardar_observacion_trabajador');
-
         Route::get('rrhh/trabajador/{id}/ascenso-trabajador', 'AscensoTrabajadorController@crear')->name('crear_ascenso_trabajador');
         Route::post('rrhh/trabajador/{id}/ascenso-trabajador', 'AscensoTrabajadorController@guardar')->name('guardar_ascenso_trabajador');
-
-
         Route::get('rrhh/trabajador/{id}/perfil/calendario', 'TrabajadorPerfilController@mostrarc')->name('mostrar_calendario_trabajador');
-
-
         /*RUTAS DE CARGO*/
         Route::get('rrhh/cargo', 'CargoController@index')->name('cargo');
         Route::get('rrhh/cargo/crear', 'CargoController@crear')->name('crear_cargo');
@@ -270,6 +262,13 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
         Route::get('rrhh/cargo/{id}/editar', 'CargoController@editar')->name('editar_cargo');
         Route::put('rrhh/cargo/{id}', 'CargoController@actualizar')->name('actualizar_cargo');
         Route::delete('rrhh/cargo/{id}', 'CargoController@eliminar')->name('eliminar_cargo');
+        /*RUTAS DE BOLETA DE PAGO*/
+        Route::get('rrhh/boleta-pago', 'BoletaPagoController@index')->name('boleta_trabajador');
+        Route::get('rrhh/boleta-pago/crear/{id}/{periodo}', 'BoletaPagoController@crear')->name('crear_boleta_trabajador');
+        Route::get('rrhh/boleta-pago/guardar/{id}/{periodo}', 'BoletaPagoController@guardar')->name('guardar_boleta_trabajador');
+        Route::get('rrhh/quincena/crear/{id}/{periodo}', 'QuincenaController@crear')->name('crear_quincena_trabajador');
+        Route::get('rrhh/quincena/guardar/{id}/{periodo}', 'QuincenaController@guardar')->name('guardar_quincena_trabajador');
+
         });
 
     Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion', 'middleware' =>['auth','superadmin']], function () {

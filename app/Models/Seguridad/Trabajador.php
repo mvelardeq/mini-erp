@@ -6,6 +6,9 @@ use App\Models\Admin\Ascenso_trabajador;
 use App\Models\Admin\Obs_trabajador;
 use App\Models\Admin\Periodo_trabajador;
 use App\Models\Admin\Rol;
+use App\Models\Administracion\RRHH\BoletaPago;
+use App\Models\Administracion\RRHH\Quincena;
+use App\Models\Operaciones\Ot;
 use App\Models\Social\Comentario;
 use App\Models\Social\Likes;
 use App\Models\Social\Post;
@@ -30,6 +33,18 @@ class Trabajador extends Authenticatable
     public function observaciones()
     {
         return $this->HasMany(Obs_trabajador::class);
+    }
+    public function boleta_pago()
+    {
+        return $this->HasMany(BoletaPago::class);
+    }
+    public function quincena()
+    {
+        return $this->HasMany(Quincena::class);
+    }
+    public function ots()
+    {
+        return $this->HasMany(Ot::class);
     }
 
     public function periodos()
