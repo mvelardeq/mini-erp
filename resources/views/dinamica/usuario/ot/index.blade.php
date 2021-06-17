@@ -42,7 +42,7 @@ Ot
                         @foreach ($ots as $ot)
                         <tr class="{{($ot->estado_ot->nombre=='Falta') ? 'table-danger' : ''}}">
                             <td>{{$ot->contrato->equipo->obra->nombre}} (O.E: {{$ot->contrato->equipo->oe}}) {{$ot->contrato->servicio->nombre}}</td>
-                            <td>{{Carbon::parse($ot->created_at)->isoFormat('DD MMM')}}</td>
+                            <td>{{Carbon::parse($ot->fecha)->isoFormat('DD MMM')}}</td>
                             <td>
                                 @foreach ($ot->actividades as $ot_actividad)
                                     {{$ot_actividad->nombre.': '.$ot_actividad->pivot->horas.' hrs'}}<br>
