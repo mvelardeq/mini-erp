@@ -43,7 +43,7 @@ use Carbon\Carbon;
                                                     target="_blank"><i class="fas fa-file-pdf text-danger"></i></a>
                                             @else
                                                 <a
-                                                    href="{{ route('crear_quincena_trabajador', ['id' => $trabajador->id, 'periodo' => Carbon::create($year, $i, 15)->toDateString()]) }}"
+                                                    href="{{ route('crear_quincena_trabajador', ['id' => $trabajador->trabajador_id, 'periodo' => Carbon::create($year, $i, 15)->toDateString()]) }}"
                                                     class="d-inline subir-quincena">
                                                     <button type="submit" class="btn-accion-tabla eliminar tooltips"
                                                         data-toggle="modal" title="Subir plano">
@@ -58,7 +58,7 @@ use Carbon\Carbon;
                                                     target="_blank"><i class="fas fa-file-pdf text-danger"></i></a>
                                             @else
                                                 <a
-                                                    href="{{ route('crear_boleta_trabajador', ['id' => $trabajador->id,'periodo' => Carbon::create($year, $i, 1)->endOfMonth()->toDateString()]) }}"
+                                                    href="{{ route('crear_boleta_trabajador', ['id' => $trabajador->trabajador_id,'periodo' => Carbon::create($year, $i, 1)->endOfMonth()->toDateString()]) }}"
                                                     class="d-inline subir-boleta">
                                                     <button type="submit" class="btn-accion-tabla eliminar tooltips"
                                                         data-toggle="modal" title="Subir plano">

@@ -1,4 +1,7 @@
 @extends("theme.$theme.layout")
+@php
+use Carbon\Carbon;
+@endphp
 @section('titulo')
     Boleta de pago
 @endsection
@@ -43,6 +46,14 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">Periodo</label>
+                            <div class="col-lg-8">
+                                <ul class="list-group">
+                                    <a>Fin mes {{Carbon::create($periodo)->isoFormat('MMMM YYYY')}}</a>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Información</label>
                             <div class="col-lg-8">
                                 <ul class="list-group mb-3">
@@ -71,6 +82,14 @@
                 <form action="{{route('guardar_boleta_trabajador',['id'=>$trabajador->id,'periodo'=>$periodo])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">Periodo</label>
+                            <div class="col-lg-8">
+                                <ul class="list-group">
+                                    <a>Fin mes {{Carbon::create($periodo)->isoFormat('MMMM YYYY')}}</a>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Información</label>
                             <div class="col-lg-8">
@@ -122,6 +141,14 @@
                 <form action="{{route('guardar_quincena_trabajador',['id'=>$trabajador->id,'periodo'=>$periodo])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-lg-3 col-form-label">Periodo</label>
+                            <div class="col-lg-8">
+                                <ul class="list-group">
+                                    <a>Fin mes {{Carbon::create($periodo)->isoFormat('MMMM YYYY')}}</a>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label">Información</label>
                             <div class="col-lg-8">

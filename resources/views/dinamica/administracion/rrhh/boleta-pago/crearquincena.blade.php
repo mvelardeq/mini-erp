@@ -1,4 +1,7 @@
 @extends("theme.$theme.layout")
+@php
+use Carbon\Carbon;
+@endphp
 @section('titulo')
     Boleta de pago
 @endsection
@@ -30,46 +33,65 @@
                     <h3 class="card-title">Crear quincena -
                         {{ $trabajador->primer_nombre . ' ' . $trabajador->primer_apellido }}</h3>
                     <div class="card-tools">
-                        <a href="{{ route('boleta_trabajador') }}" class="btn btn-block btn-info btn-sm">
+                        <a href="{{route('boleta_trabajador')}}" class="btn btn-block btn-info btn-sm">
                             <i class="fa fa-fw fa-reply-all"></i> Volver
                         </a>
                     </div>
                 </div>
                 @if (!$tecnico)
-                <form action="{{ route('guardar_quincena_trabajador', ['id' => $trabajador->id, 'periodo' => $periodo]) }}"
-                    class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
-                    @csrf
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label">Información</label>
-                            <div class="col-lg-8">
-                                <ul class="list-group mb-3">
-                                    <li class="list-group-item bg-success">
-                                        <b>Sueldo Quincena</b> <b
-                                            class="float-right">S/.{{ number_format($costo_hora * 8 * 15, 2) }}</b>
-                                    </li>
-                                </ul>
+                    <form action="{{route('guardar_quincena_trabajador', ['id' => $trabajador->id, 'periodo' => $periodo]) }}"
+                        class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
+                        @csrf
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Periodo</label>
+                                <div class="col-lg-8">
+                                    <ul class="list-group">
+                                        <a>Quincena {{Carbon::create($periodo)->isoFormat('MMMM YYYY')}}</a>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-3 col-form-label">Información</label>
+                                <div class="col-lg-8">
+                                    <ul class="list-group mb-3">
+                                        <li class="list-group-item bg-success">
+                                            <b>Sueldo Quincena</b> <b
+                                                class="float-right">S/.{{ number_format($costo_hora * 8 * 15, 2) }}</b>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <input type="hidden" name="trabajador_id" id="trabajador_id" class="form-control"
+                                        value="{{$trabajador->id}}" />
+                            <input type="hidden" name="periodo" id="periodo" class="form-control"
+                                        value="{{$periodo}}" />
+                            <div class="form-group row">
+                                <label for="pago" class="col-lg-3 col-form-label">Pago quincena</label>
+                                <div class="col-lg-8">
+                                    <input type="text" name="pago" id="pago" class="form-control"
+                                        value="{{ number_format(15*$costo_hora*8,2) }}" />
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="pago" class="col-lg-3 col-form-label">Pago quincena</label>
-                            <div class="col-lg-8">
-                                <input type="text" name="pago" id="pago" class="form-control"
-                                    value="{{ number_format(15*$costo_hora*8,2) }}" />
-                            </div>
+                        <div class="card-footer">
+                            @include('dinamica.includes.boton-form-crear')
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        @include('dinamica.includes.boton-form-crear')
-                    </div>
-                </form>
+                    </form>
                 @else
-                        @if ($dias_noc->count() - $faltas->count() > 0)
-
+                    @if ($dias_noc->count() - $faltas->count() > 0)
                         <form action="{{ route('guardar_quincena_trabajador', ['id' => $trabajador->id, 'periodo' => $periodo]) }}"
                             class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Periodo</label>
+                                    <div class="col-lg-8">
+                                        <ul class="list-group">
+                                            <a>Quincena {{Carbon::create($periodo)->isoFormat('MMMM YYYY')}}</a>
+                                        </ul>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label">Información</label>
                                     <div class="col-lg-8">
@@ -116,6 +138,10 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <input type="hidden" name="trabajador_id" id="trabajador_id" class="form-control"
+                                        value="{{$trabajador->id}}" />
+                                <input type="hidden" name="periodo" id="periodo" class="form-control"
+                                        value="{{$periodo}}" />
                                 <div class="form-group row">
                                     <label for="pago" class="col-lg-3 col-form-label">Pago quincena</label>
                                     <div class="col-lg-8">
@@ -133,6 +159,14 @@
                             class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Periodo</label>
+                                    <div class="col-lg-8">
+                                        <ul class="list-group">
+                                            <a>Quincena {{Carbon::create($periodo)->isoFormat('MMMM YYYY')}}</a>
+                                        </ul>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label">Información</label>
                                     <div class="col-lg-8">
@@ -174,7 +208,10 @@
                                         </ul>
                                     </div>
                                 </div>
-
+                                <input type="hidden" name="trabajador_id" id="trabajador_id" class="form-control"
+                                value="{{$trabajador->id}}" />
+                                <input type="hidden" name="periodo" id="periodo" class="form-control"
+                                value="{{$periodo}}" />
                                 <div class="form-group row">
                                     <label for="pago" class="col-lg-3 col-form-label">Pago quincena</label>
                                     <div class="col-lg-8">
