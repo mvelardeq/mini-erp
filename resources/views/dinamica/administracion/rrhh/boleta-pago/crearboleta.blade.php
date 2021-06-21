@@ -61,14 +61,34 @@ use Carbon\Carbon;
                                         <b>Sueldo Básico</b> <b
                                             class="float-right">S/.{{ number_format($costo_hora * 8 * 30, 2) }}</b>
                                     </li>
+                                    <li class="list-group-item">
+                                        <b class="text-muted">Pago quincena</b> <a
+                                            class="float-right">S/.{{ number_format($pago_quincena['pago']) }}</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
+                        <input type="hidden" name="trabajador_id" id="trabajador_id" class="form-control"
+                                        value="{{$trabajador->id}}" />
+                        <input type="hidden" name="periodo" id="periodo" class="form-control"
+                                        value="{{$periodo}}" />
                         <div class="form-group row">
-                            <label for="pago" class="col-lg-3 col-form-label">Pago boleta</label>
+                            <label for="descuento_mes" class="col-lg-3 col-form-label">Descuentos</label>
                             <div class="col-lg-8">
-                                <input type="text" name="pago" id="pago" class="form-control"
-                                    value="{{ number_format(30*$costo_hora*8,2) }}" />
+                                <input type="number" name="descuento_mes" id="descuento_mes" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="adelantos" class="col-lg-3 col-form-label">Adelantos</label>
+                            <div class="col-lg-8">
+                                <input type="number" name="adelantos" id="adelantos" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="pago_mes" class="col-lg-3 col-form-label">Pago fin de mes</label>
+                            <div class="col-lg-8">
+                                <input type="number" name="pago_mes" id="pago_mes" class="form-control"
+                                    value="{{number_format(30*$costo_hora*8-$pago_quincena['pago'],2)}}" />
                             </div>
                         </div>
                     </div>
@@ -78,7 +98,7 @@ use Carbon\Carbon;
                 </form>
             @else
 
-                @if ($dias_noc->count()>0)
+                @if ($dias_noc->count()-$faltas->count()>0)
                 <form action="{{route('guardar_boleta_trabajador',['id'=>$trabajador->id,'periodo'=>$periodo])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
@@ -121,14 +141,25 @@ use Carbon\Carbon;
                                         <li class="list-group-item">
                                             <b class="text-muted">Faltas</b> <a class="float-right">S/.{{number_format($faltas->count()*$costo_hora*8,2)}}</a>
                                         </li>
+                                        <li class="list-group-item">
+                                            <b class="text-muted">Pago quincena</b> <a
+                                                class="float-right">S/.{{ number_format($pago_quincena['pago'],2) }}</a>
+                                        </li>
                                 </ul>
                             </div>
                         </div>
-
+                        <input type="hidden" name="trabajador_id" id="trabajador_id" class="form-control"
+                        value="{{$trabajador->id}}" />
+                        <input type="hidden" name="periodo" id="periodo" class="form-control"
+                        value="{{$periodo}}" />
+                        <input type="hidden" name="descuento_mes" id="descuento_mes" class="form-control"
+                                        value="{{$adelantos->sum('pago')+$descuentos+$faltas->count()*$costo_hora*8}}" />
+                        <input type="hidden" name="adelantos" id="adelantos" class="form-control"
+                                        value="{{$adelantos->sum('pago')}}" />
                         <div class="form-group row">
-                            <label for="nombre" class="col-lg-3 col-form-label">Pago quincena</label>
+                            <label for="pago_mes" class="col-lg-3 col-form-label">Pago fin de mes</label>
                             <div class="col-lg-8">
-                                <input type="text" name="nombre" id="nombre" class="form-control" value="{{number_format(($dias_tra+$numeros_domingo)*$costo_hora*8+$horas_25p->sum('horas')*$costo_hora*1.25+$horas_35p->sum('horas')*$costo_hora*1.35+$horas_dob->sum('horas')*$costo_hora*2+$gastos->sum('pago')-$adelantos->sum('pago')-$descuentos,2)}}"/>
+                                <input type="number" step="0.01" name="pago_mes" id="pago_mes" class="form-control" value="{{number_format(($dias_tra+$numeros_domingo)*$costo_hora*8+$horas_25p->sum('horas')*$costo_hora*1.25+$horas_35p->sum('horas')*$costo_hora*1.35+$horas_dob->sum('horas')*$costo_hora*2+$gastos->sum('pago')-$adelantos->sum('pago')-$descuentos-$pago_quincena['pago'],2)}}"/>
                             </div>
                         </div>
 
@@ -177,14 +208,25 @@ use Carbon\Carbon;
                                         <li class="list-group-item">
                                             <b class="text-muted">Faltas</b> <a class="float-right">S/.{{number_format($faltas->count()*$costo_hora*8,2)}}</a>
                                         </li>
+                                        <li class="list-group-item">
+                                            <b class="text-muted">Pago quincena</b> <a
+                                                class="float-right">S/.{{ number_format($pago_quincena->pago,2) }}</a>
+                                        </li>
                                 </ul>
                             </div>
                         </div>
-
+                        <input type="hidden" name="trabajador_id" id="trabajador_id" class="form-control"
+                        value="{{$trabajador->id}}" />
+                        <input type="hidden" name="periodo" id="periodo" class="form-control"
+                        value="{{$periodo}}" />
+                        <input type="hidden" name="descuento_mes" id="descuento_mes" class="form-control"
+                                        value="{{$adelantos->sum('pago')+$descuentos+$faltas->count()*$costo_hora*8}}" />
+                        <input type="hidden" name="adelantos" id="adelantos" class="form-control"
+                                        value="{{$adelantos->sum('pago')}}" />
                         <div class="form-group row">
-                            <label for="nombre" class="col-lg-3 col-form-label">Pago boleta</label>
+                            <label for="pago_mes" class="col-lg-3 col-form-label">Pago fin de mes</label>
                             <div class="col-lg-8">
-                                <input type="text" name="nombre" id="nombre" class="form-control" value="{{number_format($costo_hora*8*30+$horas_25p->sum('horas')*$costo_hora*1.25+$horas_35p->sum('horas')*$costo_hora*1.35+$horas_dob->sum('horas')*$costo_hora*2+$gastos->sum('pago')-$adelantos->sum('pago')-$descuentos-$faltas->count()*$costo_hora*8,2)}}"/>
+                                <input type="text" name="pago_mes" id="pago_mes" class="form-control" value="{{number_format($costo_hora*8*30+$horas_25p->sum('horas')*$costo_hora*1.25+$horas_35p->sum('horas')*$costo_hora*1.35+$horas_dob->sum('horas')*$costo_hora*2+$gastos->sum('pago')-$adelantos->sum('pago')-$descuentos-$faltas->count()*$costo_hora*8-$pago_quincena->pago,2)}}"/>
                             </div>
                         </div>
 

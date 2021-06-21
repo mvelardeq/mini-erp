@@ -69,8 +69,8 @@ use Carbon\Carbon;
                             <div class="form-group row">
                                 <label for="pago" class="col-lg-3 col-form-label">Pago quincena</label>
                                 <div class="col-lg-8">
-                                    <input type="text" name="pago" id="pago" class="form-control"
-                                        value="{{ number_format(15*$costo_hora*8,2) }}" />
+                                    <input type="number" step="0.01" name="pago" id="pago" class="form-control"
+                                        value="{{number_format($costo_hora * 8 * 15, 2,".","")}}" />
                                 </div>
                             </div>
                         </div>
@@ -145,8 +145,8 @@ use Carbon\Carbon;
                                 <div class="form-group row">
                                     <label for="pago" class="col-lg-3 col-form-label">Pago quincena</label>
                                     <div class="col-lg-8">
-                                        <input type="text" name="pago" id="pago" class="form-control"
-                                            value="{{ number_format(($dias_tra + $numeros_domingo) * $costo_hora * 8 + $horas_25p->sum('horas') * $costo_hora * 1.25 + $horas_35p->sum('horas') * $costo_hora * 1.35 + $horas_dob->sum('horas') * $costo_hora * 2 + $gastos->sum('pago') - $adelantos->sum('pago') - $descuentos, 2) }}" />
+                                        <input type="number" name="pago" id="pago" class="form-control"
+                                            value="{{number_format(($dias_tra + $numeros_domingo) * $costo_hora * 8 + $horas_25p->sum('horas') * $costo_hora * 1.25 + $horas_35p->sum('horas') * $costo_hora * 1.35 + $horas_dob->sum('horas') * $costo_hora * 2 + $gastos->sum('pago') - $adelantos->sum('pago') - $descuentos,2) }}" />
                                     </div>
                                 </div>
                             </div>
@@ -215,8 +215,8 @@ use Carbon\Carbon;
                                 <div class="form-group row">
                                     <label for="pago" class="col-lg-3 col-form-label">Pago quincena</label>
                                     <div class="col-lg-8">
-                                        <input type="text" name="pago" id="pago" class="form-control"
-                                            value="{{ number_format($costo_hora * 8 * 15 + $horas_25p->sum('horas') * $costo_hora * 1.25 + $horas_35p->sum('horas') * $costo_hora * 1.35 + $horas_dob->sum('horas') * $costo_hora * 2 + $gastos->sum('pago') - $adelantos->sum('pago') - $descuentos - $faltas->count() * $costo_hora * 8, 2) }}" />
+                                        <input type="number" name="pago" id="pago" class="form-control"
+                                            value="{{ number_format($costo_hora * 8 * 15 + $horas_25p->sum('horas') * $costo_hora * 1.25 + $horas_35p->sum('horas') * $costo_hora * 1.35 + $horas_dob->sum('horas') * $costo_hora * 2 + $gastos->sum('pago') - $adelantos->sum('pago') - $descuentos - $faltas->count() * $costo_hora * 8,2) }}" />
                                     </div>
                                 </div>
 

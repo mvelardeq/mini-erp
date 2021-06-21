@@ -1,5 +1,7 @@
 @extends("theme.$theme.layout")
 @php
+use App\Models\Administracion\RRHH\Quincena;
+use App\Models\Administracion\RRHH\BoletaPago;
 use Carbon\Carbon;
 @endphp
 @section('titulo')
@@ -38,8 +40,8 @@ use Carbon\Carbon;
 
                                     @for ($i = 1; $i <= 12; $i++)
                                         <td>
-                                            @if (isset($equipo->quincena->periodo))
-                                                <a href="{{ Storage::disk('s3')->url('files/quincena/' . $equipo->plano) }}"
+                                            @if ($quincena = Quincena::where('trabajador_id',$trabajador->trabajador_id)->where('periodo',Carbon::create($year, $i, 15)->toDateString())->first())
+                                                <a href="{{ Storage::disk('s3')->url('files/boleta/Quincena_' . Carbon::create($quincena->periodo)->isoFormat('MMMM_YYYY').'_'.$trabajador->primer_nombre.'_'.$trabajador->primer_apellido.'.pdf') }}"
                                                     target="_blank"><i class="fas fa-file-pdf text-danger"></i></a>
                                             @else
                                                 <a
@@ -53,8 +55,8 @@ use Carbon\Carbon;
                                             @endif
                                         </td>
                                         <td>
-                                            @if (isset($equipo->boleta_pgo->periodo))
-                                                <a href="{{ Storage::disk('s3')->url('files/boleta_pago/' . $equipo->plano) }}"
+                                            @if ($boleta = BoletaPago::where('trabajador_id',$trabajador->trabajador_id)->where('periodo',Carbon::create($year, $i, 1)->endOfMonth()->toDateString())->first())
+                                                <a href="{{ Storage::disk('s3')->url('files/boleta/Boleta_' . Carbon::create($boleta->periodo)->isoFormat('MMMM_YYYY').'_'.$trabajador->primer_nombre.'_'.$trabajador->primer_apellido.'.pdf') }}"
                                                     target="_blank"><i class="fas fa-file-pdf text-danger"></i></a>
                                             @else
                                                 <a

@@ -262,9 +262,9 @@ Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion\RRHH'
     /*RUTAS DE BOLETA DE PAGO*/
     Route::get('rrhh/boleta-pago', 'BoletaPagoController@index')->name('boleta_trabajador');
     Route::get('rrhh/boleta-pago/crear-fin-de-mes/{id}/{periodo}', 'BoletaPagoController@crearFinDeMes')->name('crear_boleta_trabajador');
-    Route::get('rrhh/boleta-pago/guardar-fin-de-mes/{id}/{periodo}', 'BoletaPagoController@guardarFinDeMes')->name('guardar_boleta_trabajador');
+    Route::post('rrhh/boleta-pago/guardar-fin-de-mes/{id}/{periodo}', 'BoletaPagoController@guardarFinDeMes')->name('guardar_boleta_trabajador');
     Route::get('rrhh/boleta-pago/crear-quincena/{id}/{periodo}', 'BoletaPagoController@crearQuincena')->name('crear_quincena_trabajador');
-    Route::get('rrhh/boleta-pago/guardar-quincena/{id}/{periodo}', 'BoletaPagoController@guardarQuincena')->name('guardar_quincena_trabajador');
+    Route::post('rrhh/boleta-pago/guardar-quincena/{id}/{periodo}', 'BoletaPagoController@guardarQuincena')->name('guardar_quincena_trabajador');
 
 });
 

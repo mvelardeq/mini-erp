@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Administracion\RRHH;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Ascenso_trabajador;
 use App\Models\Admin\Periodo_trabajador;
+use App\Models\Administracion\RRHH\BoletaPago;
 use App\Models\Administracion\RRHH\Quincena;
 use App\Models\Operaciones\Ot;
 use App\Models\Seguridad\Trabajador;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
 class BoletaPagoController extends Controller
@@ -23,7 +25,7 @@ class BoletaPagoController extends Controller
     public function index()
     {
         $year =Carbon::now()->year;
-        $trabajadores = Trabajador::join('periodo_trabajador','trabajador.id','=','periodo_trabajador.trabajador_id')->where('fecha_fin',null)->get();
+        $trabajadores = Trabajador::with('quincena','boleta_pago')->join('periodo_trabajador','trabajador.id','=','periodo_trabajador.trabajador_id')->where('fecha_fin',null)->get();
 
         return view('dinamica.administracion.rrhh.boleta-pago.index',compact('year','trabajadores'));
     }
@@ -198,34 +200,60 @@ class BoletaPagoController extends Controller
         $trabajador = Trabajador::findOrFail($id);
         $inicio = Carbon::create($periodo)->startOfMonth();
         $fin =Carbon::create($periodo);
+        $month = Carbon::create($periodo)->isoFormat('MM');
+        $year = Carbon::create($periodo)->isoFormat('YYYY');
 
         $hasAscenso = $this->hasAscensos($id);
         $tecnico = $this->isTecnico($trabajador);
         $sueldo = $this->sueldo($id,$periodo);
         $costo_hora = $sueldo/(30*8);
         $hasOts = $this->hasOts($id,$periodo);
-        // $pago_quincena =
 
-        if (!$tecnico) {
-            return view('dinamica.administracion.rrhh.boleta-pago.crearboleta',compact('tecnico','trabajador','costo_hora','periodo'));
-        }elseif (!$hasOts) {
-            return redirect('administracion/rrhh/boleta-pago')->with('mensaje','El trabajador no tiene actividad en el periodo seleccionado');
+        if($pago_quincena = Quincena::where('trabajador_id',$id)->where('periodo',Carbon::create($year,$month,15)->toDateString())->first()){
+            if (!$tecnico) {
+                return view('dinamica.administracion.rrhh.boleta-pago.crearboleta',compact('tecnico','trabajador','costo_hora','periodo','pago_quincena'));
+            }elseif (!$hasOts) {
+                return redirect('administracion/rrhh/boleta-pago')->with('mensaje','El trabajador no tiene actividad en el periodo seleccionado');
+            }else{
+                $datos = $this->boleta(30,$id,$periodo);
+                $dias_tra = $datos[0];
+                $dias_noc=$datos[1];
+                $horas_dob=$datos[2];
+                $horas_nor = $datos[3];
+                $horas_25p= $datos[4];
+                $horas_35p = $datos[5];
+                $gastos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('gasto_trabajador','ot.id','=','gasto_trabajador.ot_id')->join('estado_gasto','gasto_trabajador.estado_gasto_id','=','estado_gasto.id')->where('nombre','Mensual')->get();
+                $adelantos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('adelanto_trabajador','ot.id','=','adelanto_trabajador.ot_id')->get();
+                $faltas = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('estado_ot','ot.estado_ot_id','=','estado_ot.id')->where('nombre','Falta')->get();
+                $descuentos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->get()->sum('descuento');
+                $numeros_domingo =$this->numero_domingos($periodo,$id);
+
+                return view('dinamica.administracion.rrhh.boleta-pago.crearboleta',compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico','pago_quincena'));
+            }
         }else{
-            $datos = $this->boleta(30,$id,$periodo);
-            $dias_tra = $datos[0];
-            $dias_noc=$datos[1];
-            $horas_dob=$datos[2];
-            $horas_nor = $datos[3];
-            $horas_25p= $datos[4];
-            $horas_35p = $datos[5];
-            $gastos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('gasto_trabajador','ot.id','=','gasto_trabajador.ot_id')->join('estado_gasto','gasto_trabajador.estado_gasto_id','=','estado_gasto.id')->where('nombre','Mensual')->get();
-            $adelantos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('adelanto_trabajador','ot.id','=','adelanto_trabajador.ot_id')->get();
-            $faltas = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('estado_ot','ot.estado_ot_id','=','estado_ot.id')->where('nombre','Falta')->get();
-            $descuentos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->get()->sum('descuento');
-            $numeros_domingo =$this->numero_domingos($periodo,$id);
+            $pago_quincena = collect(['trabajador_id'=>$id,'pago'=>0]);
+            if (!$tecnico) {
+                return view('dinamica.administracion.rrhh.boleta-pago.crearboleta',compact('tecnico','trabajador','costo_hora','periodo','pago_quincena'));
+            }elseif (!$hasOts) {
+                return redirect('administracion/rrhh/boleta-pago')->with('mensaje','El trabajador no tiene actividad en el periodo seleccionado');
+            }else{
+                $datos = $this->boleta(30,$id,$periodo);
+                $dias_tra = $datos[0];
+                $dias_noc=$datos[1];
+                $horas_dob=$datos[2];
+                $horas_nor = $datos[3];
+                $horas_25p= $datos[4];
+                $horas_35p = $datos[5];
+                $gastos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('gasto_trabajador','ot.id','=','gasto_trabajador.ot_id')->join('estado_gasto','gasto_trabajador.estado_gasto_id','=','estado_gasto.id')->where('nombre','Mensual')->get();
+                $adelantos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('adelanto_trabajador','ot.id','=','adelanto_trabajador.ot_id')->get();
+                $faltas = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('estado_ot','ot.estado_ot_id','=','estado_ot.id')->where('nombre','Falta')->get();
+                $descuentos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->get()->sum('descuento');
+                $numeros_domingo =$this->numero_domingos($periodo,$id);
 
-            return view('dinamica.administracion.rrhh.boleta-pago.crearboleta',compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico'));
+                return view('dinamica.administracion.rrhh.boleta-pago.crearboleta',compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico','pago_quincena'));
+            }
         }
+
     }
 
 
@@ -270,13 +298,120 @@ class BoletaPagoController extends Controller
      */
     public function guardarFinDeMes(Request $request,$id,$periodo)
     {
-        //
+        BoletaPago::create($request->all());
+
+        $trabajador = Trabajador::findOrFail($id);
+        $inicio = Carbon::create($periodo)->startOfMonth();
+        $fin =Carbon::create($periodo);
+        $month = Carbon::create($periodo)->isoFormat('MM');
+        $year = Carbon::create($periodo)->isoFormat('YYYY');
+
+        $hasAscenso = $this->hasAscensos($id);
+        $tecnico = $this->isTecnico($trabajador);
+        $sueldo = $this->sueldo($id,$periodo);
+        $costo_hora = $sueldo/(30*8);
+        $hasOts = $this->hasOts($id,$periodo);
+
+        if($pago_quincena = Quincena::where('trabajador_id',$id)->where('periodo',Carbon::create($year,$month,15)->toDateString())->first()){
+            if (!$tecnico) {
+                $pdf = App::make('dompdf.wrapper');
+                $content = $pdf->loadView('dinamica.administracion.rrhh.boleta-pago.boletaNoTecnicoPdf', compact('tecnico','trabajador','costo_hora','periodo','pago_quincena','request'))->output();
+                BoletaPago::setBoleta($content,'Boleta_'.Carbon::create($periodo)->isoFormat('MMMM_YYYY').'_'.$trabajador->primer_nombre.'_'.$trabajador->primer_apellido.'.pdf');
+                // return view('dinamica.administracion.rrhh.boleta-pago.crearboleta',compact('tecnico','trabajador','costo_hora','periodo','pago_quincena'));
+            }elseif (!$hasOts) {
+                return redirect('administracion/rrhh/boleta-pago')->with('mensaje','El trabajador no tiene actividad en el periodo seleccionado');
+            }else{
+                $datos = $this->boleta(30,$id,$periodo);
+                $dias_tra = $datos[0];
+                $dias_noc=$datos[1];
+                $horas_dob=$datos[2];
+                $horas_nor = $datos[3];
+                $horas_25p= $datos[4];
+                $horas_35p = $datos[5];
+                $gastos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('gasto_trabajador','ot.id','=','gasto_trabajador.ot_id')->join('estado_gasto','gasto_trabajador.estado_gasto_id','=','estado_gasto.id')->where('nombre','Mensual')->get();
+                $adelantos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('adelanto_trabajador','ot.id','=','adelanto_trabajador.ot_id')->get();
+                $faltas = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('estado_ot','ot.estado_ot_id','=','estado_ot.id')->where('nombre','Falta')->get();
+                $descuentos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->get()->sum('descuento');
+                $numeros_domingo =$this->numero_domingos($periodo,$id);
+
+                $pdf = App::make('dompdf.wrapper');
+                $content = $pdf->loadView('dinamica.administracion.rrhh.boleta-pago.boletaTecnicoPdf', compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico','pago_quincena','request'))->output();
+                BoletaPago::setBoleta($content,'Boleta_'.Carbon::create($periodo)->isoFormat('MMMM_YYYY').'_'.$trabajador->primer_nombre.'_'.$trabajador->primer_apellido.'.pdf');
+                // return view('dinamica.administracion.rrhh.boleta-pago.crearboleta',compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico','pago_quincena'));
+            }
+        }else{
+            $pago_quincena = collect(['trabajador_id'=>$id,'pago'=>0]);
+            if (!$tecnico) {
+                $pdf = App::make('dompdf.wrapper');
+                $content = $pdf->loadView('dinamica.administracion.rrhh.boleta-pago.boletaNoTecnicoPdf', compact('tecnico','trabajador','costo_hora','periodo','pago_quincena','request'))->output();
+                BoletaPago::setBoleta($content,'Boleta_'.Carbon::create($periodo)->isoFormat('MMMM_YYYY').'_'.$trabajador->primer_nombre.'_'.$trabajador->primer_apellido.'.pdf');
+                // return view('dinamica.administracion.rrhh.boleta-pago.crearboleta',compact('tecnico','trabajador','costo_hora','periodo','pago_quincena'));
+            }elseif (!$hasOts) {
+                return redirect('administracion/rrhh/boleta-pago')->with('mensaje','El trabajador no tiene actividad en el periodo seleccionado');
+            }else{
+                $datos = $this->boleta(30,$id,$periodo);
+                $dias_tra = $datos[0];
+                $dias_noc=$datos[1];
+                $horas_dob=$datos[2];
+                $horas_nor = $datos[3];
+                $horas_25p= $datos[4];
+                $horas_35p = $datos[5];
+                $gastos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('gasto_trabajador','ot.id','=','gasto_trabajador.ot_id')->join('estado_gasto','gasto_trabajador.estado_gasto_id','=','estado_gasto.id')->where('nombre','Mensual')->get();
+                $adelantos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('adelanto_trabajador','ot.id','=','adelanto_trabajador.ot_id')->get();
+                $faltas = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('estado_ot','ot.estado_ot_id','=','estado_ot.id')->where('nombre','Falta')->get();
+                $descuentos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->get()->sum('descuento');
+                $numeros_domingo =$this->numero_domingos($periodo,$id);
+
+                $pdf = App::make('dompdf.wrapper');
+                $content = $pdf->loadView('dinamica.administracion.rrhh.boleta-pago.boletaTecnicoPdf', compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico','pago_quincena','request'))->output();
+                BoletaPago::setBoleta($content,'Boleta_'.Carbon::create($periodo)->isoFormat('MMMM_YYYY').'_'.$trabajador->primer_nombre.'_'.$trabajador->primer_apellido.'.pdf');
+                // return view('dinamica.administracion.rrhh.boleta-pago.crearboleta',compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico','pago_quincena'));
+            }
+        }
+        return redirect('administracion/rrhh/boleta-pago')->with('mensaje','Boleta de pago creada con éxito');
     }
 
 
     public function guardarQuincena(Request $request,$id,$periodo)
     {
         Quincena::create($request->all());
+
+        $trabajador = Trabajador::findOrFail($id);
+        $inicio = Carbon::create($periodo)->startOfMonth();
+        $fin =Carbon::create($periodo);
+
+        $hasAscenso = $this->hasAscensos($id);
+        $tecnico = $this->isTecnico($trabajador);
+        $sueldo = $this->sueldo($id,$periodo);
+        $costo_hora = $sueldo/(30*8);
+        $hasOts = $this->hasOts($id,$periodo);
+
+        if (!$tecnico) {
+            $pdf = App::make('dompdf.wrapper');
+            $content = $pdf->loadView('dinamica.administracion.rrhh.boleta-pago.quincenaNoTecnicoPdf', compact('tecnico','trabajador','costo_hora','periodo','request'))->output();
+            BoletaPago::setBoleta($content,'Quincena_'.Carbon::create($periodo)->isoFormat('MMMM_YYYY').'_'.$trabajador->primer_nombre.'_'.$trabajador->primer_apellido.'.pdf');
+
+        }elseif (!$hasOts) {
+            return redirect('administracion/rrhh/boleta-pago')->with('mensaje','El trabajador no tiene actividad en el periodo seleccionado');
+        }else {
+            $datos = $this->boleta(15,$id,$periodo);
+            $dias_tra = $datos[0];
+            $dias_noc=$datos[1];
+            $horas_dob=$datos[2];
+            $horas_nor = $datos[3];
+            $horas_25p= $datos[4];
+            $horas_35p = $datos[5];
+            $gastos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('gasto_trabajador','ot.id','=','gasto_trabajador.ot_id')->join('estado_gasto','gasto_trabajador.estado_gasto_id','=','estado_gasto.id')->where('nombre','Mensual')->get();
+            $adelantos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('adelanto_trabajador','ot.id','=','adelanto_trabajador.ot_id')->get();
+            $faltas = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('estado_ot','ot.estado_ot_id','=','estado_ot.id')->where('nombre','Falta')->get();
+            $descuentos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->get()->sum('descuento');
+            $numeros_domingo =$this->numero_domingos($periodo,$id);
+
+            $pdf = App::make('dompdf.wrapper');
+            $content = $pdf->loadView('dinamica.administracion.rrhh.boleta-pago.quincenaTecnicoPdf', compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico','request'))->output();
+            BoletaPago::setBoleta($content,'Quincena_'.Carbon::create($periodo)->isoFormat('MMMM_YYYY').'_'.$trabajador->primer_nombre.'_'.$trabajador->primer_apellido.'.pdf');
+            // return view('dinamica.administracion.rrhh.boleta-pago.crearquincena',compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico'));
+        }
         return redirect('administracion/rrhh/boleta-pago')->with('mensaje','Quincena creada con éxito');
     }
 
