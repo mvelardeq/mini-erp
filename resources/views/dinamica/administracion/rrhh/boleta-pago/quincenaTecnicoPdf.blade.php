@@ -218,7 +218,7 @@ use Illuminate\Support\Str;
                     <td>{{number_format($descuentos, 2)}}</td>
                 </tr>
                 <tr>
-                    <td class="service">Faltas</td>
+                    <td class="service">Faltas ({{$faltas->count()}} días)</td>
                     <td class="desc"></td>
                     <td>{{number_format($faltas->count() * $costo_hora * 8, 2)}}</td>
                 </tr>
@@ -263,7 +263,7 @@ use Illuminate\Support\Str;
                     <td>{{number_format($descuentos, 2)}}</td>
                 </tr>
                 <tr>
-                    <td class="service">Faltas</td>
+                    <td class="service">Faltas ({{$faltas->count()}} días)</td>
                     <td class="desc"></td>
                     <td>{{number_format($faltas->count() * $costo_hora * 8, 2)}}</td>
                 </tr>

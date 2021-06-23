@@ -22,14 +22,14 @@ class Obs_trabajador extends Model
     public static function setFoto($foto, $actual = false){
         if ($foto) {
             if ($actual) {
-                Storage::disk('s3')->delete("photos/workerObs/$actual");
+                Storage::disk('s3')->delete("photos/ObsPhoto/$actual");
             }
             $imageName = Str::random(20) . '.jpg';
             $imagen = Image::make($foto)->encode('jpg', 75);
         $imagen->resize(600, 800, function ($constraint) {
                 $constraint->upsize();
             });
-            Storage::disk('s3')->put("photos/workerObs/$imageName", $imagen->stream());
+            Storage::disk('s3')->put("photos/ObsPhoto/$imageName", $imagen->stream());
             return $imageName;
         } else {
             return false;

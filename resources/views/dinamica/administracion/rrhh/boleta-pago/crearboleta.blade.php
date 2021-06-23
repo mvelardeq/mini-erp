@@ -17,7 +17,7 @@ use Carbon\Carbon;
 <script src="{{asset("assets/js/bootstrap-fileinput/js/locales/es.js")}}" type="text/javascript"></script>
 <script src="{{asset("assets/js/bootstrap-fileinput/themes/fas/theme.min.js")}}" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script> --}}
 
 @endsection
 
@@ -88,7 +88,7 @@ use Carbon\Carbon;
                             <label for="pago_mes" class="col-lg-3 col-form-label">Pago fin de mes</label>
                             <div class="col-lg-8">
                                 <input type="number" name="pago_mes" id="pago_mes" class="form-control"
-                                    value="{{number_format(30*$costo_hora*8-$pago_quincena['pago'],2)}}" />
+                                    value="{{number_format(30*$costo_hora*8-$pago_quincena['pago'],2,".","")}}" />
                             </div>
                         </div>
                     </div>
@@ -118,7 +118,7 @@ use Carbon\Carbon;
                                             <b>Sueldo Básico</b> <b class="float-right">S/.{{number_format($costo_hora*8*30,2)}}</b>
                                         </li>
                                         <li class="list-group-item">
-                                            <b class="text-muted">Dias considerados ({{$dias_tra+$numeros_domingo+$faltas->count()}} dias)</b> <a class="float-right">S/.{{number_format(($dias_tra+$numeros_domingo+$faltas->count())*$costo_hora*8,2)}}</a>
+                                            <b class="text-muted">Dias considerados ({{$dias_tra+$numeros_domingo+$faltas->count()}} días)</b> <a class="float-right">S/.{{number_format(($dias_tra+$numeros_domingo+$faltas->count())*$costo_hora*8,2)}}</a>
                                         </li>
                                         <li class="list-group-item">
                                             <b class="text-muted">Horas al 25% ({{$horas_25p->sum('horas')}} horas)</b> <a class="float-right"> S/.{{number_format($horas_25p->sum('horas')*$costo_hora*1.25,2)}}</a>
@@ -130,7 +130,7 @@ use Carbon\Carbon;
                                             <b class="text-muted">Horas doble ({{$horas_dob->sum('horas')}} horas)</b> <a class="float-right">S/.{{number_format($horas_dob->sum('horas')*$costo_hora*2,2)}}</a>
                                         </li>
                                         <li class="list-group-item">
-                                            <b class="text-muted">Gastos</b> <a class="float-right">S/.{{number_format($gastos->sum('pago'),2)}}</a>
+                                            <b class="text-muted">Gastos (movi., cena, etc)</b> <a class="float-right">S/.{{number_format($gastos->sum('pago'),2)}}</a>
                                         </li>
                                         <li class="list-group-item">
                                             <b class="text-muted">Adelantos</b> <a class="float-right">S/.{{number_format($adelantos->sum('pago'),2)}}</a>
@@ -139,7 +139,7 @@ use Carbon\Carbon;
                                             <b class="text-muted">Descuentos</b> <a class="float-right">S/.{{number_format($descuentos,2)}}</a>
                                         </li>
                                         <li class="list-group-item">
-                                            <b class="text-muted">Faltas</b> <a class="float-right">S/.{{number_format($faltas->count()*$costo_hora*8,2)}}</a>
+                                            <b class="text-muted">Faltas ({{$faltas->count()}} días)</b> <a class="float-right">S/.{{number_format($faltas->count()*$costo_hora*8,2)}}</a>
                                         </li>
                                         <li class="list-group-item">
                                             <b class="text-muted">Pago quincena</b> <a
@@ -159,7 +159,7 @@ use Carbon\Carbon;
                         <div class="form-group row">
                             <label for="pago_mes" class="col-lg-3 col-form-label">Pago fin de mes</label>
                             <div class="col-lg-8">
-                                <input type="number" step="0.01" name="pago_mes" id="pago_mes" class="form-control" value="{{number_format(($dias_tra+$numeros_domingo)*$costo_hora*8+$horas_25p->sum('horas')*$costo_hora*1.25+$horas_35p->sum('horas')*$costo_hora*1.35+$horas_dob->sum('horas')*$costo_hora*2+$gastos->sum('pago')-$adelantos->sum('pago')-$descuentos-$pago_quincena['pago'],2)}}"/>
+                                <input type="number" step="0.01" name="pago_mes" id="pago_mes" class="form-control" value="{{number_format(($dias_tra+$numeros_domingo)*$costo_hora*8+$horas_25p->sum('horas')*$costo_hora*1.25+$horas_35p->sum('horas')*$costo_hora*1.35+$horas_dob->sum('horas')*$costo_hora*2+$gastos->sum('pago')-$adelantos->sum('pago')-$descuentos-$pago_quincena['pago'],2,".","")}}"/>
                             </div>
                         </div>
 
@@ -206,10 +206,10 @@ use Carbon\Carbon;
                                             <b class="text-muted">Descuentos</b> <a class="float-right">S/.{{number_format($descuentos,2)}}</a>
                                         </li>
                                         <li class="list-group-item">
-                                            <b class="text-muted">Faltas</b> <a class="float-right">S/.{{number_format($faltas->count()*$costo_hora*8,2)}}</a>
+                                            <b class="text-muted">Faltas ({{$faltas->count()}} días)</b> <a class="float-right">S/.{{number_format($faltas->count()*$costo_hora*8,2)}}</a>
                                         </li>
                                         <li class="list-group-item">
-                                            <b class="text-muted">Pago quincena</b> <a
+                                            <b class="text-muted">Pago quincena (movi., cena, etc)</b> <a
                                                 class="float-right">S/.{{ number_format($pago_quincena->pago,2) }}</a>
                                         </li>
                                 </ul>
@@ -226,7 +226,7 @@ use Carbon\Carbon;
                         <div class="form-group row">
                             <label for="pago_mes" class="col-lg-3 col-form-label">Pago fin de mes</label>
                             <div class="col-lg-8">
-                                <input type="text" name="pago_mes" id="pago_mes" class="form-control" value="{{number_format($costo_hora*8*30+$horas_25p->sum('horas')*$costo_hora*1.25+$horas_35p->sum('horas')*$costo_hora*1.35+$horas_dob->sum('horas')*$costo_hora*2+$gastos->sum('pago')-$adelantos->sum('pago')-$descuentos-$faltas->count()*$costo_hora*8-$pago_quincena->pago,2)}}"/>
+                                <input type="number" name="pago_mes" id="pago_mes" class="form-control" value="{{number_format($costo_hora*8*30+$horas_25p->sum('horas')*$costo_hora*1.25+$horas_35p->sum('horas')*$costo_hora*1.35+$horas_dob->sum('horas')*$costo_hora*2+$gastos->sum('pago')-$adelantos->sum('pago')-$descuentos-$faltas->count()*$costo_hora*8-$pago_quincena->pago,2,".","")}}"/>
                             </div>
                         </div>
 

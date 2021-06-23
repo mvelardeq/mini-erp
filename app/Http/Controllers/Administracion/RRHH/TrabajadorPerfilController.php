@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Administracion\RRHH;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Ascenso_trabajador;
 use App\Models\Admin\Cargo_trabajador;
+use App\Models\Admin\Obs_trabajador;
+use App\Models\Admin\Periodo_trabajador;
 use App\Models\Operaciones\Ot;
 use App\Models\Seguridad\Trabajador;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,11 +24,30 @@ class TrabajadorPerfilController extends Controller
     {
         $data = Trabajador::with('roles:id,nombre', 'observaciones', 'periodos', 'ascensos')->findOrFail($id);
         $ascensos = Ascenso_trabajador::with('cargo')->where('trabajador_id', $id)->get();
+        $periodos = Periodo_trabajador::where('trabajador_id',$id)->get();
+        $observaciones = Obs_trabajador::where('trabajador_id',$id)->get();
+        $eventos = collect();
 
-        $trabajador = Trabajador::with('ascensos')->findOrFail($id);
-        $cargo_trabajador = Cargo_trabajador::get();
+        foreach ($periodos as $periodo) {
+            if (isset($periodo->fecha_fin)) {
+                $eventos->push(['tipo'=>'fin_periodo','fecha'=>$periodo->fecha_fin,'titulo'=>'Desvinculación laboral','observacion'=>null,'foto'=>null, 'pago'=>null,'cargo'=>null]);
+            }
+        }
+        foreach ($observaciones as $observacion) {
+            $eventos->push(['tipo'=>'observacion_trabajador','fecha'=>$observacion->fecha,'titulo'=>'Se hizo una observación al trabajador','observacion'=>$observacion->observacion,'foto'=>$observacion->foto, 'pago'=>null,'cargo'=>null]);
+        }
+        foreach ($ascensos as $ascenso) {
+            if ($periodos =Periodo_trabajador::where('trabajador_id',$id)->where('fecha_inicio',$ascenso->fecha)->first()) {
+                $eventos->push(['tipo'=>'contrato_trabajador','fecha'=>$ascenso->fecha,'titulo'=>'Se contrató al trabajador','observacion'=>$ascenso->observacion,'foto'=>null, 'pago'=>$ascenso->sueldo,'cargo'=>$ascenso->cargo->nombre]);
+            }else {
+                $eventos->push(['tipo'=>'ascenso_trabajador','fecha'=>$ascenso->fecha,'titulo'=>'Se ascendió al trabajador','observacion'=>$ascenso->observacion,'foto'=>null, 'pago'=>$ascenso->sueldo,'cargo'=>$ascenso->cargo->nombre]);
+            }
+        }
 
-        return view('dinamica.administracion.rrhh.trabajador.perfilTrabajador.index', compact('data', 'ascensos', 'trabajador','cargo_trabajador'));
+        $events = $eventos->sortByDesc('fecha');
+        // return dd($events);
+
+        return view('dinamica.administracion.rrhh.trabajador.perfilTrabajador.index', compact('data', 'ascensos','events'));
     }
 
     public function mostrarc($id){

@@ -102,14 +102,14 @@ use Carbon\Carbon;
                     @endif
 
                     <div class="nav-link dropdown-item">
-                        <a class="" href="#">
+                        <a class="" href="{{route('usuario_perfil')}}">
                         <i class="far fa-user text-info text-105 mr-1 w-2"></i>
-                        Profile
+                        Perfil
                         </a>
                     </div>
 
                     <div class="nav-link dropdown-item">
-                        <a class="" href="#" data-toggle="modal" data-target="#id-ace-settings-modal">
+                        <a class="" href="{{route('configurar_usuario')}}">
                         <i class="fas fa-sliders-h text-success text-105 mr-1 w-2"></i>
                         Configurar
                         </a>

@@ -7,6 +7,9 @@ use App\Models\Admin\Ascenso_trabajador;
 use App\Models\Admin\Periodo_trabajador;
 use App\Models\Administracion\RRHH\BoletaPago;
 use App\Models\Administracion\RRHH\Quincena;
+use App\Models\Finanzas\Contabilidad\Asiento_contable;
+use App\Models\Finanzas\Contabilidad\Asiento_cuenta;
+use App\Models\Finanzas\Contabilidad\Cuenta_contable;
 use App\Models\Operaciones\Ot;
 use App\Models\Seguridad\Trabajador;
 use Carbon\Carbon;
@@ -368,6 +371,32 @@ class BoletaPagoController extends Controller
                 // return view('dinamica.administracion.rrhh.boleta-pago.crearboleta',compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico','pago_quincena'));
             }
         }
+        if(BoletaPago::where('trabajador_id',$id)->where('periodo',$periodo)){
+            $boleta = BoletaPago::orderBy('created_at','desc')->first();
+            Asiento_contable::create([
+                'fecha'=>$periodo,
+                'glosa'=>'Pago fin de mes de trabajador '.$trabajador->primer_nombre.' '.$trabajador->primer_apellido.', periodo'.$periodo,
+                'asientoable_id'=>$boleta->id,
+                'asientoable_type'=>'App\Models\Administracion\RRHH\BoletaPago'
+            ]);
+            $asiento_contable_id = Asiento_contable::orderBy('created_at','desc')->first()->id;
+            $cuenta_corriente_principal = Cuenta_contable::where('codigo','10411')->value('id');
+            $cuenta_sueldos = Cuenta_contable::where('codigo','6211')->value('id');
+            Asiento_cuenta::create([
+                'cuenta_contable_id'=>$cuenta_corriente_principal,
+                'asiento_contable_id'=>$asiento_contable_id,
+                'haber'=>$boleta->pago_mes
+            ]);
+            Asiento_cuenta::create([
+                'cuenta_contable_id'=>$cuenta_sueldos,
+                'asiento_contable_id'=>$asiento_contable_id,
+                'debe'=>$boleta->pago_mes
+            ]);
+            $saldo1 = Cuenta_contable::findOrFail($cuenta_corriente_principal)->saldo;
+            Cuenta_contable::findOrFail($cuenta_corriente_principal)->update(['saldo'=>$saldo1-$boleta->pago_mes]);
+            $saldo2 = Cuenta_contable::findOrFail($cuenta_sueldos)->saldo;
+            Cuenta_contable::findOrFail($cuenta_sueldos)->update(['saldo'=>$saldo2+$boleta->pago_mes]);
+        }
         return redirect('administracion/rrhh/boleta-pago')->with('mensaje','Boleta de pago creada con éxito');
     }
 
@@ -411,6 +440,32 @@ class BoletaPagoController extends Controller
             $content = $pdf->loadView('dinamica.administracion.rrhh.boleta-pago.quincenaTecnicoPdf', compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico','request'))->output();
             BoletaPago::setBoleta($content,'Quincena_'.Carbon::create($periodo)->isoFormat('MMMM_YYYY').'_'.$trabajador->primer_nombre.'_'.$trabajador->primer_apellido.'.pdf');
             // return view('dinamica.administracion.rrhh.boleta-pago.crearquincena',compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico'));
+        }
+        if(Quincena::where('trabajador_id',$id)->where('periodo',$periodo)){
+            $quincena = Quincena::orderBy('created_at','desc')->first();
+            Asiento_contable::create([
+                'fecha'=>$periodo,
+                'glosa'=>'Quincena de trabajador '.$trabajador->primer_nombre.' '.$trabajador->primer_apellido.', periodo'.$periodo,
+                'asientoable_id'=>$quincena->id,
+                'asientoable_type'=>'App\Models\Administracion\RRHH\Quincena'
+            ]);
+            $asiento_contable_id = Asiento_contable::orderBy('created_at','desc')->first()->id;
+            $cuenta_corriente_principal = Cuenta_contable::where('codigo','10411')->value('id');
+            $cuenta_sueldos = Cuenta_contable::where('codigo','6211')->value('id');
+            Asiento_cuenta::create([
+                'cuenta_contable_id'=>$cuenta_corriente_principal,
+                'asiento_contable_id'=>$asiento_contable_id,
+                'haber'=>$quincena->pago
+            ]);
+            Asiento_cuenta::create([
+                'cuenta_contable_id'=>$cuenta_sueldos,
+                'asiento_contable_id'=>$asiento_contable_id,
+                'debe'=>$quincena->pago
+            ]);
+            $saldo1 = Cuenta_contable::findOrFail($cuenta_corriente_principal)->saldo;
+            Cuenta_contable::findOrFail($cuenta_corriente_principal)->update(['saldo'=>$saldo1-$quincena->pago]);
+            $saldo2 = Cuenta_contable::findOrFail($cuenta_sueldos)->saldo;
+            Cuenta_contable::findOrFail($cuenta_sueldos)->update(['saldo'=>$saldo2+$quincena->pago]);
         }
         return redirect('administracion/rrhh/boleta-pago')->with('mensaje','Quincena creada con éxito');
     }
