@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Usuario;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionCambiarPassword;
+use App\Models\Seguridad\Trabajador;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class ConfigurarController extends Controller
@@ -25,6 +29,20 @@ class ConfigurarController extends Controller
     public function create()
     {
         //
+    }
+
+    public function cambiarPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'password'=>'required|min:6',
+            're_password' => 'required|min:6|same:password',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors'=>$validator->errors()->all()]);
+        }
+
+        Trabajador::findOrFail(auth()->user()->id)->update(array_filter($request->all()));
+        return redirect('usuario/configurar')->with('mensaje','Se cambió la contraseña de manera exitosa');
     }
 
     /**

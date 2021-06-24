@@ -167,6 +167,7 @@ Route::group(['prefix' => 'usuario', 'namespace' => 'Usuario', 'middleware' =>['
     Route::get('calendario/mostrar','CalendarioController@mostrar')->name('mostrar_calendario');
     //RUTAS DE CONFIGURAR
     Route::get('configurar','ConfigurarController@index')->middleware(['password.confirm'])->name('configurar_usuario');
+    Route::post('configurar/cambiar-password','ConfigurarController@cambiarPassword')->name('cambio_contrasenia_usuario');
 });
 
 

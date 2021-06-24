@@ -38,8 +38,8 @@ class ValidacionTrabajador extends FormRequest
                 'botas' => 'nullable|max:5',
                 'overol' => 'nullable|max:5',
                 'correo' => 'required|email|max:300|unique:trabajador,correo,' . $this->route('id'),
-                'password' => 'nullable|min:5',
-                're_password' => 'nullable|required_with:password|min:5|same:password',
+                'password' => 'nullable|min:6',
+                're_password' => 'nullable|required_with:password|min:6|same:password',
                 'rol_id' => 'required|array',
 
             ];
@@ -58,8 +58,8 @@ class ValidacionTrabajador extends FormRequest
                 'botas' => 'nullable|max:5',
                 'overol' => 'nullable|max:5',
                 'correo' => 'required|email|max:100|unique:trabajador,correo,' . $this->route('id'),
-                'password' => 'required|min:5',
-                're_password' => 'required|min:5|same:password',
+                'password' => 'required|min:6',
+                're_password' => 'required|min:6|same:password',
                 'rol_id' => 'required|array'
             ];
         }
