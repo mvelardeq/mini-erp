@@ -168,7 +168,7 @@ Route::group(['prefix' => 'usuario', 'namespace' => 'Usuario', 'middleware' =>['
 
     Route::get('cuenta-corriente', 'UsuarioCuentaCorrienteController@index')->name('cuenta_corriente_usuario');
     Route::get('cuenta-corriente/{id}/transferencia', 'UsuarioCuentaCorrienteController@transferencia')->name('transferencia_usuario');
-    Route::post('cuenta-corriente/transferencia', 'UsuarioCuentaCorrienteController@guardarTransferencia')->name('guardar_transferencia_usuario');
+    Route::post('cuenta-corriente/{id}/transferencia', 'UsuarioCuentaCorrienteController@guardarTransferencia')->name('guardar_transferencia_usuario');
 
 
 

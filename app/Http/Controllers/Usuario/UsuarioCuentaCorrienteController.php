@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Usuario;
 
 use App\Http\Controllers\Controller;
+use App\Models\Finanzas\Contabilidad\Asiento_contable;
+use App\Models\Finanzas\Contabilidad\Asiento_cuenta;
 use App\Models\Finanzas\Contabilidad\Cuenta_contable;
+use App\Models\Finanzas\Transferencia;
 use Illuminate\Http\Request;
 
 class UsuarioCuentaCorrienteController extends Controller
@@ -33,7 +36,9 @@ class UsuarioCuentaCorrienteController extends Controller
     public function transferencia($id)
     {
         $cuenta_cargo = Cuenta_contable::findOrFail($id);
-        return view('dinamica.usuario.cuenta-corriente.transferencia',compact('cuenta_cargo'));
+        $cuentas_contables = Cuenta_contable::where('responsable_id','!=',null)->where('id','!=',$id)->get();
+        // return dd($cuentas_contables);
+        return view('dinamica.usuario.cuenta-corriente.transferencia',compact('cuenta_cargo','cuentas_contables'));
     }
 
     /**
@@ -42,9 +47,36 @@ class UsuarioCuentaCorrienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function guardarTransferencia(Request $request,$id)
     {
-        //
+        $cuenta_cargo = Cuenta_contable::findOrFail($id);
+        $cuenta_abono = Cuenta_contable::findOrFail($request->cuentaabono_id);
+        $request->request->add(['cuentacargo_id'=>$id]);
+        Transferencia::create($request->all());
+        $transferencia = Transferencia::orderBy('created_at','desc')->first();
+            Asiento_contable::create([
+                'fecha'=>$request->fecha,
+                'glosa'=>'Transferencia de la cuenta '.$cuenta_cargo->nombre.' a la cuenta '.$cuenta_abono->nombre,
+                'asientoable_id'=>$transferencia->id,
+                'asientoable_type'=>'App\Models\Finanzas\Transferencia'
+            ]);
+            $asiento_contable_id = Asiento_contable::orderBy('created_at','desc')->first()->id;
+            Asiento_cuenta::create([
+                'cuenta_contable_id'=>$request->cuentacargo_id,
+                'asiento_contable_id'=>$asiento_contable_id,
+                'haber'=>$request->cantidad
+            ]);
+            Asiento_cuenta::create([
+                'cuenta_contable_id'=>$request->cuentaabono_id,
+                'asiento_contable_id'=>$asiento_contable_id,
+                'debe'=>$request->cantidad
+            ]);
+            $saldo1 = Cuenta_contable::findOrFail($request->cuentacargo_id)->saldo;
+            Cuenta_contable::findOrFail($request->cuentacargo_id)->update(['saldo'=>$saldo1-$request->cantidad]);
+            $saldo2 = Cuenta_contable::findOrFail($request->cuentaabono_id)->saldo;
+            Cuenta_contable::findOrFail($request->cuentaabono_id)->update(['saldo'=>$saldo2+$request->cantidad]);
+
+        return redirect('usuario/cuenta-corriente')->with('mensaje','Se realizó la transferencia de manera exitosa');
     }
 
     /**

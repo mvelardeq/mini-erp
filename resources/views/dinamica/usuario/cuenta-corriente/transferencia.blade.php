@@ -40,7 +40,7 @@
                     </a>
                 </div>
             </div>
-            <form action="{{route('guardar_transferencia_usuario')}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
+            <form action="{{route('guardar_transferencia_usuario',['id'=>$cuenta_cargo->id])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                     @include('dinamica.usuario.cuenta-corriente.form')
