@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Operaciones;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionObra;
 use App\Models\Operaciones\Obra;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,7 @@ class ObraController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request)
+    public function guardar(ValidacionObra $request)
     {
         Obra::create($request->all());
         return redirect('operaciones/obra')->with('mensaje', 'Obra creada con éxito');
@@ -72,7 +73,7 @@ class ObraController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function actualizar(Request $request, $id)
+    public function actualizar(ValidacionObra $request, $id)
     {
         Obra::findOrFail($id)->update($request->all());
         return redirect('operaciones/obra')->with('mensaje', 'Obra actualizada con éxito');

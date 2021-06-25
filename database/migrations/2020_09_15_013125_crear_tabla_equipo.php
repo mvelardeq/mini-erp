@@ -27,7 +27,7 @@ class CrearTablaEquipo extends Migration
             $table->string('modelo',40)->nullable();
             $table->string('accesos',20)->nullable();
             $table->string('cuarto_maquina',20)->nullable();
-            $table->string('numero_equipo',20)->nullable();
+            $table->string('numero_equipo',20);
             $table->string('plano',30)->nullable();
             $table->timestamps();
             $table->charset = 'utf8mb4';

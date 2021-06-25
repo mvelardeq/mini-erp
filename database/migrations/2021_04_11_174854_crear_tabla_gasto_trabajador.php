@@ -15,11 +15,11 @@ class CrearTablaGastoTrabajador extends Migration
     {
         Schema::create('gasto_trabajador', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ot_id')->unique();
-            $table->foreign('ot_id','fk_gastotrabajadorot_ot')->references('id')->on('ot')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('tipo_gasto_id')->unique();
+            $table->unsignedBigInteger('ot_id');
+            $table->foreign('ot_id','fk_gastotrabajadorot_ot')->references('id')->on('ot')->onDelete('cascade')->onUpdate('restrict');
+            $table->unsignedBigInteger('tipo_gasto_id');
             $table->foreign('tipo_gasto_id','fk_gastotrabajador_tipogastotrabajador')->references('id')->on('tipo_gasto')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('estado_gasto_id')->unique();
+            $table->unsignedBigInteger('estado_gasto_id');
             $table->foreign('estado_gasto_id','fk_gastotrabajador_estadogasto')->references('id')->on('estado_gasto')->onDelete('restrict')->onUpdate('restrict');
             $table->double('pago',6,2);
             $table->timestamps();

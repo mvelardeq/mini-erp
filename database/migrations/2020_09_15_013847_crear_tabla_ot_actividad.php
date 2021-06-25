@@ -16,7 +16,7 @@ class CrearTablaOtActividad extends Migration
         Schema::create('ot_actividad', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ot_id');
-            $table->foreign('ot_id','fk_otactividad_ot')->references('id')->on('ot')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('ot_id','fk_otactividad_ot')->references('id')->on('ot')->onDelete('cascade')->onUpdate('restrict');
             $table->unsignedBigInteger('actividad_id');
             $table->foreign('actividad_id','fk_otactividad_actividad')->references('id')->on('actividad')->onDelete('restrict')->onUpdate('restrict');
             $table->double('horas',4,2);

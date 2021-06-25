@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Administracion\RRHH;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionObsTrabajador;
 use App\Models\Admin\Ascenso_trabajador;
 use App\Models\Admin\Obs_trabajador;
 use App\Models\Seguridad\Trabajador;
@@ -45,7 +46,7 @@ class ObservacionTrabajadorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request, $id)
+    public function guardar(ValidacionObsTrabajador $request, $id)
     {
         if ($foto = Obs_trabajador::setFoto($request->foto_up))
             $request->request->add(['foto' => $foto]);

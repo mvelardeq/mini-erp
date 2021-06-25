@@ -2,7 +2,7 @@
     <div class="form-group row">
         <label for="cuenta_contable_id" class="col-lg-3 col-form-label requerido">Cuenta de cargo </label>
         <div class="col-lg-8">
-            <select name="cuenta_contable_id" id="cuenta_contable_id" class="selectpicker form-control" data-live-search="true">
+            <select name="cuenta_contable_id" id="cuenta_contable_id" class="selectpicker form-control" data-live-search="true" required>
                 <option value="">Seleccione la cuenta</option>
                 @foreach($cuentas_contable as $cuenta_contable)
                 <option value="{{$cuenta_contable->id}}" {{($cuenta_contable->id==old('cuenta_contable_id',$compra->asiento->id ?? ''))?'selected':''}}>
@@ -17,14 +17,14 @@
 <div class="form-group row">
     <label for="proveedor" class="col-lg-3 col-form-label">Proveedor</label>
     <div class="col-lg-8">
-        <input type="text" name="proveedor" id="proveedor" class="form-control" value="{{old('proveedor', $compra->proveedor ?? '')}}"/>
+        <input type="text" name="proveedor" id="proveedor" class="form-control" value="{{old('proveedor', $compra->proveedor ?? '')}}" required/>
     </div>
 </div>
 
 <div class="form-group row">
     <label for="fecha" class="col-lg-3 col-form-label">Fecha</label>
     <div class="col-lg-8">
-        <input type="date" name="fecha" id="fecha" class="form-control" value="{{old('fecha', $compra->fecha ?? '')}}"/>
+        <input type="date" name="fecha" id="fecha" class="form-control" value="{{old('fecha', $compra->fecha ?? '')}}" required/>
     </div>
 </div>
 

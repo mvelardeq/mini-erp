@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Usuario;
 
 use App\Http\Controllers\Controller;
+use App\Models\Finanzas\Contabilidad\Asiento_contable;
+use App\Models\Finanzas\Contabilidad\Asiento_cuenta;
+use App\Models\Finanzas\Contabilidad\Cuenta_contable;
 use App\Models\Operaciones\Adelanto_trabajador;
 use App\Models\Operaciones\Gasto_trabajador;
 use App\Models\Operaciones\Ot;
@@ -45,6 +48,65 @@ class NotificacionesController extends Controller
     {
         if ($request->ajax()) {
             if (Ot::findOrFail($id)->update(['estado_ot_id' => 2 ])) {
+                $ot = Ot::with('trabajador','adelanto_trabajador','gasto_trabajador')->findOrFail($id);
+
+                if($ot->adelanto_trabajador->count()>0)
+                {
+                    $adelanto = Adelanto_trabajador::orderBy('created_at','desc')->first();
+                    Asiento_contable::create([
+                        'fecha'=>$ot->fecha,
+                        'glosa'=>'Se le hizo adelanto al trabajdor '.$ot->trabajador->primer_nombre.' '.$ot->trabajador->primer_apellido,
+                        'asientoable_id'=>$adelanto->id,
+                        'asientoable_type'=>'App\Operaciones\Adelanto_trabajador'
+                    ]);
+                    $asiento_contable_id = Asiento_contable::orderBy('created_at','desc')->first()->id;
+                    $cuenta_principal = Cuenta_contable::where('codigo','10411')->value('id');
+                    $cuenta_sueldos = Cuenta_contable::where('codigo','6211')->value('id');
+                    Asiento_cuenta::create([
+                        'cuenta_contable_id'=>$cuenta_principal,
+                        'asiento_contable_id'=>$asiento_contable_id,
+                        'haber'=>$ot->adelanto_trabajador->pago
+                    ]);
+                    Asiento_cuenta::create([
+                        'cuenta_contable_id'=>$cuenta_sueldos,
+                        'asiento_contable_id'=>$asiento_contable_id,
+                        'debe'=>$ot->adelanto_trabajador->pago
+                    ]);
+                    $saldo1 = Cuenta_contable::findOrFail($cuenta_principal)->saldo;
+                    Cuenta_contable::findOrFail($cuenta_principal)->update(['saldo'=>$saldo1-$ot->adelanto_trabajador->pago]);
+                    $saldo2 = Cuenta_contable::findOrFail($cuenta_sueldos)->saldo;
+                    Cuenta_contable::findOrFail($cuenta_sueldos)->update(['saldo'=>$saldo2+$ot->adelanto_trabajador->pago]);
+                }
+
+                if ($ot->gasto_trabajador->estado_gasto->nombre == 'Inmediato')
+                {
+                    $gasto = Gasto_trabajador::orderBy('created_at','desc')->first();
+                    Asiento_contable::create([
+                        'fecha'=>$ot->fecha,
+                        'glosa'=>'Se le pagó gasto del trabajdor '.$ot->trabajador->primer_nombre.' '.$ot->trabajador->primer_apellido.', motivo: '.$ot->gasto_trabajador->tipo_gasto->nombre,
+                        'asientoable_id'=>$gasto->id,
+                        'asientoable_type'=>'App\Operaciones\Gasto_trabajador'
+                    ]);
+                    $asiento_contable_id = Asiento_contable::orderBy('created_at','desc')->first()->id;
+                    $cuenta_principal = Cuenta_contable::where('codigo','10411')->value('id');
+                    $cuenta_gastos = Cuenta_contable::where('codigo','622')->value('id');
+                    Asiento_cuenta::create([
+                        'cuenta_contable_id'=>$cuenta_principal,
+                        'asiento_contable_id'=>$asiento_contable_id,
+                        'haber'=>$ot->gasto_trabajador->pago
+                    ]);
+                    Asiento_cuenta::create([
+                        'cuenta_contable_id'=>$cuenta_gastos,
+                        'asiento_contable_id'=>$asiento_contable_id,
+                        'debe'=>$ot->gasto_trabajador->pago
+                    ]);
+                    $saldo1 = Cuenta_contable::findOrFail($cuenta_principal)->saldo;
+                    Cuenta_contable::findOrFail($cuenta_principal)->update(['saldo'=>$saldo1-$ot->gasto_trabajador->pago]);
+                    $saldo2 = Cuenta_contable::findOrFail($cuenta_gastos)->saldo;
+                    Cuenta_contable::findOrFail($cuenta_gastos)->update(['saldo'=>$saldo2+$ot->gasto_trabajador->pago]);
+
+                }
+
                 return response()->json(['mensaje' => 'ok','id'=>$id]);
             } else {
                 return response()->json(['mensaje' => 'ng']);
@@ -56,9 +118,10 @@ class NotificacionesController extends Controller
 
     public function adelanto(Request $request, $id)
     {
-
         $pago = $_POST['pago'];
         Adelanto_trabajador::create(['ot_id'=>$id, 'pago'=>$pago]);
+        // $ot = Ot::with('trabajador')->findOrFail($id);
+
         return response()->json(['mensaje'=>'ok','id'=>$id, 'pago'=>$pago]);
     }
 
@@ -68,7 +131,6 @@ class NotificacionesController extends Controller
         $motivo_descuento = $_POST['motivo_descuento'];
         Ot::findOrFail($id)->update(['descuento' => $descuento, 'motivo_descuento'=>$motivo_descuento]);
         return response()->json(['mensaje'=>'ok','id'=>$id, 'descuento'=>$descuento,'motivo_descuento'=>$motivo_descuento]);
-
     }
 
     public function gastoi(Request $request, $id)
@@ -77,7 +139,6 @@ class NotificacionesController extends Controller
         $tipo_gasto_id = $_POST['tipogasto_id'];
         Gasto_trabajador::create(['ot_id'=>$id, 'pago'=>$pago, 'tipo_gasto_id'=>$tipo_gasto_id, 'estado_gasto_id'=>1]);
         return response()->json(['mensaje'=>'ok','id'=>$id]);
-
     }
 
     public function gastom(Request $request, $id)

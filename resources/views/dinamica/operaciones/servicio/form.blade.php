@@ -1,17 +1,17 @@
 {{-- {{dd($actividades)}}; --}}
 {{-- {{dd($servicio->actividades)}}; --}}
 <div class="form-group row">
-    <label for="nombre" class="col-lg-3 col-form-label">Nombre del servicio</label>
+    <label for="nombre" class="col-lg-3 col-form-label requerido">Nombre del servicio</label>
     <div class="col-lg-8">
-        <input type="text" name="nombre" id="nombre" class="form-control" value="{{old('nombre', $servicio->nombre ?? '')}}"/>
+        <input type="text" name="nombre" id="nombre" class="form-control" value="{{old('nombre', $servicio->nombre ?? '')}}" required/>
     </div>
 </div>
 
 {{-- <input type="hidden" name="servicio_id" id="servicio_id" class="form-control" value="{{$servicio->id}}" required/> --}}
 <div class="form-group row">
-    <label for="actividad1" class="col-lg-3 col-form-label">Actividad 1</label>
+    <label for="actividad1" class="col-lg-3 col-form-label requerido">Actividad 1</label>
     <div class="col-lg-8">
-        <input type="text" name="actividad1" id="actividad1" class="form-control" value="{{old('actividad1', $servicio->actividades[0]['nombre'] ?? '')}}"/>
+        <input type="text" name="actividad1" id="actividad1" class="form-control" value="{{old('actividad1', $servicio->actividades[0]['nombre'] ?? '')}}" required/>
     </div>
 </div>
 <div class="form-group row">

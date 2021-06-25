@@ -1,20 +1,20 @@
 
 <div class="form-group row">
-    <label for="nombre" class="col-lg-3 col-form-label">Servicio</label>
+    <label for="nombre" class="col-lg-3 col-form-label requerido">Servicio</label>
     <div class="col-lg-8">
-        <input type="text" name="nombre" id="nombre" class="form-control" value="{{old('nombre', $servicio_tercero->nombre ?? '')}}"/>
+        <input type="text" name="nombre" id="nombre" class="form-control" value="{{old('nombre', $servicio_tercero->nombre ?? '')}}" required/>
     </div>
 </div>
 <div class="form-group row">
-    <label for="cuenta" class="col-lg-3 col-form-label">Cuenta contable</label>
+    <label for="cuenta" class="col-lg-3 col-form-label requerido">Cuenta contable</label>
     <div class="col-lg-8">
-        <input type="text" name="cuenta" id="cuenta" class="form-control" value="{{old('cuenta', $servicio_tercero->cuenta ?? '')}}"/>
+        <input type="text" name="cuenta" id="cuenta" class="form-control" value="{{old('cuenta', $servicio_tercero->cuenta ?? '')}}" required/>
     </div>
 </div>
 <div class="form-group row">
     <label for="tipo_gasto" class="col-lg-3 col-form-label requerido">Tipo de gasto</label>
     <div class="col-lg-8">
-        <select name="tipo_gasto" id="tipo_gasto" class="selectpicker form-control" data-live-search="true">
+        <select name="tipo_gasto" id="tipo_gasto" class="selectpicker form-control" data-live-search="true" required>
             <option value="">Seleccione el tipo de gasto</option>
             <option value="Administrativo" {{('Administrativo'==old('tipo_gasto',$servicio_tercero->tipo_gasto ?? ''))?'selected':''}}>
                 Administrativo
@@ -30,8 +30,8 @@
     </div>
 </div>
 <div class="form-group row">
-    <label for="dirigido_a" class="col-lg-3 col-form-label">Dirigido a</label>
+    <label for="dirigido_a" class="col-lg-3 col-form-label requerido">Dirigido a</label>
     <div class="col-lg-8">
-        <input type="text" name="dirigido_a" id="dirigido_a" class="form-control" value="{{old('dirigido_a', $servicio_tercero->dirigido_a ?? '')}}"/>
+        <input type="text" name="dirigido_a" id="dirigido_a" class="form-control" value="{{old('dirigido_a', $servicio_tercero->dirigido_a ?? '')}}" required/>
     </div>
 </div>

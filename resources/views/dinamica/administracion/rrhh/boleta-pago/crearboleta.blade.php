@@ -85,10 +85,10 @@ use Carbon\Carbon;
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="pago_mes" class="col-lg-3 col-form-label">Pago fin de mes</label>
+                            <label for="pago_mes" class="col-lg-3 col-form-label requerido">Pago fin de mes</label>
                             <div class="col-lg-8">
                                 <input type="number" name="pago_mes" id="pago_mes" class="form-control"
-                                    value="{{number_format(30*$costo_hora*8-$pago_quincena['pago'],2,".","")}}" />
+                                    value="{{number_format(30*$costo_hora*8-$pago_quincena['pago'],2,".","")}}" required/>
                             </div>
                         </div>
                     </div>
@@ -157,9 +157,9 @@ use Carbon\Carbon;
                         <input type="hidden" name="adelantos" id="adelantos" class="form-control"
                                         value="{{$adelantos->sum('pago')}}" />
                         <div class="form-group row">
-                            <label for="pago_mes" class="col-lg-3 col-form-label">Pago fin de mes</label>
+                            <label for="pago_mes" class="col-lg-3 col-form-label requerido">Pago fin de mes</label>
                             <div class="col-lg-8">
-                                <input type="number" step="0.01" name="pago_mes" id="pago_mes" class="form-control" value="{{number_format(($dias_tra+$numeros_domingo)*$costo_hora*8+$horas_25p->sum('horas')*$costo_hora*1.25+$horas_35p->sum('horas')*$costo_hora*1.35+$horas_dob->sum('horas')*$costo_hora*2+$gastos->sum('pago')-$adelantos->sum('pago')-$descuentos-$pago_quincena['pago'],2,".","")}}"/>
+                                <input type="number" step="0.01" name="pago_mes" id="pago_mes" class="form-control" value="{{number_format(($dias_tra+$numeros_domingo)*$costo_hora*8+$horas_25p->sum('horas')*$costo_hora*1.25+$horas_35p->sum('horas')*$costo_hora*1.35+$horas_dob->sum('horas')*$costo_hora*2+$gastos->sum('pago')-$adelantos->sum('pago')-$descuentos-$pago_quincena['pago'],2,".","")}}" required/>
                             </div>
                         </div>
 
@@ -224,9 +224,9 @@ use Carbon\Carbon;
                         <input type="hidden" name="adelantos" id="adelantos" class="form-control"
                                         value="{{$adelantos->sum('pago')}}" />
                         <div class="form-group row">
-                            <label for="pago_mes" class="col-lg-3 col-form-label">Pago fin de mes</label>
+                            <label for="pago_mes" class="col-lg-3 col-form-label requerido">Pago fin de mes</label>
                             <div class="col-lg-8">
-                                <input type="number" name="pago_mes" id="pago_mes" class="form-control" value="{{number_format($costo_hora*8*30+$horas_25p->sum('horas')*$costo_hora*1.25+$horas_35p->sum('horas')*$costo_hora*1.35+$horas_dob->sum('horas')*$costo_hora*2+$gastos->sum('pago')-$adelantos->sum('pago')-$descuentos-$faltas->count()*$costo_hora*8-$pago_quincena->pago,2,".","")}}"/>
+                                <input type="number" name="pago_mes" id="pago_mes" class="form-control" value="{{number_format($costo_hora*8*30+$horas_25p->sum('horas')*$costo_hora*1.25+$horas_35p->sum('horas')*$costo_hora*1.35+$horas_dob->sum('horas')*$costo_hora*2+$gastos->sum('pago')-$adelantos->sum('pago')-$descuentos-$faltas->count()*$costo_hora*8-$pago_quincena->pago,2,".","")}}" required/>
                             </div>
                         </div>
 

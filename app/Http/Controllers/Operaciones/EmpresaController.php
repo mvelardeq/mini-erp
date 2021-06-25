@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Operaciones;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionEmpresa;
 use App\Models\Operaciones\Empresa;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,7 @@ class EmpresaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request)
+    public function guardar(ValidacionEmpresa $request)
     {
         Empresa::create($request->all());
         return redirect('operaciones/empresa')->with('mensaje', 'Empresa creada con éxito');
@@ -72,7 +73,7 @@ class EmpresaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function actualizar(Request $request, $id)
+    public function actualizar(ValidacionEmpresa $request, $id)
     {
         Empresa::findOrFail($id)->update($request->all());
         return redirect('operaciones/empresa')->with('mensaje', 'Empresa actualizada con éxito');

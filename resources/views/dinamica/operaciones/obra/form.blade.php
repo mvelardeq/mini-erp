@@ -5,14 +5,14 @@
     </div>
 </div>
 <div class="form-group row">
-    <label for="direccion" class="col-lg-3 col-form-label">Dirección</label>
+    <label for="direccion" class="col-lg-3 col-form-label requerido">Dirección</label>
     <div class="col-lg-8">
-        <input type="text" name="direccion" id="direccion" class="form-control" value="{{old('direccion', $obra->direccion ?? '')}}"/>
+        <input type="text" name="direccion" id="direccion" class="form-control" value="{{old('direccion', $obra->direccion ?? '')}}" required/>
     </div>
 </div>
 <div class="form-group row">
-    <label for="cliente" class="col-lg-3 col-form-label requerido">Cliente</label>
+    <label for="cliente" class="col-lg-3 col-form-label">Cliente</label>
     <div class="col-lg-8">
-        <input type="text" name="cliente" id="cliente" class="form-control" value="{{old('cliente', $obra->cliente ?? '')}}" required/>
+        <input type="text" name="cliente" id="cliente" class="form-control" value="{{old('cliente', $obra->cliente ?? '')}}"/>
     </div>
 </div>

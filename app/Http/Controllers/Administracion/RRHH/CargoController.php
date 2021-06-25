@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Administracion\RRHH;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionCargoTrabajador;
 use App\Models\Admin\Cargo_trabajador;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,7 @@ class CargoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request)
+    public function guardar(ValidacionCargoTrabajador $request)
     {
         Cargo_trabajador::create($request->all());
 
@@ -73,7 +74,7 @@ class CargoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function actualizar(Request $request, $id)
+    public function actualizar(ValidacionCargoTrabajador $request, $id)
     {
         Cargo_trabajador::findOrFail($id)->update($request->all());
         return redirect('administracion/rrhh/cargo')->with('mensaje','Cargo actualizado con éxito');

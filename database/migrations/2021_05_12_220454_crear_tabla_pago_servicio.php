@@ -19,7 +19,7 @@ class CrearTablaPagoServicio extends Migration
             $table->foreign('servicio_tercero_id','fk_pagoserviciotercero_pagoservicio')->references('id')->on('servicio_tercero')->onDelete('restrict')->onUpdate('restrict');
             $table->double('pago',7,2);
             $table->date('fecha_pago');
-            $table->string('proveedor',200)->nullable();
+            $table->string('proveedor',200);
             $table->string('ruc_proveedor',11)->nullable();
             $table->text('observacion')->nullable();
             $table->timestamps();

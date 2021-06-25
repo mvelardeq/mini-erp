@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Administracion;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionPagoServicio;
 use App\Models\Administracion\Pago_servicio;
 use App\Models\Administracion\Servicio_tercero;
 use App\Models\Finanzas\Contabilidad\Asiento_contable;
@@ -42,7 +43,7 @@ class PagoServicioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request)
+    public function guardar(ValidacionPagoServicio $request)
     {
         Pago_servicio::create($request->all());
         $idpago_servicio = Pago_servicio::orderBy('created_at','desc')->first()->id;
@@ -213,7 +214,7 @@ class PagoServicioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function actualizar(Request $request, $id)
+    public function actualizar(ValidacionPagoServicio $request, $id)
     {
         Pago_servicio::findOrFail($id)->update($request->all());
         return redirect('administracion/pago-servicio')->with('mensaje','Pago actualizado con éxito');

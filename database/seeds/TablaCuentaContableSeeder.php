@@ -14,9 +14,31 @@ class TablaCuentaContableSeeder extends Seeder
     public function run()
     {
         DB::table('cuenta_contable')->insert([
+            'codigo' => '1021',
+            'nombre' => 'Fondos fijos Martín Velarde',
+            'saldo' => 0,
+            'banco' => 'Bbva Continental',
+            'numero_cuenta' => '0011-0113-0200605440',
+            'responsable_id' => 1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('cuenta_contable')->insert([
+            'codigo' => '1022',
+            'nombre' => 'Fondos fijos Sayuri Velarde',
+            'saldo' => 0,
+            'banco' => 'Bbva Continental',
+            'numero_cuenta' => '0011-0284-0200510017',
+            'responsable_id' => 3,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('cuenta_contable')->insert([
             'codigo' => '10411',
             'nombre' => 'Cuenta corriente general',
             'saldo' => 0,
+            'banco' => 'Bbva Continental',
+            'numero_cuenta' => '0011-0174-000100010442',
             'responsable_id' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -73,6 +95,34 @@ class TablaCuentaContableSeeder extends Seeder
         DB::table('cuenta_contable')->insert([
             'codigo' => '6032',
             'nombre' => 'Suministros',
+            'saldo' => 0,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('cuenta_contable')->insert([
+            'codigo' => '6211',
+            'nombre' => 'Sueldos y salarios',
+            'saldo' => 0,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('cuenta_contable')->insert([
+            'codigo' => '622',
+            'nombre' => 'Otras remuneraciones',
+            'saldo' => 0,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('cuenta_contable')->insert([
+            'codigo' => '6273',
+            'nombre' => 'Seguro complementario de trabajo de riesgo, accidentes de trabajo y enfermedades profesionales',
+            'saldo' => 0,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('cuenta_contable')->insert([
+            'codigo' => '6343',
+            'nombre' => 'Mantenimiento propiedad, planta y equipo',
             'saldo' => 0,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),

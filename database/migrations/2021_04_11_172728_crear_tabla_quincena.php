@@ -15,7 +15,7 @@ class CrearTablaQuincena extends Migration
     {
         Schema::create('quincena', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('trabajador_id')->unique();
+            $table->unsignedBigInteger('trabajador_id');
             $table->foreign('trabajador_id','fk_quincenatrabajador_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
             $table->string('periodo',45);
             $table->double('pago',7,2);

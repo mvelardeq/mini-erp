@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Administracion\Logistica;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionProducto;
 use App\Models\Administracion\Logistica\Categoria_producto;
 use App\Models\Administracion\Logistica\Producto;
 use Illuminate\Http\Request;
@@ -40,7 +41,7 @@ class ProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request)
+    public function guardar(ValidacionProducto $request)
     {
         if ($foto = Producto::setFoto($request->foto_producto))
             $request->request->add(['foto' => $foto]);
@@ -81,7 +82,7 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function actualizar(Request $request, $id)
+    public function actualizar(ValidacionProducto $request, $id)
     {
         Producto::findOrFail($id)->update($request->all());
         return redirect('administracion/logistica/producto')->with('mensaje','producto actualizado con éxito');

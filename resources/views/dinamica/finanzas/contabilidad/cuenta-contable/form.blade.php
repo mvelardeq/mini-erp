@@ -1,20 +1,20 @@
 
 <div class="form-group row">
-    <label for="codigo" class="col-lg-3 col-form-label">Código de cuenta</label>
+    <label for="codigo" class="col-lg-3 col-form-label requerido">Código de cuenta</label>
     <div class="col-lg-8">
-        <input type="text" name="codigo" id="codigo" class="form-control" value="{{old('codigo', $cuenta_contable->codigo ?? '')}}"/>
+        <input type="text" name="codigo" id="codigo" class="form-control" value="{{old('codigo', $cuenta_contable->codigo ?? '')}}" required/>
     </div>
 </div>
 <div class="form-group row">
-    <label for="nombre" class="col-lg-3 col-form-label">Nombre</label>
+    <label for="nombre" class="col-lg-3 col-form-label requerido">Nombre</label>
     <div class="col-lg-8">
-        <input type="text" name="nombre" id="nombre" class="form-control" value="{{old('nombre', $cuenta_contable->nombre ?? '')}}"/>
+        <input type="text" name="nombre" id="nombre" class="form-control" value="{{old('nombre', $cuenta_contable->nombre ?? '')}}" required/>
     </div>
 </div>
 <div class="form-group row">
-    <label for="saldo" class="col-lg-3 col-form-label">Saldo</label>
+    <label for="saldo" class="col-lg-3 col-form-label requerido">Saldo</label>
     <div class="col-lg-8">
-        <input type="number" step="0.01" name="saldo" id="saldo" class="form-control" value="{{old('saldo', $cuenta_contable->saldo ?? '')}}"/>
+        <input type="number" step="0.01" name="saldo" id="saldo" class="form-control" value="{{old('saldo', $cuenta_contable->saldo ?? '')}}" required/>
     </div>
 </div>
 <div class="form-group row">

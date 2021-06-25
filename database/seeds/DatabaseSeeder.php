@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TablaServicioSeeder::class);
         $this->call(TablaActividadSeeder::class);
         $this->call(TablaEmpresaSeeder::class);
+        $this->call(TablaServicioTerceroSeeder::class);
     }
     protected function truncateTablas(array $tablas){
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');

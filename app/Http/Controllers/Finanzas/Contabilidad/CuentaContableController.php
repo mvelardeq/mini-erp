@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Finanzas\Contabilidad;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionCuentaContable;
 use App\Models\Administracion\Servicio_tercero;
 use App\Models\Finanzas\Contabilidad\Asiento_contable;
 use App\Models\Finanzas\Contabilidad\Asiento_cuenta;
@@ -41,7 +42,7 @@ class CuentaContableController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request)
+    public function guardar(ValidacionCuentaContable $request)
     {
         Cuenta_contable::create($request->all());
 
@@ -79,7 +80,7 @@ class CuentaContableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function actualizar(Request $request, $id)
+    public function actualizar(ValidacionCuentaContable $request, $id)
     {
         Cuenta_contable::findOrFail($id)->update($request->all());
         return redirect('finanzas/contabilidad/cuenta-contable')->with('mensaje','La cuenta contable se actualizó correctamente');

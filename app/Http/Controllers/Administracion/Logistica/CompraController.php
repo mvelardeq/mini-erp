@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Administracion\Logistica;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionCompra;
 use App\Models\Administracion\Logistica\Compra;
 use App\Models\Administracion\Logistica\Item_compra;
 use App\Models\Administracion\Logistica\Producto;
@@ -48,7 +49,7 @@ class CompraController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request)
+    public function guardar(ValidacionCompra $request)
     {
         Compra::create([
             'proveedor' => $request->proveedor,

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Administracion\RRHH;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionBoletaPago;
+use App\Http\Requests\ValidacionQuincena;
 use App\Models\Admin\Ascenso_trabajador;
 use App\Models\Admin\Periodo_trabajador;
 use App\Models\Administracion\RRHH\BoletaPago;
@@ -299,7 +301,7 @@ class BoletaPagoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardarFinDeMes(Request $request,$id,$periodo)
+    public function guardarFinDeMes(ValidacionBoletaPago $request,$id,$periodo)
     {
         BoletaPago::create($request->all());
 
@@ -375,7 +377,7 @@ class BoletaPagoController extends Controller
             $boleta = BoletaPago::orderBy('created_at','desc')->first();
             Asiento_contable::create([
                 'fecha'=>$periodo,
-                'glosa'=>'Pago fin de mes de trabajador '.$trabajador->primer_nombre.' '.$trabajador->primer_apellido.', periodo'.$periodo,
+                'glosa'=>'Pago fin de mes de trabajador '.$trabajador->primer_nombre.' '.$trabajador->primer_apellido.', periodo '.Carbon::parse($periodo)->isoFormat('DD-MM-YYYY'),
                 'asientoable_id'=>$boleta->id,
                 'asientoable_type'=>'App\Models\Administracion\RRHH\BoletaPago'
             ]);
@@ -401,7 +403,7 @@ class BoletaPagoController extends Controller
     }
 
 
-    public function guardarQuincena(Request $request,$id,$periodo)
+    public function guardarQuincena(ValidacionQuincena $request,$id,$periodo)
     {
         Quincena::create($request->all());
 
@@ -445,7 +447,7 @@ class BoletaPagoController extends Controller
             $quincena = Quincena::orderBy('created_at','desc')->first();
             Asiento_contable::create([
                 'fecha'=>$periodo,
-                'glosa'=>'Quincena de trabajador '.$trabajador->primer_nombre.' '.$trabajador->primer_apellido.', periodo'.$periodo,
+                'glosa'=>'Quincena de trabajador '.$trabajador->primer_nombre.' '.$trabajador->primer_apellido.', periodo '.Carbon::parse($periodo)->isoFormat('DD-MM-YYYY'),
                 'asientoable_id'=>$quincena->id,
                 'asientoable_type'=>'App\Models\Administracion\RRHH\Quincena'
             ]);

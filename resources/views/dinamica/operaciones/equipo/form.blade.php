@@ -1,13 +1,13 @@
 <div class="form-group row">
-    <label for="numero_equipo" class="col-lg-3 col-form-label">Número de equipo</label>
+    <label for="numero_equipo" class="col-lg-3 col-form-label requerido">Número de equipo</label>
     <div class="col-lg-8">
-        <input type="text" name="numero_equipo" id="numero_equipo" class="form-control" value="{{old('numero_equipo', $equipo->numero_equipo ?? '')}}"/>
+        <input type="text" name="numero_equipo" id="numero_equipo" class="form-control" value="{{old('numero_equipo', $equipo->numero_equipo ?? '')}}" required/>
     </div>
 </div>
 <div class="form-group row">
     <label for="obra_id" class="col-lg-3 col-form-label requerido">Obra</label>
     <div class="col-lg-8">
-        <select name="obra_id" id="obra_id" class="selectpicker form-control" data-live-search="true">
+        <select name="obra_id" id="obra_id" class="selectpicker form-control" data-live-search="true" required>
             <option value="">Seleccione la obra</option>
             @foreach($obras as $obra)
         <option value="{{$obra->id}}" {{($obra->id==old('obra_id',$equipo->obra->id ?? ''))?'selected':''}}>
@@ -21,7 +21,7 @@
 <div class="form-group row">
     <label for="empresa_id" class="col-lg-3 col-form-label requerido">Empresa</label>
     <div class="col-lg-8">
-        <select name="empresa_id" id="empresa_id" class="form-control" data-live-search="true">
+        <select name="empresa_id" id="empresa_id" class="form-control" data-live-search="true" required>
             <option value="">Seleccione la empresa</option>
             @foreach($empresas as $empresa)
         <option value="{{$empresa->id}}" {{($empresa->id==old('empresa_id',$equipo->empresa->id ?? ''))?'selected':''}}>
@@ -39,9 +39,9 @@
     </div>
 </div>
 <div class="form-group row">
-    <label for="velocidad" class="col-lg-3 col-form-label">Velocidad (m/s)</label>
+    <label for="velocidad" class="col-lg-3 col-form-label requerido">Velocidad (m/s)</label>
     <div class="col-lg-8">
-        <input type="text" name="velocidad" id="velocidad" class="form-control" value="{{old('velocidad', $equipo->velocidad ?? '')}}"/>
+        <input type="text" name="velocidad" id="velocidad" class="form-control" value="{{old('velocidad', $equipo->velocidad ?? '')}}" required/>
     </div>
 </div>
 <div class="form-group row">

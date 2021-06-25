@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Operaciones;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionEquipo;
 use App\Models\Operaciones\Empresa;
 use App\Models\Operaciones\Equipo;
 use App\Models\Operaciones\Obra;
@@ -43,7 +44,7 @@ class EquipoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request)
+    public function guardar(ValidacionEquipo $request)
     {
         if ($plane = Equipo::setPlane($request->plano_up))
         {
@@ -86,7 +87,7 @@ class EquipoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function actualizar(Request $request, $id)
+    public function actualizar(ValidacionEquipo $request, $id)
     {
         // Equipo::findOrFail($id)->update($request->all());
         $equipo = Equipo::findOrFail($id);

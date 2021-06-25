@@ -1,7 +1,7 @@
 <div class="form-group row">
     <label for="servicio_tercero_id" class="col-lg-3 col-form-label requerido">Servicio</label>
     <div class="col-lg-8">
-        <select name="servicio_tercero_id" id="servicio_tercero_id" class="selectpicker form-control" data-live-search="true">
+        <select name="servicio_tercero_id" id="servicio_tercero_id" class="selectpicker form-control" data-live-search="true" required>
             <option value="">Seleccione el servicio</option>
             @foreach($servicios_tercero as $servicio_tercero)
             <option value="{{$servicio_tercero->id}}" {{($servicio_tercero->id==old('servicio_tercero_id',$pago_servicio->servicio_tercero->id ?? ''))?'selected':''}}>
@@ -16,7 +16,7 @@
     <div class="form-group row">
         <label for="cuenta_contable_id" class="col-lg-3 col-form-label requerido">Cuenta </label>
         <div class="col-lg-8">
-            <select name="cuenta_contable_id" id="cuenta_contable_id" class="selectpicker form-control" data-live-search="true">
+            <select name="cuenta_contable_id" id="cuenta_contable_id" class="selectpicker form-control" data-live-search="true" required>
                 <option value="">Seleccione el servicio</option>
                 @foreach($cuentas_contable as $cuenta_contable)
                 <option value="{{$cuenta_contable->id}}" {{($cuenta_contable->id==old('cuenta_contable_id',$pago_servicio->asiento->id ?? ''))?'selected':''}}>
@@ -29,21 +29,21 @@
     </div>
 @endif
 <div class="form-group row">
-    <label for="pago" class="col-lg-3 col-form-label">Pago</label>
+    <label for="pago" class="col-lg-3 col-form-label requerido">Pago</label>
     <div class="col-lg-8">
-        <input type="number" step="0.01" name="pago" id="pago" class="form-control" value="{{old('pago', $pago_servicio->pago ?? '')}}"/>
+        <input type="number" step="0.01" name="pago" id="pago" class="form-control" value="{{old('pago', $pago_servicio->pago ?? '')}}" required/>
     </div>
 </div>
 <div class="form-group row">
-    <label for="fecha_pago" class="col-lg-3 col-form-label">Fecha pago</label>
+    <label for="fecha_pago" class="col-lg-3 col-form-label requerido">Fecha pago</label>
     <div class="col-lg-8">
-        <input type="date" name="fecha_pago" id="fecha_pago" class="form-control" value="{{old('fecha_pago', $pago_servicio->fecha_pago ?? '')}}"/>
+        <input type="date" name="fecha_pago" id="fecha_pago" class="form-control" value="{{old('fecha_pago', $pago_servicio->fecha_pago ?? '')}}" required/>
     </div>
 </div>
 <div class="form-group row">
-    <label for="proveedor" class="col-lg-3 col-form-label">proveedor</label>
+    <label for="proveedor" class="col-lg-3 col-form-label requerido">proveedor</label>
     <div class="col-lg-8">
-        <input type="text" name="proveedor" id="proveedor" class="form-control" value="{{old('proveedor', $pago_servicio->proveedor ?? '')}}"/>
+        <input type="text" name="proveedor" id="proveedor" class="form-control" value="{{old('proveedor', $pago_servicio->proveedor ?? '')}}" required/>
     </div>
 </div>
 <div class="form-group row">

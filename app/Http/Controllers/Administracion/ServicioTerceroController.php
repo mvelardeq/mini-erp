@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Administracion;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionServicioTercero;
 use App\Models\Administracion\Servicio_tercero;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class ServicioTerceroController extends Controller
      */
     public function index()
     {
-        $servicios_tercero = Servicio_tercero::orderBy('id')->get();
+        $servicios_tercero = Servicio_tercero::orderBy('cuenta')->get();
         return view('dinamica.administracion.servicio-tercero.index', compact('servicios_tercero'));
     }
 
@@ -35,7 +36,7 @@ class ServicioTerceroController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request)
+    public function guardar(ValidacionServicioTercero $request)
     {
         if ($request->tipo_gasto=='Administrativo' || $request->tipo_gasto=='Ventas' || $request->tipo_gasto=='Producción') {
             Servicio_tercero::create($request->all());
@@ -75,7 +76,7 @@ class ServicioTerceroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function actualizar(Request $request, $id)
+    public function actualizar(ValidacionServicioTercero $request, $id)
     {
         Servicio_tercero::findOrFail($id)->update($request->all());
         return redirect('administracion/servicio-tercero')->with('mensaje','Servicio actualizado con éxito');

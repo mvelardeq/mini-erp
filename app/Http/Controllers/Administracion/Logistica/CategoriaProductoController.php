@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Administracion\Logistica;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionCategoriaProducto;
 use App\Models\Administracion\Logistica\Categoria_producto;
 use Illuminate\Http\Request;
 
@@ -37,7 +38,7 @@ class CategoriaProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request)
+    public function guardar(ValidacionCategoriaProducto $request)
     {
         Categoria_producto::create($request->all());
         return redirect('administracion/logistica/categoria')->with('mensaje','Categoría creada con éxito');
@@ -73,7 +74,7 @@ class CategoriaProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function actualizar(Request $request, $id)
+    public function actualizar(ValidacionCategoriaProducto $request, $id)
     {
         // return dd($request->all());
         Categoria_producto::findOrFail($id)->update($request->all());

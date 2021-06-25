@@ -15,8 +15,8 @@ class CrearTablaAdelantoTrabajador extends Migration
     {
         Schema::create('adelanto_trabajador', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ot_id')->unique();
-            $table->foreign('ot_id','fk_adelantotrabajadorot_ot')->references('id')->on('ot')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('ot_id');
+            $table->foreign('ot_id','fk_adelantotrabajadorot_ot')->references('id')->on('ot')->onDelete('cascade')->onUpdate('restrict');
             $table->double('pago',5,2);
             $table->timestamps();
             $table->charset = 'utf8mb4';

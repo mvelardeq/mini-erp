@@ -27,15 +27,15 @@
     </div>
 </div>
 <div class="form-group row">
-    <label for="fecha" class="col-lg-3 col-form-label">Fecha de ascenso</label>
+    <label for="fecha" class="col-lg-3 col-form-label requerido">Fecha de ascenso</label>
     <div class="col-lg-8">
-    <input type="date" name="fecha" id="fecha" class="form-control" value="{{old('fecha', $trabajador->periodos->last()->fecha ?? '')}}">
+    <input type="date" name="fecha" id="fecha" class="form-control" value="{{old('fecha', $trabajador->periodos->last()->fecha ?? '')}}" required>
     </div>
 </div>
 <div class="form-group row">
     <label for="cargo_trabajador_id" class="col-lg-3 col-form-label requerido">Cargo</label>
     <div class="col-lg-8">
-        <select name="cargo_trabajador_id" id="cargo_trabajador_id" class="form-control">
+        <select name="cargo_trabajador_id" id="cargo_trabajador_id" class="form-control" required>
             <option value="">Seleccione el cargo</option>
             @foreach($cargo_trabajador as $cargo_trabajador)
         <option value="{{$cargo_trabajador->id}}" {{($cargo_trabajador->id==$ascensos->last()->cargo->id)?'selected':''}}>
@@ -46,9 +46,9 @@
     </div>
 </div>
 <div class="form-group row">
-    <label for="sueldo" class="col-lg-3 col-form-label">Sueldo</label>
+    <label for="sueldo" class="col-lg-3 col-form-label requerido">Sueldo</label>
     <div class="col-lg-8">
-    <input type="number" name="sueldo" id="sueldo" class="form-control" value="{{old('sueldo', $ascensos->last()->sueldo ?? '')}}">
+    <input type="number" name="sueldo" id="sueldo" class="form-control" value="{{old('sueldo', $ascensos->last()->sueldo ?? '')}}" required>
     </div>
 </div>
 <div class="form-group row">

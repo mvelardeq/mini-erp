@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Administracion\Logistica;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionPerdidaExistencia;
 use App\Models\Administracion\Logistica\Compra;
 use App\Models\Administracion\Logistica\Item_compra;
 use App\Models\Administracion\Logistica\Perdida_existencia;
@@ -44,7 +45,9 @@ class PerdidaExistenciaController extends Controller
             $productos_comunes = $productos_separados->unique('producto_id');
         }
 
-        // return dd($perdida);
+        if (!isset($productos_comunes)) {
+            $productos_comunes = collect();
+        }
 
         return view('dinamica.administracion.logistica.perdida_existencia.crear_comun', compact('productos_comunes'));
     }
@@ -73,7 +76,7 @@ class PerdidaExistenciaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar_comun(Request $request)
+    public function guardar_comun(ValidacionPerdidaExistencia $request)
     {
         $items = Compra::join('item_compra','compra.id', '=','item_compra.compra_id')->with('producto')->where('producto_id', $request->producto_id)->orderBy('fecha', 'asc')->get();
 
@@ -174,7 +177,7 @@ class PerdidaExistenciaController extends Controller
     }
 
 
-    public function guardar_particular(Request $request){
+    public function guardar_particular(ValidacionPerdidaExistencia $request){
         if ($request->cantidad = 1) {
             Item_compra::findOrFail($request->item_compra_id)->update([
                 'cantidad_perdida' => $request->cantidad,
