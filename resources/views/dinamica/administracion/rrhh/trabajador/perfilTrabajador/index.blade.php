@@ -17,7 +17,7 @@ use Carbon\Carbon;
     <div class="card-header p-2">
         <ul class="nav nav-pills">
             <li class="nav-item"><a class="nav-link active" href="#actividad" data-toggle="tab">Actividades</a></li>
-            <li class="nav-item"><a class="nav-link" href="#periodos" data-toggle="tab">Períodos</a></li>
+            <li class="nav-item"><a class="nav-link" href="#historia" data-toggle="tab">Historia</a></li>
             <li class="nav-item"><a class="nav-link" href="#acciones" data-toggle="tab">Acciones</a></li>
         </ul>
     </div><!-- /.card-header -->
@@ -31,7 +31,7 @@ use Carbon\Carbon;
         </div>
         <!-- /.tab-pane -->
 
-        <div class="tab-pane" id="periodos">
+        <div class="tab-pane" id="historia">
             <!-- The timeline -->
             <div class="timeline timeline-inverse">
                 @foreach ($events as $event)

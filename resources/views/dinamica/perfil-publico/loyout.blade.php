@@ -8,8 +8,8 @@ use Carbon\Carbon;
 @endsection
 
 @section("script")
-<script src="{{asset("assets/pages/scripts/admin/trabajador/crear.js")}}" type="text/javascript"></script>
-<script src="{{asset("assets/pages/scripts/usuario/perfil/inicio.js")}}" type="text/javascript"></script>
+{{-- <script src="{{asset("assets/pages/scripts/admin/trabajador/crear.js")}}" type="text/javascript"></script> --}}
+<script src="{{asset("assets/pages/scripts/perfil-publico/inicio.js")}}" type="text/javascript"></script>
 
 @endsection
 
@@ -32,32 +32,9 @@ use Carbon\Carbon;
                      alt="User profile picture">
               </div>
 
-              {{-- {{dd(in_array('técnico',$roles))}} --}}
+                <h3 class="profile-username text-center">{{$data->primer_nombre." ".$data->primer_apellido}}</h3>
+                <p class="text-muted text-center">{{in_array('técnico',$roles) ? 'Técnico' : $ascensos->last()->cargo->nombre}}</p>
 
-            <h3 class="profile-username text-center">{{$data->primer_nombre." ".$data->primer_apellido}}</h3>
-              <p class="text-muted text-center">{{in_array('técnico',$roles) ? 'Técnico' : $ascensos->last()->cargo->nombre}}</p>
-
-              <ul class="list-group list-group-unbordered mb-3">
-                <li class="list-group-item">
-                    <b>Edad</b> <a class="float-right">{{Carbon::parse($data->fecha_nacimiento)->age}} años</a>
-                </li>
-                <li class="list-group-item">
-                    <b>Fecha Inicio</b> <a class="float-right">
-                        @if (isset($data->periodos->last()->fecha_fin))
-                             Cesado
-                        @elseif (isset($data->periodos->last()->fecha_inicio))
-                            {{-- {{$data->periodos->last()->fecha_inicio}} --}}
-                            {{Carbon::parse($data->periodos->last()->fecha_inicio)->isoFormat('DD MMMM YYYY')}}
-                        @else
-                            Sin contrato
-                        @endif
-                    </a>
-                </li>
-              </ul>
-
-                @if (isset($data->periodos->last()->fecha_inicio))
-                    <a href="{{route('configurar_usuario', ['id' => $data->id])}}" class="btn btn-primary btn-block"><b>Configurar</b></a>
-                @endif
             </div>
             <!-- /.card-body -->
           </div>
@@ -85,14 +62,6 @@ use Carbon\Carbon;
 
                 <hr>
 
-                <strong><i class="fas fa-id-card mr-1"></i> Dni</strong>
-
-                <p class="text-muted">
-                    {{$data->dni}}
-                </p>
-
-                <hr>
-
                 <strong><i class="fas fa-map-marker-alt mr-1"></i> Ubicación</strong>
 
                 <p class="text-muted">{{$data->direccion}}</p>
@@ -103,21 +72,6 @@ use Carbon\Carbon;
 
                 <p class="text-muted">
                     {{Carbon::parse($data->fecha_nacimiento)->isoFormat('Do MMMM') }}
-                </p>
-
-                <hr>
-
-                <strong><i class="fas fa-shoe-prints mr-1"></i> Botas</strong>
-
-                <p class="text-muted">
-                    {{$data->botas}}
-                </p>
-                <hr>
-
-                <strong><i class="fas fa-tshirt mr-1"></i> Overol</strong>
-
-                <p class="text-muted">
-                    {{$data->overol}}
                 </p>
 
             </div>

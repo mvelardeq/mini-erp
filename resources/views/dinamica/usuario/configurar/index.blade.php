@@ -13,7 +13,6 @@ Configurar
     <div class="col-lg-12">
         @include('dinamica.includes.mensaje')
         <div id="mensaje"></div>
-        {{-- <div class="alert alert-success" style="display:none"></div> --}}
         <div class="card card-outline card-info">
             <div class="card-header">
                 <h3 class="card-title">Contraseña</h3>
@@ -33,7 +32,7 @@ Configurar
             <div class="card-header">
                 <h3 class="card-title">Información de contacto</h3>
                 <div class="card-tools">
-                    <b href="{{route('crear_empresa')}}" class="btn btn-block btn-success btn-sm">
+                    <b class="btn btn-block btn-success btn-sm" id="botonModalInformacion" title="Editar información">
                         <i class="fas fa-pen"></i>
                     </b>
                 </div>
@@ -64,7 +63,7 @@ Configurar
 </div>
 
 
-{{-- Modal Agregar producto común--}}
+{{-- Modal Cambiar contraseña--}}
 <div class="modal fade" id="modalCambioContrasenia" tabindex="-1" role="dialog" aria-labelledby="modalCambioContraseniaLabel" aria-hidden="true">
 
     <div class="modal-dialog" role="document">
@@ -75,7 +74,7 @@ Configurar
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="form-password" id="formproductoc">
+            <form class="form-password" id="formpassword">
                 @csrf
                 <div class="modal-body">
                     <div class="alert alert-danger" style="display:none"></div>
@@ -95,7 +94,68 @@ Configurar
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="guardarc" class="btn btn-primary">Guardar</button>
+                    <button type="submit" id="guardarpassword" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{-- Modal Editar información--}}
+<div class="modal fade" id="modalEditarInformacion" tabindex="-1" role="dialog" aria-labelledby="modalInformacionLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditarInformacionLabel">Editar información</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form-informacion" id="forminformacion">
+                @csrf
+                <div class="modal-body">
+                    <div class="alert alert-danger" style="display:none"></div>
+
+                    <div class="form-group row">
+                        <label for="direccion" class="col-lg-3 col-form-label requerido">Dirección</label>
+                        <div class="col-lg-8">
+                            <input type="text" name="direccion" id="direccion" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="botas" class="col-lg-3 col-form-label requerido">Botas</label>
+                        <div class="col-lg-8">
+                            <input type="text" name="botas" id="botas" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="overol" class="col-lg-3 col-form-label requerido">Overol</label>
+                        <div class="col-lg-8">
+                            <input type="text" name="overol" id="overol" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="celular" class="col-lg-3 col-form-label requerido">Celular</label>
+                        <div class="col-lg-8">
+                            <input type="text" name="celular" id="celular" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="correo" class="col-lg-3 col-form-label requerido">Correo</label>
+                        <div class="col-lg-8">
+                            <input type="email" name="correo" id="correo" class="form-control" required/>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="guardarinfo" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
         </div>

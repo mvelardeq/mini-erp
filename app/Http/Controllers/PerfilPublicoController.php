@@ -1,33 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\Usuario;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Admin\Ascenso_trabajador;
-use App\Models\Admin\Cargo_trabajador;
 use App\Models\Admin\Obs_trabajador;
 use App\Models\Admin\Periodo_trabajador;
 use App\Models\Seguridad\Trabajador;
 use App\Models\Social\Post;
 use Illuminate\Http\Request;
 
-class PerfilController extends Controller
+class PerfilPublicoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $data = Trabajador::with('roles:id,nombre', 'observaciones', 'periodos', 'ascensos')->findOrFail(auth()->user()->id);
-        $ascensos = Ascenso_trabajador::with('cargo')->where('trabajador_id', auth()->user()->id)->get();
-        $periodos = Periodo_trabajador::where('trabajador_id',auth()->user()->id)->get();
-        $observaciones = Obs_trabajador::where('trabajador_id',auth()->user()->id)->get();
-        $trabajador = Trabajador::with('ascensos')->findOrFail(auth()->user()->id);
-        $cargo_trabajador = Cargo_trabajador::get();
-
+        $data = Trabajador::with('roles:id,nombre', 'observaciones', 'periodos', 'ascensos')->findOrFail($id);
+        $ascensos = Ascenso_trabajador::with('cargo')->where('trabajador_id', $id)->get();
+        $periodos = Periodo_trabajador::where('trabajador_id',$id)->get();
+        $observaciones = Obs_trabajador::where('trabajador_id',$id)->get();
         $eventos = collect();
+
         foreach ($periodos as $periodo) {
             if (isset($periodo->fecha_fin)) {
                 $eventos->push(['tipo'=>'fin_periodo','fecha'=>$periodo->fecha_fin,'titulo'=>'Desvinculación laboral','observacion'=>null,'foto'=>null, 'pago'=>null,'cargo'=>null]);
@@ -37,13 +33,15 @@ class PerfilController extends Controller
             $eventos->push(['tipo'=>'observacion_trabajador','fecha'=>$observacion->fecha,'titulo'=>'Se hizo una observación al trabajador','observacion'=>$observacion->observacion,'foto'=>$observacion->foto, 'pago'=>null,'cargo'=>null]);
         }
         foreach ($ascensos as $ascenso) {
-            if ($periodos =Periodo_trabajador::where('trabajador_id',auth()->user()->id)->where('fecha_inicio',$ascenso->fecha)->first()) {
+            if ($periodos =Periodo_trabajador::where('trabajador_id',$id)->where('fecha_inicio',$ascenso->fecha)->first()) {
                 $eventos->push(['tipo'=>'contrato_trabajador','fecha'=>$ascenso->fecha,'titulo'=>'Se contrató al trabajador','observacion'=>$ascenso->observacion,'foto'=>null, 'pago'=>$ascenso->sueldo,'cargo'=>$ascenso->cargo->nombre]);
             }else {
                 $eventos->push(['tipo'=>'ascenso_trabajador','fecha'=>$ascenso->fecha,'titulo'=>'Se ascendió al trabajador','observacion'=>$ascenso->observacion,'foto'=>null, 'pago'=>$ascenso->sueldo,'cargo'=>$ascenso->cargo->nombre]);
             }
         }
+
         $events = $eventos->sortByDesc('fecha');
+        // return dd($events);
 
         $roles = array();
 
@@ -51,10 +49,12 @@ class PerfilController extends Controller
             array_push($roles,$rol->nombre);
         }
 
-        $posts = Post::with('trabajador')->with('comentarios')->with('likes')->where('trabajador_id',auth()->user()->id)->orderBy('created_at','desc')->get();
+        $posts = Post::with('trabajador')->with('comentarios')->with('likes')->where('trabajador_id',$id)->orderBy('created_at','desc')->get();
+
+        // return view('dinamica.inicio', compact('posts'));
 
 
-        return view('dinamica.usuario.perfil.index', compact('data','ascensos','trabajador','roles','events','posts'));
+        return view('dinamica.perfil-publico.index', compact('data', 'ascensos','events','roles','posts'));
     }
 
     /**

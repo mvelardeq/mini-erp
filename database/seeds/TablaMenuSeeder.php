@@ -137,7 +137,7 @@ class TablaMenuSeeder extends Seeder
             'nombre' => 'OT',
             'url' => 'operaciones/ot',
             'orden'=> 5,
-            'icono'=> 'hard-hat',
+            'icono'=> 'file-alt',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);

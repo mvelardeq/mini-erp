@@ -69,7 +69,7 @@ class CuentaContableController extends Controller
     {
         $cuenta_contable = Cuenta_contable::findOrFail($id);
         $trabajadores = Trabajador::orderBy('id')->get();
-        return view('dinamica.finanzas.contabilidad.cuenta-contable.crear',compact('trabajadores','cuenta_contable'));
+        return view('dinamica.finanzas.contabilidad.cuenta-contable.editar',compact('trabajadores','cuenta_contable'));
     }
 
     /**
@@ -79,9 +79,10 @@ class CuentaContableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function actualizar(Request $request, $id)
     {
-        //
+        Cuenta_contable::findOrFail($id)->update($request->all());
+        return redirect('finanzas/contabilidad/cuenta-contable')->with('mensaje','La cuenta contable se actualizó correctamente');
     }
 
     /**
@@ -90,8 +91,16 @@ class CuentaContableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function eliminar(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            if (Cuenta_contable::destroy($id)) {
+                return response()->json(['mensaje' => 'ok']);
+            } else {
+                return response()->json(['mensaje' => 'ng']);
+            }
+        } else {
+            abort(404);
+        }
     }
 }

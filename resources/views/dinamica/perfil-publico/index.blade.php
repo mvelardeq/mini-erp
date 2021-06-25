@@ -1,13 +1,12 @@
 @php
 use Carbon\Carbon;
 @endphp
-@extends("dinamica.usuario.perfil.loyout")
+@extends("dinamica.perfil-publico.loyout")
 
 @section('contenido2')
     <div class="card-header p-2">
         <ul class="nav nav-pills">
-            <li class="nav-item"><a class="nav-link active" href="#historia" data-toggle="tab">Historia</a></li>
-            <li class="nav-item"><a class="nav-link" href="#publicaciones" data-toggle="tab">Mis publicaciones</a></li>
+            <li class="nav-item"><a class="nav-link active" href="#publicaciones" data-toggle="tab">Publicaciones</a></li>
         </ul>
     </div><!-- /.card-header -->
     <div class="card-body">
@@ -15,114 +14,7 @@ use Carbon\Carbon;
 
             <!-- /.tab-pane -->
 
-            <div class="active tab-pane" id="historia">
-
-                <!-- The timeline -->
-                <div class="timeline timeline-inverse">
-                    @foreach ($events as $event)
-                        @switch($event['tipo'])
-                            @case('contrato_trabajador')
-                                <!-- timeline time label -->
-                                <div class="time-label">
-                                    <span class="bg-success">
-                                        {{ Carbon::parse($event['fecha'])->isoFormat('DD MMMM YYYY') }}
-                                    </span>
-                                </div>
-                                <div>
-                                    <i class="fas fa-handshake bg-primary"></i>
-                                    <div class="timeline-item">
-                                        {{-- <span class="time"><i class="far fa-clock"></i> 12:05</span> --}}
-                                        <h3 class="timeline-header">Se realizó contrato al trabajdor</h3>
-                                        <div class="timeline-body">
-                                            Se realizó contrato con los siguientes términos: <br>
-                                            {{-- {{dd(array_search('técnico',$roles))}} --}}
-
-                                            Cargo: {{ in_array('técnico', $roles) ? 'Técnico' : $event['cargo'] }}
-                                        </div>
-                                    </div>
-                                </div>
-
-                            @break
-                            @case('fin_periodo')
-                                <!-- timeline time label -->
-                                <div class="time-label">
-                                    <span class="bg-success">
-                                        {{ Carbon::parse($event['fecha'])->isoFormat('DD MMMM YYYY') }}
-                                    </span>
-                                </div>
-                                <div>
-                                    <i class="fas fa-handshake bg-danger"></i>
-                                    <div class="timeline-item">
-                                        {{-- <span class="time"><i class="far fa-clock"></i> 12:05</span> --}}
-                                        <h3 class="timeline-header">Se desvinculó de la empresa al trabajdor</h3>
-                                        <div class="timeline-body">
-                                            Se realizó la desvinculación laboral sin ninguna novedad.
-                                        </div>
-                                    </div>
-                                </div>
-                            @break
-                            @case('observacion_trabajador')
-                                <!-- timeline time label -->
-                                <div class="time-label">
-                                    <span class="bg-success">
-                                        {{ Carbon::parse($event['fecha'])->isoFormat('DD MMMM YYYY') }}
-                                    </span>
-                                </div>
-                                <!-- /.timeline-label -->
-                                <!-- timeline item -->
-                                <div>
-                                    <i class="fas fa-calendar-day bg-warning"></i>
-
-                                    <div class="timeline-item">
-                                        {{-- <span class="time"><i class="far fa-clock"></i> 2 days ago</span> --}}
-
-                                        <h3 class="timeline-header">Se le hizo una observación al trabajador</h3>
-
-                                        <div class="timeline-body">
-                                            {{ $event['observacion'] }}
-                                            <div>
-                                                <img class="img-fluid pad mx-auto d-block pb-2"
-                                                    src="{{ Storage::disk('s3')->url('photos/ObsPhoto/' . $event['foto']) }}"
-                                                    alt="...">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @break
-                            @case('ascenso_trabajador')
-                                <!-- timeline time label -->
-                                <div class="time-label">
-                                    <span class="bg-success">
-                                        {{ Carbon::parse($event['fecha'])->isoFormat('DD MMMM YYYY') }}
-                                    </span>
-                                </div>
-                                <div>
-                                    <i class="fas fa-star bg-warning"></i>
-                                    <div class="timeline-item">
-                                        {{-- <span class="time"><i class="far fa-clock"></i> 12:05</span> --}}
-                                        <h3 class="timeline-header">Ascenso del trabajador</h3>
-                                        <div class="timeline-body">
-                                            Se realiza ascenso con los siguientes términos: <br>
-                                            Cargo: {{ $event['cargo'] }} <br>
-                                            Sueldo: S/. {{ number_format($event['pago'], 2) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            @break
-                            @default
-
-                        @endswitch
-                    @endforeach
-                    <!-- END timeline item -->
-                    <div>
-                        <i class="far fa-clock bg-gray"></i>
-                    </div>
-                </div>
-
-            </div>
-            <!-- /.tab-pane -->
-
-            <div class="tab-pane" id="publicaciones">
+            <div class="tab-pane active" id="publicaciones">
                 <div id="muro">
                     @if ($posts->count() > 0)
                         @foreach ($posts as $post)
@@ -235,11 +127,13 @@ use Carbon\Carbon;
                 </div>
             </div>
             <!-- /.tab-pane -->
+
         </div>
         <!-- /.tab-content -->
     </div><!-- /.card-body -->
 
-        {{-- Modal Me gusta --}}
+
+    {{-- Modal Me gusta --}}
 <div class="modal fade" id="modalMegusta" tabindex="-1" role="dialog" aria-labelledby="modalProductopLabel" aria-hidden="true">
 
     <div class="modal-dialog modal-dialog-centered" role="document">

@@ -1,9 +1,8 @@
-// const { data } = require("jquery");
-
 $(document).ready(function () {
+
     $("#botonModalContrasenia").click(function(){
-        console.log('click boton');
-        // $("#modalCambiarContrasenia").find('form').reset();
+        $("#modalCambioContrasenia").find('form')[0].reset();
+        $("#modalCambioContrasenia").find('.alert-danger').hide();
         $("#modalCambioContrasenia").modal("show");
 
     });
@@ -13,29 +12,64 @@ $(document).ready(function () {
         const data = form.serialize();
         $.post("configurar/cambiar-password", data, function (response) {
 
-            // console.log(response);
             if(response.errors)
-                  	{
-                  		$('.alert-danger').html('');
-                  		$.each(response.errors, function(key, value){
-                  			$('.alert-danger').show();
-                  			$('.alert-danger').append('<li>'+value+'</li>');
-                  		});
-                  	}
-                  	else
-                  	{
-                  		$('.alert-danger').hide();
-                  		$('#modalCambioContrasenia').modal('hide');
-                          $("#mensaje").html(`
-                          <div class="alert alert-success alert-dismissible" data-auto-dismiss="3000">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            <h5><i class="icon fas fa-check"></i> Mensaje Sistema Ascensores Industriales</h5>
-                            <ul>
-                                <li>Se cambió la contraseña exitosamente</li>
-                            </ul>
-                        </div>
-                          `);
-                  	}
+            {
+                $('.alert-danger').html('');
+                $.each(response.errors, function(key, value){
+                    $('.alert-danger').show();
+                    $('.alert-danger').append('<li>'+value+'</li>');
+                });
+            }else{
+                if (response.mensaje == "ok") {
+                    Biblioteca.notificaciones('La contraseña fue actualizada correctamente', 'Ascensores Industriales', 'success');
+                } else {
+                    Biblioteca.notificaciones('La contraseña no pudo ser actualizada, hay recursos usandolo', 'Ascensores Industriales', 'error');
+                }
+                $('.alert-danger').hide();
+                $('#modalCambioContrasenia').modal('hide');
+            }
         });
     });
+
+
+
+    $("#botonModalInformacion").click(function(){
+        $("#modalEditarInformacion").find('form')[0].reset();
+        $("#modalEditarInformacion").find('.alert-danger').hide();
+        $.get('configurar/informacion',function(response){
+            $("#direccion").attr('value',response.direccion);
+            $("#botas").attr('value',response.botas);
+            $("#overol").attr('value',response.overol);
+            $("#celular").attr('value',response.celular);
+            $("#correo").attr('value',response.correo);
+        });
+        $("#modalEditarInformacion").modal("show");
+    });
+    $("#modalEditarInformacion").on('submit','.form-informacion',function(e){
+        e.preventDefault();
+        const form = $(this);
+        const data = form.serialize();
+        $.post("configurar/cambiar-informacion", data, function (response) {
+
+            if(response.errors)
+            {
+                $('.alert-danger').html('');
+                $.each(response.errors, function(key, value){
+                    $('.alert-danger').show();
+                    $('.alert-danger').append('<li>'+value+'</li>');
+                });
+            }else{
+                if (response.mensaje == "ok") {
+                    Biblioteca.notificaciones('La información fue actualizada correctamente', 'Ascensores Industriales', 'success');
+                } else {
+                    Biblioteca.notificaciones('La información no pudo ser actualizada, hay recursos usandolo', 'Ascensores Industriales', 'error');
+                }
+                $('.alert-danger').hide();
+                $('#modalEditarInformacion').modal('hide');
+            }
+        });
+    });
+
+
+
 });

@@ -165,9 +165,18 @@ Route::group(['prefix' => 'usuario', 'namespace' => 'Usuario', 'middleware' =>['
     // RUTAS DE CALENDARIO
     Route::get('calendario','CalendarioController@index')->name('usuario_calendario');
     Route::get('calendario/mostrar','CalendarioController@mostrar')->name('mostrar_calendario');
+
+    Route::get('cuenta-corriente', 'UsuarioCuentaCorrienteController@index')->name('cuenta_corriente_usuario');
+    Route::get('cuenta-corriente/{id}/transferencia', 'UsuarioCuentaCorrienteController@transferencia')->name('transferencia_usuario');
+    Route::post('cuenta-corriente/transferencia', 'UsuarioCuentaCorrienteController@guardarTransferencia')->name('guardar_transferencia_usuario');
+
+
+
     //RUTAS DE CONFIGURAR
     Route::get('configurar','ConfigurarController@index')->middleware(['password.confirm'])->name('configurar_usuario');
     Route::post('configurar/cambiar-password','ConfigurarController@cambiarPassword')->name('cambio_contrasenia_usuario');
+    Route::get('configurar/informacion','ConfigurarController@informacion')->name('informacion_usuario');
+    Route::post('configurar/cambiar-informacion','ConfigurarController@cambiarInformacion')->name('cambiar_informacion_usuario');
 });
 
 
@@ -274,10 +283,13 @@ Route::group(['prefix' => 'finanzas/contabilidad', 'namespace' => 'Finanzas\Cont
 Route::group(['prefix' => 'finanzas', 'namespace' => 'Finanzas', 'middleware' =>['auth','superadmin']], function () {
     /*RUTAS DE CUENTA CONTABLE*/
     Route::get('estado-movimientos', 'EstadoMovimientosController@index')->name('estado_movimientos');
+    Route::get('cuenta-corriente', 'CuentaCorrienteController@index')->name('cuenta_corriente');
+    Route::get('cuenta-corriente/{id}/movimiento', 'CuentaCorrienteController@movimiento')->name('movimiento_cuenta_corriente');
 });
 
 
 Route::get('/inicio', 'HomeController@index')->name('home');
+Route::get('/inicio/perfil/{id}', 'PerfilPublicoController@index')->middleware('auth')->name('perfil-publico');
 
 Route::group(['prefix' => 'social', 'namespace' => 'Social', 'middleware' =>['auth']], function () {
     /*RUTAS DE POST*/

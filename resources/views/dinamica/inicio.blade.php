@@ -50,7 +50,7 @@
                     <div class="card-header">
                       <div class="user-block">
                         <img class="img-circle" src="{{Storage::disk('s3')->url('photos/profilePhoto/'.$post->trabajador->foto)}}" alt="User Image">
-                        <span class="username"><a href="#">{{$post->trabajador->primer_nombre.' '.$post->trabajador->primer_apellido}}</a></span>
+                        <span class="username"><a href="{{route('perfil-publico',['id'=>$post->trabajador->id])}}">{{$post->trabajador->primer_nombre.' '.$post->trabajador->primer_apellido}}</a></span>
                         <span class="description">Publicado - {{Carbon::parse($post->created_at)->diffForHumans()}}</span>
                       </div>
                     </div>
@@ -80,7 +80,9 @@
                             @if ($loop->index<3)
                                 <div class="card-comment">
                                     <!-- User image -->
-                                    <img class="img-circle img-sm" src="{{Storage::disk('s3')->url('photos/profilePhoto/'.$comentario->trabajador->foto)}}" alt="User Image">
+                                    <a href="{{route('perfil-publico',['id'=>$comentario->trabajador->id])}}">
+                                        <img class="img-circle img-sm" src="{{Storage::disk('s3')->url('photos/profilePhoto/'.$comentario->trabajador->foto)}}" alt="User Image">
+                                    </a>
 
                                     <div class="comment-text">
                                         <span class="username">
