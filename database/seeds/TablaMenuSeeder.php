@@ -215,18 +215,9 @@ class TablaMenuSeeder extends Seeder
         ]);
         DB::table('menu')->insert([
             'menu_id' => 20,
-            'nombre' => 'Quincena',
-            'url' => 'administracion/rrhh/quincena',
-            'orden'=> 3,
-            'icono'=> 'calendar-alt',
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        ]);
-        DB::table('menu')->insert([
-            'menu_id' => 20,
             'nombre' => 'Boleta de pago',
             'url' => 'administracion/rrhh/boleta-pago',
-            'orden'=> 4,
+            'orden'=> 3,
             'icono'=> 'calendar-check',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -241,7 +232,7 @@ class TablaMenuSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('menu')->insert([
-            'menu_id' => 25,
+            'menu_id' => 24,
             'nombre' => 'Productos',
             'url' => 'administracion/logistica/producto',
             'orden'=> 1,
@@ -250,7 +241,7 @@ class TablaMenuSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('menu')->insert([
-            'menu_id' => 25,
+            'menu_id' => 24,
             'nombre' => 'Compras',
             'url' => 'administracion/logistica/compra',
             'orden'=> 2,
@@ -259,7 +250,7 @@ class TablaMenuSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('menu')->insert([
-            'menu_id' => 25,
+            'menu_id' => 24,
             'nombre' => 'Inventario',
             'url' => 'administracion/logistica/inventario',
             'orden'=> 3,
@@ -268,7 +259,7 @@ class TablaMenuSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('menu')->insert([
-            'menu_id' => 25,
+            'menu_id' => 24,
             'nombre' => 'Pérdida existencia',
             'url' => 'administracion/logistica/perdida',
             'orden'=> 4,
@@ -277,7 +268,7 @@ class TablaMenuSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('menu')->insert([
-            'menu_id' => 25,
+            'menu_id' => 24,
             'nombre' => 'Categorías',
             'url' => 'administracion/logistica/categoria',
             'orden'=> 5,
@@ -298,8 +289,8 @@ class TablaMenuSeeder extends Seeder
             'menu_id' => 19,
             'nombre' => 'Pago serv.',
             'url' => 'administracion/pago-servicio',
-            'orden'=> 5,
-            'icono'=> 'money-bill',
+            'orden'=> 4,
+            'icono'=> 'gas-pump',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
@@ -313,7 +304,7 @@ class TablaMenuSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('menu')->insert([
-            'menu_id' => 33,
+            'menu_id' => 32,
             'nombre' => 'Contabilidad',
             'url' => '#',
             'orden'=> 1,
@@ -322,7 +313,7 @@ class TablaMenuSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('menu')->insert([
-            'menu_id' => 34,
+            'menu_id' => 33,
             'nombre' => 'Cuentas contables',
             'url' => 'finanzas/contabilidad/cuenta-contable',
             'orden'=> 1,
@@ -331,7 +322,7 @@ class TablaMenuSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('menu')->insert([
-            'menu_id' => 34,
+            'menu_id' => 33,
             'nombre' => 'Asiento contable',
             'url' => 'finanzas/contabilidad/asiento-contable',
             'orden'=> 2,
@@ -340,7 +331,7 @@ class TablaMenuSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('menu')->insert([
-            'menu_id' => 34,
+            'menu_id' => 33,
             'nombre' => 'E.S.F',
             'url' => 'finanzas/contabilidad/esf',
             'orden'=> 3,
@@ -349,7 +340,7 @@ class TablaMenuSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('menu')->insert([
-            'menu_id' => 34,
+            'menu_id' => 33,
             'nombre' => 'EERR',
             'url' => 'finanzas/contabilidad/eerr',
             'orden'=> 4,
@@ -358,11 +349,20 @@ class TablaMenuSeeder extends Seeder
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('menu')->insert([
-            'menu_id' => 33,
+            'menu_id' => 32,
             'nombre' => 'E. movimientos',
             'url' => 'finanzas/estado-movimientos',
             'orden'=> 2,
             'icono'=> 'hand-holding-usd',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('menu')->insert([
+            'menu_id' => 32,
+            'nombre' => 'Cuentas corrientes',
+            'url' => 'finanzas/cuenta-corriente',
+            'orden'=> 3,
+            'icono'=> 'credit-card',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
@@ -399,6 +399,33 @@ class TablaMenuSeeder extends Seeder
             'url' => 'usuario/notificaciones',
             'orden'=> 3,
             'icono'=> 'bell',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('menu')->insert([
+            'menu_id' => 40,
+            'nombre' => "Calendario",
+            'url' => 'usuario/calendario',
+            'orden'=> 4,
+            'icono'=> 'calendar-alt',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('menu')->insert([
+            'menu_id' => 40,
+            'nombre' => "Mis cuentas",
+            'url' => 'usuario/cuenta-corriente',
+            'orden'=> 5,
+            'icono'=> 'credit-card',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('menu')->insert([
+            'menu_id' => 40,
+            'nombre' => "Configurar",
+            'url' => 'usuario/configurar',
+            'orden'=> 6,
+            'icono'=> 'sliders-h',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);

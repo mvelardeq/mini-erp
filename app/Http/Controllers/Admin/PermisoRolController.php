@@ -41,7 +41,7 @@ class PermisoRolController extends Controller
     public function guardar(Request $request)
     {
         if ($request->ajax()) {
-            cache()->tags('permiso')->flush();
+            // cache()->tags('permiso')->flush();
             $permisos = new Permiso();
             if ($request->input('estado') == 1) {
                 $permisos->find($request->input('permiso_id'))->roles()->attach($request->input('rol_id'));

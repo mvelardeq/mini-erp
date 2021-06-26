@@ -16,6 +16,7 @@ class ObraController extends Controller
      */
     public function index()
     {
+        can('listar-obras');
         $obras= Obra::orderBy('id')->get();
         return view('dinamica.operaciones.obra.index',compact('obras'));
     }
@@ -27,6 +28,7 @@ class ObraController extends Controller
      */
     public function crear()
     {
+        can('crear-obras');
         $obras= Obra::orderBy('id')->get();
         return  view('dinamica.operaciones.obra.crear',compact('obras'));
     }
@@ -39,6 +41,7 @@ class ObraController extends Controller
      */
     public function guardar(ValidacionObra $request)
     {
+        can('crear-obras');
         Obra::create($request->all());
         return redirect('operaciones/obra')->with('mensaje', 'Obra creada con éxito');
     }
@@ -62,6 +65,7 @@ class ObraController extends Controller
      */
     public function editar($id)
     {
+        can('editar-obras');
         $obra = Obra::findOrFail($id);
         return view('dinamica.operaciones.obra.editar', compact('obra'));
     }
@@ -75,6 +79,7 @@ class ObraController extends Controller
      */
     public function actualizar(ValidacionObra $request, $id)
     {
+        can('editar-obras');
         Obra::findOrFail($id)->update($request->all());
         return redirect('operaciones/obra')->with('mensaje', 'Obra actualizada con éxito');
     }
@@ -87,6 +92,7 @@ class ObraController extends Controller
      */
     public function eliminar(Request $request, $id)
     {
+        can('eliminar-obras');
         if ($request->ajax()) {
             if (Obra::destroy($id)) {
                 return response()->json(['mensaje' => 'ok']);

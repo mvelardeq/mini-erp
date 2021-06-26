@@ -52,8 +52,8 @@
         <input type="password" name="re_password" id="re_password" class="form-control" value="" {{!isset($data) ? 'required' : ''}}/>
     </div>
 </div>
-<div class="form-group row">
-    <label for="rol_id" class="col-lg-3 col-form-label requerido">Rol</label>
+{{-- <div class="form-group row">
+    <label for="rol_id" class="col-lg-3 col-form-label">Rol</label>
     <div class="col-lg-8">
         <select name="rol_id[]" id="rol_id" class="form-control" multiple required>
             <option value="">Seleccione el rol</option>
@@ -66,7 +66,7 @@
             @endforeach
         </select>
     </div>
-</div>
+</div> --}}
 <div class="form-group row">
     <label for="direccion" class="col-lg-3 col-form-label">Dirección</label>
     <div class="col-lg-8">

@@ -14,22 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 /*RUTAS PASSWORD RESET*/
-
-// Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-// Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-// Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-// Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 Route::post('usuario/configurar/password/confirm','Auth\ConfirmPasswordController@confirm')->name('password.confirmp');
 Route::get('usuario/configurar/password/confirm','Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
 
+
+// RUTAS DE LOGIN
 Route::get('/', 'InicioController@index')->name('inicio');
 Route::get('seguridad/login', 'Seguridad\LoginController@index')->name('login');
 Route::post('seguridad/login', 'Seguridad\LoginController@login')->name('login_post');
 Route::get('seguridad/logout', 'Seguridad\LoginController@logout')->name('logout');
 Route::post('ajax-sesion', 'AjaxController@setSession')->name('ajax')->middleware('auth');
 
-
-
+// RUTAS ADMIN
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' =>['auth','superadmin']], function () {
     Route::get('', 'AdminController@index');
     /*RUTAS DE USUARIO*/
@@ -70,7 +66,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' =>['auth
 });
 
 
-Route::group(['prefix' => 'operaciones', 'namespace' => 'Operaciones', 'middleware' =>['auth','superadmin']], function () {
+Route::group(['prefix' => 'operaciones', 'namespace' => 'Operaciones', 'middleware' => ['auth','linea-mando']], function () {
     /*RUTAS DE OBRA*/
     Route::get('obra', 'ObraController@index')->name('obra');
     Route::get('obra/crear', 'ObraController@crear')->name('crear_obra');
@@ -113,7 +109,7 @@ Route::group(['prefix' => 'operaciones', 'namespace' => 'Operaciones', 'middlewa
     Route::delete('ot/{id}', 'OtController@eliminar')->name('eliminar_ot');
 });
 
-Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['auth','superadmin']], function () {
+Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['auth','linea-mando']], function () {
     /*RUTAS DE COTIZACIÓN*/
     Route::get('cotizacion', 'CotizacionController@index')->name('cotizacion');
     Route::get('cotizacion/crear', 'CotizacionController@crear')->name('crear_cotizacion');
@@ -180,7 +176,7 @@ Route::group(['prefix' => 'usuario', 'namespace' => 'Usuario', 'middleware' =>['
 });
 
 
-Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion\Logistica', 'middleware' =>['auth','superadmin']], function () {
+Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion\Logistica', 'middleware' =>['auth','linea-mando']], function () {
     /*RUTAS DE CATEGORIA_PRODUCTO*/
     Route::get('logistica/categoria', 'CategoriaProductoController@index')->name('categoria_producto');
     Route::get('logistica/categoria/crear', 'CategoriaProductoController@crear')->name('crear_categoria_producto');
@@ -220,7 +216,7 @@ Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion\Logis
     Route::delete('logistica/compra/{id}', 'CompraController@eliminar')->name('eliminar_compra');
     });
 
-Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion\RRHH', 'middleware' =>['auth','superadmin']], function () {
+Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion\RRHH', 'middleware' =>['auth','linea-mando']], function () {
     /*RUTAS DE TRABAJADOR*/
     Route::get('rrhh/trabajador', 'TrabajadorController@index')->name('trabajador');
     Route::get('rrhh/trabajador/crear', 'TrabajadorController@crear')->name('crear_trabajador');
@@ -253,7 +249,7 @@ Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion\RRHH'
     Route::post('rrhh/boleta-pago/guardar-quincena/{id}/{periodo}', 'BoletaPagoController@guardarQuincena')->name('guardar_quincena_trabajador');
 });
 
-Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion', 'middleware' =>['auth','superadmin']], function () {
+Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion', 'middleware' =>['auth','linea-mando']], function () {
     /*RUTAS DE SERVICIO TERCERO*/
     Route::get('servicio-tercero', 'ServicioTerceroController@index')->name('servicio_tercero');
     Route::get('servicio-tercero/crear', 'ServicioTerceroController@crear')->name('crear_servicio_tercero');
@@ -270,7 +266,7 @@ Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion', 'mi
     Route::delete('pago-servicio/{id}', 'PagoServicioController@eliminar')->name('eliminar_pago_servicio');
 });
 
-Route::group(['prefix' => 'finanzas/contabilidad', 'namespace' => 'Finanzas\Contabilidad', 'middleware' =>['auth','superadmin']], function () {
+Route::group(['prefix' => 'finanzas/contabilidad', 'namespace' => 'Finanzas\Contabilidad', 'middleware' =>['auth','linea-mando']], function () {
     /*RUTAS DE CUENTA CONTABLE*/
     Route::get('cuenta-contable', 'CuentaContableController@index')->name('cuenta_contable');
     Route::get('cuenta-contable/crear', 'CuentaContableController@crear')->name('crear_cuenta_contable');
@@ -280,7 +276,7 @@ Route::group(['prefix' => 'finanzas/contabilidad', 'namespace' => 'Finanzas\Cont
     Route::delete('cuenta-contable/{id}', 'CuentaContableController@eliminar')->name('eliminar_cuenta_contable');
 });
 
-Route::group(['prefix' => 'finanzas', 'namespace' => 'Finanzas', 'middleware' =>['auth','superadmin']], function () {
+Route::group(['prefix' => 'finanzas', 'namespace' => 'Finanzas', 'middleware' =>['auth','linea-mando']], function () {
     /*RUTAS DE CUENTA CONTABLE*/
     Route::get('estado-movimientos', 'EstadoMovimientosController@index')->name('estado_movimientos');
     Route::get('cuenta-corriente', 'CuentaCorrienteController@index')->name('cuenta_corriente');

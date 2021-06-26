@@ -19,7 +19,7 @@ class TablaRolSeeder extends Seeder
             'administrador',
             'técnico',
             'supervisor',
-            'asistente-admin',
+            'asistente',
         ];
         foreach($rols as $key=>$value){
             DB::table('rol')->insert([

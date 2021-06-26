@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seguridad;
 
 use App\Http\Controllers\Controller;
+use App\Models\Seguridad\Trabajador;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -32,7 +33,7 @@ class LoginController extends Controller
     {
         // $request->session()->flush();
         $roles = $user->roles()->get();
-        if ($roles->isNotEmpty()) {
+        if ($roles->isNotEmpty() && isset(Trabajador::findOrFail(auth()->user()->id)->periodos->last()->fecha_inicio) && !isset(Trabajador::findOrFail(auth()->user()->id)->periodos->last()->fecha_fin)) {
             $user->setSession($roles->toArray());
         } else {
             $this->guard()->logout();

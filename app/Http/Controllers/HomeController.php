@@ -30,6 +30,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // dd(session()->get('rol_nombre'));
+
         $posts = Post::with('trabajador')->with('comentarios')->with('likes')->orderBy('created_at','desc')->get();
 
         return view('dinamica.inicio', compact('posts'));

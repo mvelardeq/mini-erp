@@ -3,7 +3,8 @@
 use Illuminate\Support\Str;
 use App\Models\Admin\Permiso;
 use Illuminate\Database\Eloquent\Builder;
-
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
 
 if (!function_exists('getMenuActivo')) {
     function getMenuActivo($ruta)
@@ -59,7 +60,8 @@ if (!function_exists('canUser')) {
             if (!in_array($permiso, $permisos)) {
                 if ($redirect) {
                     if (!request()->ajax())
-                        return redirect()->route('dinamica.inicio')->with('mensaje', 'No tienes permisos para entrar en este modulo')->send();
+                        // return redirect()->route('home')->with('mensaje', 'No tienes permisos para esa acción')->send();
+                        return back()->withInput()->with('mensaje','No tienes permisos para esa acción')->send();
                     abort(403, 'No tiene permiso');
                 } else {
                     return false;

@@ -55,6 +55,7 @@ class TrabajadorController extends Controller
         $trabajador = Trabajador::create($request->all());
 
         // return dd($request->foto);
+        $request->request->add(["rol_id"=>2]);
         $trabajador->roles()->sync($request->rol_id);
         return redirect()->route('trabajador')->with('mensaje', 'El trabajador se registró correctamente');
     }
@@ -88,6 +89,7 @@ class TrabajadorController extends Controller
         if ($foto = Trabajador::setFoto($request->foto_up, $trabajador->foto))
             $request->request->add(['foto' => $foto]);
         $trabajador->update(array_filter($request->all()));
+        $request->request->add(["rol_id"=>2]);
         $trabajador->roles()->sync($request->rol_id);
         return redirect()->route('trabajador')->with('mensaje', 'El trabajdor se actualizó correctamente');
     }
