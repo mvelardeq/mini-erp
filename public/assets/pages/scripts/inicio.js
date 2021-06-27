@@ -22,7 +22,7 @@ $(document).ready(function () {
 
 
 
-    $("#tabla").on('submit', '.form-eliminar', function () {
+    $("#muro").on('submit', '.form-eliminar', function () {
         event.preventDefault();
         const form = $(this);
         swal({

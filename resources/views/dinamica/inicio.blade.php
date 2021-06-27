@@ -62,7 +62,6 @@ use Carbon\Carbon;
                                 </div>
                                 @if (canTrue('eliminar-posts'))
                                     <div class="card-tools">
-                                        <table id="tabla">
                                             <form action="{{ route('eliminar_post', ['id' => $post->id]) }}"
                                                 class="d-inline form-eliminar" method="POST">
                                                 @csrf @method("delete")
@@ -71,7 +70,6 @@ use Carbon\Carbon;
                                                     <i class="fa fa-trash text-danger"></i>
                                                 </button>
                                             </form>
-                                        </table>
                                     </div>
                                 @endif
                             </div>
