@@ -106,7 +106,7 @@ Route::group(['prefix' => 'operaciones', 'namespace' => 'Operaciones', 'middlewa
     Route::post('ot', 'OtController@guardar')->name('guardar_ot');
     Route::get('ot/{id}/editar', 'OtController@editar')->name('editar_ot');
     Route::put('ot/{id}', 'OtController@actualizar')->name('actualizar_ot');
-    Route::delete('ot/{id}', 'OtController@eliminar')->name('eliminar_ot');
+    // Route::delete('ot/{id}', 'OtController@eliminar')->name('eliminar_ot');
 });
 
 Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['auth','linea-mando']], function () {
