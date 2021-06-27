@@ -41,19 +41,19 @@ Configurar
                 <div>
                     <ul class="list-group list-group-unbordered mb-3">
                         <li class="list-group-item">
-                            <b>Dirección</b> <a class="float-right">{{auth()->user()->direccion}}</a>
+                            <b>Dirección</b> <a class="float-right" id="direccion-info">{{auth()->user()->direccion}}</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Botas</b> <a class="float-right">{{auth()->user()->botas}}</a>
+                            <b>Botas</b> <a class="float-right" id="botas-info">{{auth()->user()->botas}}</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Overol</b> <a class="float-right">{{auth()->user()->overol}}</a>
+                            <b>Overol</b> <a class="float-right" id="overol-info">{{auth()->user()->overol}}</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Celular</b> <a class="float-right">{{auth()->user()->celular}}</a>
+                            <b>Celular</b> <a class="float-right" id="celular-info">{{auth()->user()->celular}}</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Correo</b> <a class="float-right">{{auth()->user()->correo}}</a>
+                            <b>Correo</b> <a class="float-right" id="correo-info">{{auth()->user()->correo}}</a>
                         </li>
                     </ul>
                 </div>

@@ -18,7 +18,7 @@ class CreatTablaLikes extends Migration
             $table->unsignedBigInteger('trabajador_id');
             $table->foreign('trabajador_id','fk_like_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('post_id');
-            $table->foreign('post_id','fk_like_post')->references('id')->on('post')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('post_id','fk_like_post')->references('id')->on('post')->onDelete('cascade')->onUpdate('restrict');
 
             $table->timestamps();
         });

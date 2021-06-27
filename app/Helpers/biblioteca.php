@@ -71,3 +71,24 @@ if (!function_exists('canUser')) {
         }
     }
 }
+
+
+if (!function_exists('canUser')) {
+    function canTrue($permiso, $redirect = true)
+    {
+        if (session()->get('rol_nombre') == 'administrador') {
+            return true;
+        } else {
+            $rolId = session()->get('rol_id');
+            $permisos = cache()->tags('permiso')->rememberForever("permiso.rolid.$rolId", function () {
+                return Permiso::whereHas('roles', function ($query) {
+                    $query->where('rol_id', session()->get('rol_id'));
+                })->get()->pluck('slug')->toArray();
+            });
+            if (!in_array($permiso, $permisos)) {
+                return false;
+            }
+            return true;
+        }
+    }
+}

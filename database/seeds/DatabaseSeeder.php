@@ -1,5 +1,7 @@
 <?php
 
+use Database\Seeders\TablaAscensoTrabajadorSeeder;
+use Database\Seeders\TablaPeriodoTrabajadorSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -37,6 +39,8 @@ class DatabaseSeeder extends Seeder
         $this->call(TablaActividadSeeder::class);
         $this->call(TablaEmpresaSeeder::class);
         $this->call(TablaServicioTerceroSeeder::class);
+        $this->call(TablaAscensoTrabajadorSeeder::class);
+        $this->call(TablaPeriodoTrabajadorSeeder::class);
     }
     protected function truncateTablas(array $tablas){
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');

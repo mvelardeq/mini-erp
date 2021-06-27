@@ -69,7 +69,7 @@ class TrabajadorAdministradorSeeder extends Seeder
             'segundo_apellido' => 'Guerra',
             'password' => bcrypt('pass123'),
             'correo' => 'sayuri@gmail.com',
-            'dni' => '723',
+            'dni' => '72332044',
             'direccion' => 'Av. Principal mz.K lte. 7 Cerro el Pacífico-Los Olivos Lima Peru',
             'celular' => '936455043',
             'fecha_nacimiento' => '1998-07-30',

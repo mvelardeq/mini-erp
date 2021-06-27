@@ -75,7 +75,7 @@ class ConfigurarController extends Controller
 
         if(Trabajador::findOrFail(auth()->user()->id)->update(array_filter($request->all())))
         {
-            return response()->json(['mensaje' => 'ok']);
+            return response()->json(['mensaje' => 'ok','direccion'=>$request->direccion,'botas'=>$request->botas,'overol'=>$request->overol,'celular'=>$request->celular,'correo'=>$request->correo]);
         }else {
             return response()->json(['mensaje' => 'ng']);
         }

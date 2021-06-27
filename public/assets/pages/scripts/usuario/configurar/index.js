@@ -60,6 +60,11 @@ $(document).ready(function () {
                 });
             }else{
                 if (response.mensaje == "ok") {
+                    $("#direccion-info").html(response.direccion);
+                    $("#botas-info").html(response.botas);
+                    $("#overol-info").html(response.overol);
+                    $("#celular-info").html(response.celular);
+                    $("#correo-info").html(response.correo);
                     Biblioteca.notificaciones('La información fue actualizada correctamente', 'Ascensores Industriales', 'success');
                 } else {
                     Biblioteca.notificaciones('La información no pudo ser actualizada, hay recursos usandolo', 'Ascensores Industriales', 'error');

@@ -17,7 +17,7 @@ class CrearTablaCuentaContable extends Migration
             $table->id();
             $table->string('codigo',8);
             $table->string('nombre',240);
-            $table->double('saldo',10,2)->default(0);
+            $table->double('saldo',13,2)->default(0);
             $table->string('banco',90)->nullable();
             $table->string('numero_cuenta',45)->nullable();
             $table->string('responsable_id',45)->nullable();

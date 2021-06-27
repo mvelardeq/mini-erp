@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Social;
 
 use App\Http\Controllers\Controller;
 use App\Models\Social\Post;
+use Google\Service\ShoppingContent\Resource\Pos;
+use Illuminate\Support\Facades\Storage;
+// use Google\Service\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage as FacadesStorage;
 
 class PostController extends Controller
 {
@@ -88,8 +92,15 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function eliminar(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            $post = Post::findOrFail($id);
+            Storage::disk('s3')->delete("photos/postPhoto/$post->foto");
+            $post->delete();
+            return response()->json(['mensaje'=>'ok']);
+        } else {
+            abort(404);
+        }
     }
 }
