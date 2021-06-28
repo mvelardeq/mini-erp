@@ -16,6 +16,7 @@ class EmpresaController extends Controller
      */
     public function index()
     {
+        can('listar-empresas');
         $empresas= Empresa::orderBy('id')->get();
         return view('dinamica.operaciones.empresa.index',compact('empresas'));
     }
@@ -27,6 +28,7 @@ class EmpresaController extends Controller
      */
     public function crear()
     {
+        can('crear-empresas');
         $empresas= Empresa::orderBy('id')->get();
         return  view('dinamica.operaciones.empresa.crear',compact('empresas'));
     }
@@ -39,6 +41,7 @@ class EmpresaController extends Controller
      */
     public function guardar(ValidacionEmpresa $request)
     {
+        can('crear-empresas');
         Empresa::create($request->all());
         return redirect('operaciones/empresa')->with('mensaje', 'Empresa creada con éxito');
     }
@@ -62,6 +65,7 @@ class EmpresaController extends Controller
      */
     public function editar($id)
     {
+        can('editar-empresas');
         $empresa = Empresa::findOrFail($id);
         return view('dinamica.operaciones.empresa.editar', compact('empresa'));
     }
@@ -75,6 +79,7 @@ class EmpresaController extends Controller
      */
     public function actualizar(ValidacionEmpresa $request, $id)
     {
+        can('editar-empresas');
         Empresa::findOrFail($id)->update($request->all());
         return redirect('operaciones/empresa')->with('mensaje', 'Empresa actualizada con éxito');
     }
@@ -87,6 +92,7 @@ class EmpresaController extends Controller
      */
     public function eliminar(Request $request, $id)
     {
+        can('eliminar-empresas');
         if ($request->ajax()) {
             if (Empresa::destroy($id)) {
                 return response()->json(['mensaje' => 'ok']);

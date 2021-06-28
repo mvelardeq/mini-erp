@@ -22,6 +22,6 @@ class PermisoLineaMando
     }
     private function permiso()
     {
-        return session()->get('rol_nombre')!='técnico';
+        return session()->get('rol_nombre')!=='técnico';
     }
 }

@@ -20,6 +20,7 @@ class CotizacionController extends Controller
      */
     public function index()
     {
+        can('listar-cotizaciones');
         $cotizaciones= Cotizacion::with('lineas_cotizacion','equipo')->orderBy('fecha','desc')->get();
 
         return view('dinamica.ventas.cotizacion.index',compact('cotizaciones'));
@@ -37,6 +38,7 @@ class CotizacionController extends Controller
      */
     public function crear()
     {
+        can('crear-cotizaciones');
         $cotizaciones= Cotizacion::with('lineas_cotizacion')->orderBy('id')->get();
         $lineas_cotizacion= Linea_cotizacion::orderBy('id')->get();
         $equipos= Equipo::orderBy('id')->get();
@@ -51,6 +53,7 @@ class CotizacionController extends Controller
      */
     public function guardar(Request $request)
     {
+        can('crear-cotizaciones');
         $equipo = Equipo::with('obra')->findOrFail($request->equipo_id);
         Cotizacion::create([
             'equipo_id' => $request->equipo_id,
@@ -149,6 +152,7 @@ class CotizacionController extends Controller
      */
     public function editar($id)
     {
+        can('editar-cotizaciones');
         $cotizacion = Cotizacion::findOrFail($id);
         $descripciones = Linea_cotizacion::orderBy('id')->where('cotizacion_id', $id)->pluck('descripcion')->toArray();
         $cantidades = Linea_cotizacion::orderBy('id')->where('cotizacion_id', $id)->pluck('cantidad')->toArray();
@@ -166,6 +170,7 @@ class CotizacionController extends Controller
      */
     public function actualizar(Request $request, $id)
     {
+        can('editar-cotizaciones');
         $equipo = Equipo::with('obra')->findOrFail($request->equipo_id);
         $name = Cotizacion::findOrFail($id)->pdf;
         Cotizacion::findOrFail($id)->update([
@@ -363,6 +368,7 @@ class CotizacionController extends Controller
      */
     public function eliminar(Request $request, $id)
     {
+        can('eliminar-cotizaciones');
         if ($request->ajax()) {
             $name = Cotizacion::findOrFail($id)->pdf;
             if (Linea_cotizacion::where('cotizacion_id',$id)->delete()) {

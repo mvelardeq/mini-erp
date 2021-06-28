@@ -18,7 +18,7 @@ class ObservacionTrabajadorController extends Controller
      */
     public function index()
     {
-        // can('listar-libros');
+        can('listar-observacion-trabajador');
         // dd(session()->all());
         $observaciones = Obs_trabajador::with('trabajador:id,primer_nombre, primer_apellido')->orderBy('id')->get();
         return view('dinamica.administracion.rrhh.observacion-trabajador.index', compact('observaciones'));
@@ -31,6 +31,7 @@ class ObservacionTrabajadorController extends Controller
      */
     public function crear($id)
     {
+        can('crear-observacion-trabajador');
         // $trabajador = Trabajador::orderBy('id')->pluck('nombres', 'id')->toArray();
         $trabajador = Trabajador::with('ascensos')->findOrFail($id);
 
@@ -48,6 +49,7 @@ class ObservacionTrabajadorController extends Controller
      */
     public function guardar(ValidacionObsTrabajador $request, $id)
     {
+        can('crear-observacion-trabajador');
         if ($foto = Obs_trabajador::setFoto($request->foto_up))
             $request->request->add(['foto' => $foto]);
         Obs_trabajador::create($request->all());

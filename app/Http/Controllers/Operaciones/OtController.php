@@ -17,6 +17,7 @@ class OtController extends Controller
      */
     public function index()
     {
+        can('listar-ot');
         $ots= Ot::with('contrato','trabajador','estado_ot')->orderBy('created_at','Desc')->get();
         return view('dinamica.operaciones.ot.index',compact('ots'));
 

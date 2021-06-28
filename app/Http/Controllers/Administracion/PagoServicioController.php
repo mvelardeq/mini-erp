@@ -21,6 +21,7 @@ class PagoServicioController extends Controller
      */
     public function index()
     {
+        can('listar-pagos-serviciost');
         $pagos_servicio = Pago_servicio::with('servicio_tercero')->orderBy('id')->get();
         return view('dinamica.administracion.pago-servicio.index', compact('pagos_servicio'));
     }
@@ -32,6 +33,7 @@ class PagoServicioController extends Controller
      */
     public function crear()
     {
+        can('crear-pagos-serviciost');
         $servicios_tercero = Servicio_tercero::orderBy('id')->get();
         $cuentas_contable = Cuenta_contable::where('responsable_id',Auth::user()->id)->orderBy('id')->get();
         return view('dinamica.administracion.pago-servicio.crear', compact('servicios_tercero','cuentas_contable'));
@@ -45,6 +47,7 @@ class PagoServicioController extends Controller
      */
     public function guardar(ValidacionPagoServicio $request)
     {
+        can('crear-pagos-serviciost');
         Pago_servicio::create($request->all());
         $idpago_servicio = Pago_servicio::orderBy('created_at','desc')->first()->id;
         $servicio_tercero = Servicio_tercero::findOrFail($request->servicio_tercero_id);
@@ -202,6 +205,7 @@ class PagoServicioController extends Controller
      */
     public function editar($id)
     {
+        can('editar-pagos-serviciost');
         $servicios_tercero = Servicio_tercero::orderBy('id')->get();
         $pago_servicio = Pago_servicio::findOrFail($id);
         return view('dinamica.administracion.pago-servicio.editar',compact('pago_servicio','servicios_tercero'));
@@ -216,6 +220,7 @@ class PagoServicioController extends Controller
      */
     public function actualizar(ValidacionPagoServicio $request, $id)
     {
+        can('editar-pagos-serviciost');
         Pago_servicio::findOrFail($id)->update($request->all());
         return redirect('administracion/pago-servicio')->with('mensaje','Pago actualizado con éxito');
     }
@@ -228,6 +233,7 @@ class PagoServicioController extends Controller
      */
     public function Eliminar(Request $request, $id)
     {
+        can('eliminar-pagos-serviciost');
         if ($request->ajax()) {
             if (Pago_servicio::destroy($id)) {
                 return response()->json(['mensaje'=>'ok']);

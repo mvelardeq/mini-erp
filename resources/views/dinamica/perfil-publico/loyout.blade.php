@@ -31,7 +31,7 @@ use Carbon\Carbon;
                      src="{{Storage::disk('s3')->url("photos/profilePhoto/".$data->foto."")}}"
                      alt="User profile picture">
               </div>
-
+              {{-- {{dd($ascensos->last()->cargo)}} --}}
                 <h3 class="profile-username text-center">{{$data->primer_nombre." ".$data->primer_apellido}}</h3>
                 <p class="text-muted text-center">{{in_array('técnico',$roles) ? 'Técnico' : $ascensos->last()->cargo->nombre}}</p>
 

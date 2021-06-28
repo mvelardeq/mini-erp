@@ -19,6 +19,7 @@ class TrabajadorController extends Controller
      */
     public function index()
     {
+        can('listar-trabajadores');
         $datas = Trabajador::with('roles:id,nombre', 'observaciones', 'periodos', 'ascensos')->orderBy('id')->get();
         return view('dinamica.administracion.rrhh.trabajador.index', compact('datas'));
     }
@@ -30,6 +31,7 @@ class TrabajadorController extends Controller
      */
     public function crear()
     {
+        can('crear-trabajadores');
         $rols = Rol::orderBy('id')->pluck('nombre', 'id')->toArray();
         $trabajadores = Trabajador::with('roles')->orderBy('id')->get();
         $supervisores = Trabajador::whereHas('roles',function(Builder $query){
@@ -46,6 +48,7 @@ class TrabajadorController extends Controller
      */
     public function guardar(ValidacionTrabajador $request)
     {
+        can('crear-trabajadores');
         // $trabajador = Trabajador::create($request->all());
         // $trabajador->roles()->sync($request->rol_id);
         // return redirect('admin/trabajador')->with('mensaje', 'Trabajador creado con exito');
@@ -68,6 +71,7 @@ class TrabajadorController extends Controller
      */
     public function editar($id)
     {
+        can('editar-trabajadores');
         $rols = Rol::orderBy('id')->pluck('nombre', 'id')->toArray();
         $data = Trabajador::with('roles')->findOrFail($id);
         $supervisores = Trabajador::whereHas('roles',function(Builder $query){
@@ -85,6 +89,7 @@ class TrabajadorController extends Controller
      */
     public function actualizar(ValidacionTrabajador $request, $id)
     {
+        can('editar-trabajadores');
         $trabajador = Trabajador::findOrFail($id);
         if ($foto = Trabajador::setFoto($request->foto_up, $trabajador->foto))
             $request->request->add(['foto' => $foto]);
@@ -102,6 +107,7 @@ class TrabajadorController extends Controller
      */
     public function eliminar(Request $request, $id)
     {
+        can('eliminar-trabajadores');
         if ($request->ajax()) {
             $trabajador=Trabajador::findOrFail($id);
             $trabajador->roles()->detach();

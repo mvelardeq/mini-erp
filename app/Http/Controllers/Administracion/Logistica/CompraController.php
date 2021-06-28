@@ -22,6 +22,7 @@ class CompraController extends Controller
      */
     public function index()
     {
+        can('listar-compras');
         $compras = Compra::orderBy('id')->get();
 
         return view('dinamica.administracion.logistica.compra.index', compact('compras'));
@@ -34,11 +35,10 @@ class CompraController extends Controller
      */
     public function crear()
     {
+        can('crear-compras');
         $productosc = Producto::where('tipo_producto_id', '1')->orWhere('tipo_producto_id','3')->orderBy('id')->get();
         $productosp = Producto::where('tipo_producto_id', '2')->orderBy('id')->get();
         $cuentas_contable = Cuenta_contable::where('responsable_id',Auth::user()->id)->orderBy('id')->get();
-
-        // return $productosp;
 
         return view('dinamica.administracion.logistica.compra.crear', compact('productosc', 'productosp','cuentas_contable'));
     }
@@ -51,6 +51,7 @@ class CompraController extends Controller
      */
     public function guardar(ValidacionCompra $request)
     {
+        can('crear-compras');
         Compra::create([
             'proveedor' => $request->proveedor,
             'fecha' => $request->fecha,

@@ -15,7 +15,7 @@
 
 <div class="container-fluid">
     <div id="calendar">
-        Calendario
+
     </div>
 </div>
 

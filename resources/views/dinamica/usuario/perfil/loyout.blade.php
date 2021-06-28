@@ -38,9 +38,9 @@ use Carbon\Carbon;
               <p class="text-muted text-center">{{in_array('técnico',$roles) ? 'Técnico' : $ascensos->last()->cargo->nombre}}</p>
 
               <ul class="list-group list-group-unbordered mb-3">
-                <li class="list-group-item">
+                {{-- <li class="list-group-item">
                     <b>Edad</b> <a class="float-right">{{Carbon::parse($data->fecha_nacimiento)->age}} años</a>
-                </li>
+                </li> --}}
                 <li class="list-group-item">
                     <b>Fecha Inicio</b> <a class="float-right">
                         @if (isset($data->periodos->last()->fecha_fin))

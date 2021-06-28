@@ -17,7 +17,7 @@ class TablaAscensoTrabajadorSeeder extends Seeder
     {
         DB::table('ascenso_trabajador')->insert([
             'trabajador_id' => 1,
-            'cargo_trabajador_id' => 6,
+            'cargo_trabajador_id' => 8,
             'sueldo' => 2000,
             'fecha' => '2007-03-01',
             'observacion' => null,

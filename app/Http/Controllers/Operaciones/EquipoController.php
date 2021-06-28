@@ -21,6 +21,7 @@ class EquipoController extends Controller
      */
     public function index()
     {
+        can('listar-equipos');
         $equipos= Equipo::with('obra')->orderBy('id')->get();
         return view('dinamica.operaciones.equipo.index',compact('equipos'));
     }
@@ -32,6 +33,7 @@ class EquipoController extends Controller
      */
     public function crear()
     {
+        can('crear-equipos');
         $equipos= Equipo::with('obra')->orderBy('id')->get();
         $obras= Obra::orderBy('id')->get();
         $empresas = Empresa::orderBy('id')->get();
@@ -44,8 +46,9 @@ class EquipoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(ValidacionEquipo $request)
+    public function guardar(Request $request)
     {
+        can('crear-equipos');
         if ($plane = Equipo::setPlane($request->plano_up))
         {
             $request->request->add(['plano' => $plane]);
@@ -73,6 +76,7 @@ class EquipoController extends Controller
      */
     public function editar($id)
     {
+        can('editar-equipos');
         $equipo = Equipo::findOrFail($id);
         $obras= Obra::orderBy('id')->get();
         $empresas = Empresa::orderBy('id')->get();
@@ -89,6 +93,7 @@ class EquipoController extends Controller
      */
     public function actualizar(ValidacionEquipo $request, $id)
     {
+        can('editar-equipos');
         // Equipo::findOrFail($id)->update($request->all());
         $equipo = Equipo::findOrFail($id);
         if ($plane = Equipo::setPlane($request->plano_up, $equipo->plano))
@@ -107,6 +112,7 @@ class EquipoController extends Controller
      */
     public function eliminar(Request $request, $id)
     {
+        can('eliminar-equipos');
         $equipo = Equipo::findorFail($id);
         if ($request->ajax()) {
             if (Equipo::destroy($id)) {

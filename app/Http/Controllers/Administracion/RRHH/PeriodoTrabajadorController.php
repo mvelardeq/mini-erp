@@ -18,6 +18,7 @@ class PeriodoTrabajadorController extends Controller
      */
     public function index()
     {
+        can('listar-periodo-trabajador');
         $periodos = Periodo_trabajador::with('trabajador:id,primer_nombre, primer_apellido')->orderBy('id')->get();
         return view('dinamica.administracion.rrhh.periodo-trabajador.index', compact('periodos'));
     }
@@ -29,6 +30,7 @@ class PeriodoTrabajadorController extends Controller
      */
     public function crear($id)
     {
+        can('crear-periodo-trabajador');
         $trabajador = Trabajador::with('ascensos')->findOrFail($id);
         $cargo_trabajador = Cargo_trabajador::get();
 
@@ -46,6 +48,7 @@ class PeriodoTrabajadorController extends Controller
      */
     public function guardar(Request $request, $id)
     {
+        can('crear-periodo-trabajador');
         Periodo_trabajador::create([
             'trabajador_id' => $request->trabajador_id,
             'fecha_inicio' => $request->fecha_inicio,
@@ -83,6 +86,7 @@ class PeriodoTrabajadorController extends Controller
     {
         // $data = Periodo_trabajador::findOrFail($id);
 
+        can('editar-periodo-trabajador');
         $trabajador = Trabajador::with('ascensos')->findOrFail($id);
         $cargo_trabajador = Cargo_trabajador::get();
 
@@ -101,6 +105,7 @@ class PeriodoTrabajadorController extends Controller
      */
     public function actualizar(Request $request, $id)
     {
+        can('editar-periodo-trabajador');
         $data = Trabajador::with('roles:id,nombre', 'observaciones', 'periodos', 'ascensos')->findOrFail($id);
         Periodo_trabajador::findOrFail($data->periodos->last()->id)->update($request->all());
         return redirect('administracion/rrhh/trabajador/'.$id.'/perfil')->with('mensaje', 'Trabajador actualizado con exito');

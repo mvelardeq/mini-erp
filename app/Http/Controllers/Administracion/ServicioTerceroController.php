@@ -16,6 +16,7 @@ class ServicioTerceroController extends Controller
      */
     public function index()
     {
+        can('listar-serviciost');
         $servicios_tercero = Servicio_tercero::orderBy('cuenta')->get();
         return view('dinamica.administracion.servicio-tercero.index', compact('servicios_tercero'));
     }
@@ -27,6 +28,7 @@ class ServicioTerceroController extends Controller
      */
     public function crear()
     {
+        can('crear-serviciost');
         return view('dinamica.administracion.servicio-tercero.crear');
     }
 
@@ -38,6 +40,7 @@ class ServicioTerceroController extends Controller
      */
     public function guardar(ValidacionServicioTercero $request)
     {
+        can('crear-serviciost');
         if ($request->tipo_gasto=='Administrativo' || $request->tipo_gasto=='Ventas' || $request->tipo_gasto=='Producción') {
             Servicio_tercero::create($request->all());
             return redirect('administracion/servicio-tercero')->with('mensaje','Servicio creado con éxito');
@@ -65,6 +68,7 @@ class ServicioTerceroController extends Controller
      */
     public function editar($id)
     {
+        can('editar-serviciost');
         $servicio_tercero = Servicio_tercero::findOrFail($id);
         return view('dinamica.administracion.servicio-tercero.editar',compact('servicio_tercero'));
     }
@@ -78,6 +82,7 @@ class ServicioTerceroController extends Controller
      */
     public function actualizar(ValidacionServicioTercero $request, $id)
     {
+        can('editar-serviciost');
         Servicio_tercero::findOrFail($id)->update($request->all());
         return redirect('administracion/servicio-tercero')->with('mensaje','Servicio actualizado con éxito');
     }
@@ -90,6 +95,7 @@ class ServicioTerceroController extends Controller
      */
     public function eliminar(Request $request,$id)
     {
+        can('eliminar-serviciost');
         if ($request->ajax()) {
             if (Servicio_tercero::destroy($id)) {
                 return response()->json(['mensaje'=>'ok']);

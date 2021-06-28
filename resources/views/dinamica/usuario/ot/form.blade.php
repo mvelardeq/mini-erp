@@ -65,6 +65,13 @@
 
 
 <div class="form-group row">
+    <label for="foto" class="col-lg-3 control-form-label">Fotos</label>
+    <div class="col-lg-8">
+    <input type="file" id="foto" data-initial-preview="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=Fotos+Ot" name="fotos_up[]" multiple accept="image/*"/>
+    </div>
+</div>
+
+<div class="form-group row">
     <label for="pedido" class="col-lg-3 col-form-label">Pedido</label>
     <div class="col-lg-8">
         <textarea name="pedido" id="pedido" class="form-control" cols="30" rows="5" value="{{old('pedido', $ot->pedido ?? '')}}"></textarea>

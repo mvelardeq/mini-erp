@@ -40,7 +40,7 @@ class ValidacionTrabajador extends FormRequest
                 'correo' => 'required|email|max:300|unique:trabajador,correo,' . $this->route('id'),
                 'password' => 'nullable|min:6',
                 're_password' => 'nullable|required_with:password|min:6|same:password',
-                'rol_id' => 'required|array',
+                // 'rol_id' => 'required|array',
 
             ];
         }else {
@@ -60,7 +60,7 @@ class ValidacionTrabajador extends FormRequest
                 'correo' => 'required|email|max:100|unique:trabajador,correo,' . $this->route('id'),
                 'password' => 'required|min:6',
                 're_password' => 'required|min:6|same:password',
-                'rol_id' => 'required|array'
+                // 'rol_id' => 'required|array'
             ];
         }
     }

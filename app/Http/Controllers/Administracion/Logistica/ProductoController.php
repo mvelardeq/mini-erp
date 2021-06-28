@@ -18,6 +18,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
+        can('listar-productos');
         $productos = Producto::with('tipo_producto', 'categoria_producto')->orderBy('id')->get();
         return  view('dinamica.administracion.logistica.producto.index', compact('productos'));
     }
@@ -29,6 +30,7 @@ class ProductoController extends Controller
      */
     public function crear()
     {
+        can('crear-productos');
         $productos = Producto::orderBy('id')->get();
         $categorias_producto = Categoria_producto::orderBy('id')->get();
 
@@ -43,6 +45,7 @@ class ProductoController extends Controller
      */
     public function guardar(ValidacionProducto $request)
     {
+        can('crear-productos');
         if ($foto = Producto::setFoto($request->foto_producto))
             $request->request->add(['foto' => $foto]);
         Producto::create($request->all());
@@ -69,6 +72,7 @@ class ProductoController extends Controller
      */
     public function editar($id)
     {
+        can('editar-productos');
         $producto = Producto::findOrFail($id);
         $categorias_producto = Categoria_producto::orderBy('id')->get();
         return view('dinamica.administracion.logistica.producto.editar', compact('producto', 'categorias_producto'));
@@ -84,6 +88,7 @@ class ProductoController extends Controller
      */
     public function actualizar(ValidacionProducto $request, $id)
     {
+        can('editar-productos');
         Producto::findOrFail($id)->update($request->all());
         return redirect('administracion/logistica/producto')->with('mensaje','producto actualizado con éxito');
     }
@@ -96,6 +101,7 @@ class ProductoController extends Controller
      */
     public function eliminar(Request $request, $id)
     {
+        can('eliminar-productos');
         if ($request->ajax()) {
             $producto = Producto::findOrFail($id);
             Storage::disk('s3')->delete("photos/product/$producto->foto");

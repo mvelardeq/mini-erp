@@ -29,6 +29,7 @@ class BoletaPagoController extends Controller
      */
     public function index()
     {
+        can('listar-boletas');
         $year =Carbon::now()->year;
         $trabajadores = Trabajador::with('quincena','boleta_pago')->join('periodo_trabajador','trabajador.id','=','periodo_trabajador.trabajador_id')->where('fecha_fin',null)->get();
 
@@ -202,6 +203,7 @@ class BoletaPagoController extends Controller
 
     public function crearFinDeMes($id,$periodo)
     {
+        can('crear-boletas');
         $trabajador = Trabajador::findOrFail($id);
         $inicio = Carbon::create($periodo)->startOfMonth();
         $fin =Carbon::create($periodo);
@@ -264,6 +266,7 @@ class BoletaPagoController extends Controller
 
     public function crearQuincena($id,$periodo)
     {
+        can('crear-boletas');
         $trabajador = Trabajador::findOrFail($id);
         $inicio = Carbon::create($periodo)->startOfMonth();
         $fin =Carbon::create($periodo);
@@ -303,6 +306,7 @@ class BoletaPagoController extends Controller
      */
     public function guardarFinDeMes(ValidacionBoletaPago $request,$id,$periodo)
     {
+        can('crear-boletas');
         BoletaPago::create($request->all());
 
         $trabajador = Trabajador::findOrFail($id);
@@ -405,6 +409,7 @@ class BoletaPagoController extends Controller
 
     public function guardarQuincena(ValidacionQuincena $request,$id,$periodo)
     {
+        can('crear-boletas');
         Quincena::create($request->all());
 
         $trabajador = Trabajador::findOrFail($id);

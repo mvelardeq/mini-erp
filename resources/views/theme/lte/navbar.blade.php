@@ -10,17 +10,14 @@ use Carbon\Carbon;
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+        <a href="{{route('home')}}" class="nav-link"><i class="fas fa-home"></i> Inicio</a>
       </li>
     </ul>
 
     <!-- SEARCH FORM -->
     <form class="form-inline ml-2">
       <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control form-control-navbar" type="search" placeholder="Buscar" aria-label="Search">
         <div class="input-group-append">
           <button class="btn btn-navbar" type="submit">
             <i class="fas fa-search"></i>
@@ -74,7 +71,7 @@ use Carbon\Carbon;
                             </label>
                         </div>
                     </div> --}}
-                    <div class=" p-3 text-center border-b-1 brc-secondary-l2">
+                    {{-- <div class=" p-3 text-center border-b-1 brc-secondary-l2">
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-outline-danger color-palette active">
                             <input type="radio" name="options" id="option1" autocomplete="off" checked> OFFLINE
@@ -83,7 +80,7 @@ use Carbon\Carbon;
                             <input type="radio" name="options" id="option2" autocomplete="off"> ONLINE
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- <div class="row justify-content-center align-items-center">
                         @if(session()->get("roles") && count(session()->get("roles")) > 1)
                         <div class="col-xs-12 text-center">

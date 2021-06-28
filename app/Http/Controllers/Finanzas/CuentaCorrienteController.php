@@ -16,6 +16,7 @@ class CuentaCorrienteController extends Controller
      */
     public function index()
     {
+        can('listar-cuentas-corrientes');
         $cuentas_corrientes = Cuenta_contable::where('responsable_id','!=',null)->get();
 
         return view('dinamica.finanzas.cuenta-corriente.index',compact('cuentas_corrientes'));
@@ -27,8 +28,10 @@ class CuentaCorrienteController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function movimiento($id){
-         $movimientos = Cuenta_contable::findOrFail($id);
+     public function movimiento($id)
+     {
+        can('listar-cuentas-corrientes');
+        $movimientos = Cuenta_contable::findOrFail($id);
 
         return view('dinamica.finanzas.cuenta-corriente.movimientos',compact('movimientos'));
      }

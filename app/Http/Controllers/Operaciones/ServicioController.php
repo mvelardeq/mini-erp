@@ -16,6 +16,7 @@ class ServicioController extends Controller
      */
     public function index()
     {
+        can('listar-servicios');
         $servicios= Servicio::with('actividades')->orderBy('id')->get();
 
         // return dd($servicios->actividades->nombre);
@@ -29,6 +30,7 @@ class ServicioController extends Controller
      */
     public function crear()
     {
+        can('crear-servicios');
         $servicios= Servicio::with('actividades')->orderBy('id')->get();
         $actividades= Actividad::orderBy('id')->get();
         return  view('dinamica.operaciones.servicio.crear',compact('servicios', 'actividades'));
@@ -42,7 +44,8 @@ class ServicioController extends Controller
      */
     public function guardar(Request $request)
     {
-            Servicio::create([
+        can('crear-servicios');
+        Servicio::create([
             'nombre' => $request->nombre,
             'observacion' => $request->observacion,
             ]);
@@ -161,6 +164,7 @@ class ServicioController extends Controller
      */
     public function editar($id)
     {
+        can('editar-servicios');
         $servicio = Servicio::findOrFail($id);
         $actividades = Actividad::orderBy('id')->where('servicio_id', $id)->pluck('nombre')->toArray();
         return view('dinamica.operaciones.servicio.editar', compact('servicio','actividades'));
@@ -175,6 +179,7 @@ class ServicioController extends Controller
      */
     public function actualizar(Request $request, $id)
     {
+        can('editar-servicios');
         Servicio::findOrFail($id)->update([
             'nombre' => $request->nombre,
             'observacion' => $request->observacion,
@@ -504,6 +509,7 @@ class ServicioController extends Controller
      */
     public function eliminar(Request $request, $id)
     {
+        can('eliminar-servicios');
         if ($request->ajax()) {
             if (Actividad::where('servicio_id',$id)->delete()) {
                 if (Servicio::destroy($id)) {

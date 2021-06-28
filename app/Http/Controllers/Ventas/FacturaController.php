@@ -26,6 +26,7 @@ class FacturaController extends Controller
      */
     public function index()
     {
+        can('listar-facturas');
         $facturas= Factura::with('concepto_pago', 'pagar_factura', 'detraer_factura', 'anular_factura')->orderBy('numero','desc')->get();
         // $contratos= Contrato::with('conceptos_pago','equipo')->where('estado','abierto')->orderBy('id')->get();
         $equipos= Equipo::orderBy('id')->get();
@@ -41,6 +42,7 @@ class FacturaController extends Controller
      */
     public function crear()
     {
+        can('crear-facturas');
         $contratos= Contrato::with('conceptos_pago','equipo')->where('estado','Abierto')->orderBy('fecha_inicio','desc')->get();
         $conceptos_pago= Concepto_pago::orderBy('id')->get();
         $equipos= Equipo::orderBy('created_at','desc')->get();
@@ -55,6 +57,7 @@ class FacturaController extends Controller
      */
     public function guardar(Request $request)
     {
+        can('crear-facturas');
         define("IGV",0.18);
         $concepto_pago = Concepto_pago::with('contrato')->findOrFail($request->concepto_pago_id);
         $pago_sin_detraccion = $concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*(IGV+1)*(1-($concepto_pago->contrato->equipo->empresa->porcentaje_detraccion/100))/100;
@@ -203,6 +206,7 @@ class FacturaController extends Controller
      */
     public function editar($id)
     {
+        can('editar-facturas');
         $factura = Factura::findOrFail($id);
         // $contrato = Contrato::findOrFail($factura->concepto_pago->contrato);
         $contratos= Contrato::with('conceptos_pago','equipo')->where('estado','Abierto')->orderBy('id')->get();
@@ -230,6 +234,7 @@ class FacturaController extends Controller
      */
     public function eliminar(Request $request, $id)
     {
+        can('eliminar-facturas');
         if ($request->ajax()) {
 
             $conceptopago_id = Factura::findOrFail($id)->concepto_pago_id;
@@ -247,6 +252,7 @@ class FacturaController extends Controller
 
     public function procesar(Request $request, $id)
     {
+        can('procesar-facturas');
         if ($request->ajax()) {
             if (Factura::findOrFail($id)->update(['estado_factura_id' => 2 ])) {
                 return response()->json(['mensaje' => 'ok','id'=>$id]);
@@ -260,6 +266,7 @@ class FacturaController extends Controller
 
     public function pagar(Request $request, $id)
     {
+        can('pagar-facturas');
         $pago = $_POST['pago'];
         $fecha_pago = $_POST['fecha_pago'];
         Pagar_factura::create(['factura_id'=>$id, 'pago'=>$pago, 'fecha'=>$fecha_pago]);
@@ -301,6 +308,7 @@ class FacturaController extends Controller
 
     public function detraer(Request $request, $id)
     {
+        can('detraer-facturas');
         $pago_detraccion = $_POST['pago_detraccion'];
         $fecha_detraccion = $_POST['fecha_detraccion'];
         Detraer_factura::create(['factura_id'=>$id, 'pago_detraccion'=>$pago_detraccion, 'fecha'=>$fecha_detraccion]);
@@ -338,6 +346,7 @@ class FacturaController extends Controller
 
     public function anular(Request $request, $id)
     {
+        can('anular-facturas');
         $fecha_anulacion = $_POST['fecha_anulacion'];
         $motivo_anulacion = $_POST['motivo_anulacion'];
         Anular_factura::create(['factura_id'=>$id, 'motivo'=>$motivo_anulacion, 'fecha'=>$fecha_anulacion]);

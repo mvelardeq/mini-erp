@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Usuario;
 
 use App\Http\Controllers\Controller;
 use App\Models\Operaciones\Actividad;
+use App\Models\Operaciones\Fotos_ot;
 use App\Models\Operaciones\Ot;
 use App\Models\Operaciones\Ot_actividad;
 use App\Models\Ventas\Contrato;
@@ -76,6 +77,17 @@ class OtController extends Controller
                     'ot_id' => $idot,
                     'actividad_id' => $request->actividad3_id,
                     'horas' => $request->horas3,
+                ]);
+            }
+
+            for ($i=0; $i < count($request->fotos_up); $i++) {
+
+                if ($foto = Fotos_ot::setFoto($request->fotos_up[$i]))
+                    $request->request->add(['foto' => $foto]);
+
+                Fotos_ot::create([
+                    'ot_id' => $idot,
+                    'foto' => $request->foto,
                 ]);
             }
 

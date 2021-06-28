@@ -97,6 +97,11 @@ class TablaPermisoSeeder extends Seeder
             'editar cuentas corrientes',
             'eliminar cuentas corrientes',
             'eliminar posts',
+            'crear ascenso trabajador',
+            'listar observacion trabajador',
+            'crear observacion trabajador',
+            'finalizar contrato',
+            'retomar contrato',
         ];
         foreach($permisos as $key=>$value){
             DB::table('permiso')->insert([

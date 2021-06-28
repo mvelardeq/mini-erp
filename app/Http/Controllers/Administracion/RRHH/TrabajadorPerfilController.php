@@ -12,6 +12,7 @@ use App\Models\Seguridad\Trabajador;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TrabajadorPerfilController extends Controller
 {
@@ -82,14 +83,31 @@ class TrabajadorPerfilController extends Controller
                     $evento->push(['start'=>$ot->fecha,'color'=>'#228E3B', 'title'=>$ot->contrato->equipo->obra->nombre, 'url'=>$actividades]);
 
                     if ($ot->adelanto_trabajador) {
-                        $evento->push(['start'=>$ot->fecha .' 01:00','color'=>'#DCA606', 'title'=>'adelanto '.$ot->adelanto_trabajador->pago.' soles', 'url'=>'<div class="card-footer">Se adelantó '.$ot->adelanto_trabajador->pago.' Soles</div>']);
+                        $evento->push(['start'=>$ot->fecha .' 01:00','color'=>'#DCA606', 'title'=>'Adelanto '.$ot->adelanto_trabajador->pago.' soles', 'url'=>'<div class="card-footer">Se adelantó '.$ot->adelanto_trabajador->pago.' Soles</div>']);
                     }
                     if ($ot->descuento) {
-                        $evento->push(['start'=>$ot->fecha .' 01:00','color'=>'#F56954', 'title'=>'descuento de '.$ot->descuento.' soles', 'url'=>'<div class="card-footer">Motivo: '.$ot->motivo_descuento.'</div>']);
+                        $evento->push(['start'=>$ot->fecha .' 01:00','color'=>'#F56954', 'title'=>'Descuento de '.$ot->descuento.' soles', 'url'=>'<div class="card-footer">Motivo: '.$ot->motivo_descuento.'</div>']);
                     }
                     if (($ot->gasto_trabajador->estado_gasto->nombre ?? '') == 'Mensual') {
                         $evento->push(['start'=>$ot->fecha .' 01:00','color'=>'#6C757D', 'title'=>'Gasto de '.$ot->gasto_trabajador->tipo_gasto->nombre, 'url'=>'<div class="card-footer">Gasto: '.$ot->gasto_trabajador->pago.' soles</div>']);
                     }
+
+
+                    if ($ot->fotos) {
+
+                        $lista_fotos ='';
+                        foreach ($ot->fotos as $ot_foto) {
+                            $lista_fotos .= '<img src="'.Storage::disk('s3')->url("photos/otPhoto/".$ot_foto->foto).'" alt="..." class="img-fluid pad mx-auto d-block pb-2" >';
+                        }
+                    $lista_final = '<div class="timeline-item row">
+
+                            <h6>'.$ot->contrato->equipo->obra->nombre.'</h6>
+                          <div class="timeline-body col-12">'.$lista_fotos.'</div>
+                        </div>';
+
+                        $evento->push(['start'=>$ot->fecha .' 0'.$ot->fotos->count().':00','color'=>'#6F42C1', 'title'=>'Fotos', 'url'=>'<div class="card-footer">'.$lista_final.'</div>']);
+                    }
+
 
                     break;
 

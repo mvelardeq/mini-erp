@@ -28,6 +28,7 @@ class AscensoTrabajadorController extends Controller
      */
     public function crear($id)
     {
+        can('crear-ascenso-trabajador');
         $trabajador = Trabajador::with('ascensos','periodos')->findOrFail($id);
         $cargo_trabajador = Cargo_trabajador::get();
         $ascensos = Ascenso_trabajador::with('cargo')->where('trabajador_id', $id)->get();
@@ -45,6 +46,7 @@ class AscensoTrabajadorController extends Controller
      */
     public function guardar(ValidacionAscensoTrabajador $request,$id)
     {
+        can('crear-ascenso-trabajador');
         Ascenso_trabajador::create($request->all());
         return redirect('administracion/rrhh/trabajador/'.$id.'/perfil')->with('mensaje','Ascenso creado con éxito');
     }

@@ -16,6 +16,7 @@ class CargoController extends Controller
      */
     public function index()
     {
+        can('listar-cargos');
         $cargos_trabajador = Cargo_trabajador::orderBy('id')->get();
 
         return view('dinamica.administracion.rrhh.cargo.index', compact('cargos_trabajador'));
@@ -28,6 +29,7 @@ class CargoController extends Controller
      */
     public function crear()
     {
+        can('crear-cargos');
         return view('dinamica.administracion.rrhh.cargo.crear');
     }
 
@@ -39,6 +41,7 @@ class CargoController extends Controller
      */
     public function guardar(ValidacionCargoTrabajador $request)
     {
+        can('crear-cargos');
         Cargo_trabajador::create($request->all());
 
         return redirect('administracion/rrhh/cargo')->with('mensaje','Cargo creado con éxito');
@@ -63,6 +66,7 @@ class CargoController extends Controller
      */
     public function editar($id)
     {
+        can('editar-cargos');
         $cargo_trabajador = Cargo_trabajador::findOrFail($id);
         return view('dinamica.administracion.rrhh.cargo.editar', compact('cargo_trabajador'));
     }
@@ -76,6 +80,7 @@ class CargoController extends Controller
      */
     public function actualizar(ValidacionCargoTrabajador $request, $id)
     {
+        can('editar-cargos');
         Cargo_trabajador::findOrFail($id)->update($request->all());
         return redirect('administracion/rrhh/cargo')->with('mensaje','Cargo actualizado con éxito');
     }
@@ -88,6 +93,7 @@ class CargoController extends Controller
      */
     public function eliminar(Request $request, $id)
     {
+        can('eliminar-cargos');
         if ($request->ajax()) {
             if ( Cargo_trabajador::destroy($id)) {
                 return response()->json(['mensaje'=>'ok']);

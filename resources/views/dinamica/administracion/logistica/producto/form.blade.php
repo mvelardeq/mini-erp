@@ -23,7 +23,6 @@
 <div class="form-group row">
     <label for="categoria_producto_id" class="col-lg-3 col-form-label requerido">Categoría</label>
     <div class="col-lg-8">
-            'categoria_producto_id'=>'required',
         <select name="categoria_producto_id" id="categoria_producto_id" class="selectpicker form-control" data-live-search="true" required>
             <option value="">Seleccione la categoría</option>
             @foreach($categorias_producto as $categoria_producto)

@@ -20,6 +20,7 @@ class CuentaContableController extends Controller
      */
     public function index()
     {
+        can('listar-cuentas-contables');
         $cuentas_contable = Cuenta_contable::orderBy('codigo','asc')->get();
         $trabajadores = Trabajador::orderBy('id')->get();
         return view('dinamica.finanzas.contabilidad.cuenta-contable.index',compact('cuentas_contable','trabajadores'));
@@ -32,6 +33,7 @@ class CuentaContableController extends Controller
      */
     public function crear()
     {
+        can('crear-cuentas-contables');
         $trabajadores = Trabajador::orderBy('id')->get();
         return view('dinamica.finanzas.contabilidad.cuenta-contable.crear', compact('trabajadores'));
     }
@@ -44,6 +46,7 @@ class CuentaContableController extends Controller
      */
     public function guardar(ValidacionCuentaContable $request)
     {
+        can('crear-cuentas-contables');
         Cuenta_contable::create($request->all());
 
         return redirect('finanzas/contabilidad/cuenta-contable')->with('mensaje','Cuenta contable creada con éxito');
@@ -68,6 +71,7 @@ class CuentaContableController extends Controller
      */
     public function editar($id)
     {
+        can('editar-cuentas-contables');
         $cuenta_contable = Cuenta_contable::findOrFail($id);
         $trabajadores = Trabajador::orderBy('id')->get();
         return view('dinamica.finanzas.contabilidad.cuenta-contable.editar',compact('trabajadores','cuenta_contable'));
@@ -82,6 +86,7 @@ class CuentaContableController extends Controller
      */
     public function actualizar(ValidacionCuentaContable $request, $id)
     {
+        can('editar-cuentas-contables');
         Cuenta_contable::findOrFail($id)->update($request->all());
         return redirect('finanzas/contabilidad/cuenta-contable')->with('mensaje','La cuenta contable se actualizó correctamente');
     }
@@ -94,6 +99,7 @@ class CuentaContableController extends Controller
      */
     public function eliminar(Request $request, $id)
     {
+        can('eliminar-cuentas-contables');
         if ($request->ajax()) {
             if (Cuenta_contable::destroy($id)) {
                 return response()->json(['mensaje' => 'ok']);

@@ -21,6 +21,7 @@ class PerdidaExistenciaController extends Controller
      */
     public function index()
     {
+        can('listar-perdidas');
         $perdidas_existencia = Perdida_existencia::orderBy('id')->get();
 
         return view('dinamica.administracion.logistica.perdida_existencia.index', compact('perdidas_existencia'));
@@ -33,6 +34,7 @@ class PerdidaExistenciaController extends Controller
      */
     public function crear_comun()
     {
+        can('crear-perdidas');
         $items = Item_compra::with('producto')->orderBy('id')->get();
 
         $productos_separados = collect();
@@ -55,6 +57,7 @@ class PerdidaExistenciaController extends Controller
 
     public function crear_particular()
     {
+        can('crear-perdidas');
         $items = Item_compra::with('producto')->orderBy('id')->get();
 
         $productos_particulares = collect();
@@ -78,6 +81,7 @@ class PerdidaExistenciaController extends Controller
      */
     public function guardar_comun(ValidacionPerdidaExistencia $request)
     {
+        can('crear-perdidas');
         $items = Compra::join('item_compra','compra.id', '=','item_compra.compra_id')->with('producto')->where('producto_id', $request->producto_id)->orderBy('fecha', 'asc')->get();
 
 
@@ -177,7 +181,9 @@ class PerdidaExistenciaController extends Controller
     }
 
 
-    public function guardar_particular(ValidacionPerdidaExistencia $request){
+    public function guardar_particular(ValidacionPerdidaExistencia $request)
+    {
+        can('crear-perdidas');
         if ($request->cantidad = 1) {
             Item_compra::findOrFail($request->item_compra_id)->update([
                 'cantidad_perdida' => $request->cantidad,

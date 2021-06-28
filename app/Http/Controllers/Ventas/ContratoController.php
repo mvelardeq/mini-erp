@@ -19,6 +19,7 @@ class ContratoController extends Controller
      */
     public function index()
     {
+        can('listar-contratos');
         $contratos= Contrato::with('conceptos_pago','equipo', 'servicio')->orderBy('fecha_inicio','desc')->get();
         $servicios = Servicio::orderBy('id')->get();
         // $empresas = Empresa::orderBy('id')->get();
@@ -33,6 +34,7 @@ class ContratoController extends Controller
      */
     public function crear()
     {
+        can('listar-contratos');
         $contratos= Contrato::with('conceptos_pago','equipo')->orderBy('id')->get();
         $conceptos_pago= Concepto_pago::orderBy('id')->get();
         $servicios = Servicio::orderBy('id')->get();
@@ -49,6 +51,7 @@ class ContratoController extends Controller
      */
     public function guardar(Request $request)
     {
+        can('listar-contratos');
         Contrato::create([
             'servicio_id' => $request->servicio_id,
             'equipo_id' => $request->equipo_id,
@@ -133,6 +136,7 @@ class ContratoController extends Controller
      */
     public function editar($id)
     {
+        can('listar-contratos');
         $contrato = Contrato::findOrFail($id);
         $conceptos = Concepto_pago::orderBy('id')->where('contrato_id', $id)->pluck('concepto')->toArray();
         $porcentajes = Concepto_pago::orderBy('id')->where('contrato_id', $id)->pluck('porcentaje')->toArray();
@@ -151,6 +155,7 @@ class ContratoController extends Controller
      */
     public function actualizar(Request $request, $id)
     {
+        can('listar-contratos');
         Contrato::findOrFail($id)->update([
             'servicio_id' => $request->servicio_id,
             'equipo_id' => $request->equipo_id,
@@ -322,6 +327,7 @@ class ContratoController extends Controller
      */
     public function eliminar(Request $request, $id)
     {
+        can('listar-contratos');
         if ($request->ajax()) {
             if (Concepto_pago::where('contrato_id',$id)->delete()) {
                 if (Contrato::destroy($id)) {
@@ -337,6 +343,7 @@ class ContratoController extends Controller
     }
     public function finalizar(Request $request, $id)
     {
+        can('finalizar-contrato');
         if ($request->ajax()) {
             if (Contrato::findOrFail($id)->update(['estado' => "Cerrado" ])) {
                 return response()->json(['mensaje' => 'ok','id'=>$id]);
@@ -349,6 +356,7 @@ class ContratoController extends Controller
     }
     public function retomar(Request $request, $id)
     {
+        can('retomar-contrato');
         if ($request->ajax()) {
             if (Contrato::findOrFail($id)->update(['estado' => "Abierto" ])) {
                 return response()->json(['mensaje' => 'ok', 'id'=>$id]);

@@ -94,6 +94,7 @@ class PostController extends Controller
      */
     public function eliminar(Request $request, $id)
     {
+        can('eliminar-posts');
         if ($request->ajax()) {
             $post = Post::findOrFail($id);
             Storage::disk('s3')->delete("photos/postPhoto/$post->foto");

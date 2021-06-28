@@ -16,6 +16,7 @@ class CategoriaProductoController extends Controller
      */
     public function index()
     {
+        can('listar-categorias');
         $categorias_producto = Categoria_producto::orderBy('id')->get();
         return  view('dinamica.administracion.logistica.categoria_producto.index', compact('categorias_producto'));
     }
@@ -27,6 +28,7 @@ class CategoriaProductoController extends Controller
      */
     public function crear()
     {
+        can('crear-categorias');
         $categorias_producto = Categoria_producto::orderBy('id')->get();
         return  view('dinamica.administracion.logistica.categoria_producto.crear', compact('categorias_producto'));
 
@@ -40,6 +42,7 @@ class CategoriaProductoController extends Controller
      */
     public function guardar(ValidacionCategoriaProducto $request)
     {
+        can('crear-categorias');
         Categoria_producto::create($request->all());
         return redirect('administracion/logistica/categoria')->with('mensaje','Categoría creada con éxito');
     }
@@ -63,6 +66,7 @@ class CategoriaProductoController extends Controller
      */
     public function editar($id)
     {
+        can('editar-categorias');
         $categoria_producto = Categoria_producto::findOrFail($id);
         return view('dinamica.administracion.logistica.categoria_producto.editar', compact('categoria_producto'));
     }
@@ -77,6 +81,7 @@ class CategoriaProductoController extends Controller
     public function actualizar(ValidacionCategoriaProducto $request, $id)
     {
         // return dd($request->all());
+        can('editar-categorias');
         Categoria_producto::findOrFail($id)->update($request->all());
         return redirect('administracion/logistica/categoria')->with('mensaje','categoria actualizada con éxito');
     }
@@ -89,6 +94,7 @@ class CategoriaProductoController extends Controller
      */
     public function eliminar(Request $request, $id)
     {
+        can('eliminar-categorias');
         if ($request->ajax()) {
             if (Categoria_producto::destroy($id)) {
                 return response()->json(['mensaje'=>'ok']);

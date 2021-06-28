@@ -30,9 +30,7 @@ Ot
                             <th>Equipo</th>
                             <th>Fecha</th>
                             <th>Actividad-Horas</th>
-                            <th>Adelanto</th>
-                            <th>Descuento</th>
-                            <th>Pedido</th>
+                            <th>Extra</th>
                             <th>Estado</th>
 
                             <th class="width70"></th>
@@ -48,9 +46,17 @@ Ot
                                     {{$ot_actividad->nombre.': '.$ot_actividad->pivot->horas.' hrs'}}<br>
                                 @endforeach
                             </td>
-                            <td>{{$ot->adelanto_trabajador->pago ?? ''}}</td>
-                            <td>{{$ot->descuento}}</td>
-                            <td>{{$ot->pedido}}</td>
+                            <td>
+                                @if ($ot->adelanto_trabajador->pago)
+                                Adelanto: S/. {{$ot->adelanto_trabajador->pago}} <br>
+                                @endif
+                                @if ($ot->descuento)
+                                Descuento: S/. {{$ot->descuento}} <br>
+                                @endif
+                                @if ($ot->pedido)
+                                Pedido: {{$ot->pedido}}
+                                @endif
+                            </td>
                             <td>
                                 @if ($ot->estado_ot->nombre=='Aprobado')
                                     <span class="badge bg-success">Aprobado</span>

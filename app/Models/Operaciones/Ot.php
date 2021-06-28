@@ -18,6 +18,10 @@ class Ot extends Model
         return $this->belongsToMany(Actividad::class, 'ot_actividad')->withPivot('horas');
     }
 
+    public function fotos(){
+        return $this->hasMany(Fotos_ot::class);
+    }
+
     public function trabajador()
     {
         return $this->belongsTo(Trabajador::class, 'trabajador_id');
