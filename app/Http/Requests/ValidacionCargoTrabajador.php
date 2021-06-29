@@ -24,7 +24,7 @@ class ValidacionCargoTrabajador extends FormRequest
     public function rules()
     {
         return [
-            'nombre'=>'required|unique:cargo_trabajador'. $this->route('id'),
+            'nombre'=>'required|unique:cargo_trabajador,nombre,'. $this->route('id'),
         ];
     }
 }

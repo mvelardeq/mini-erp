@@ -24,7 +24,7 @@ class ValidacionCategoriaProducto extends FormRequest
     public function rules()
     {
         return [
-            'nombre'=>'required|unique:categoria_producto|max:45'. $this->route('id')
+            'nombre'=>'required|max:45|unique:categoria_producto,nombre,'. $this->route('id')
         ];
     }
 }
