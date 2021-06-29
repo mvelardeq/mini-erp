@@ -24,7 +24,7 @@ class ValidacionObra extends FormRequest
     public function rules()
     {
         return [
-            'nombre'=>'required|unique:obra|max:100',
+            'nombre'=>'required|unique:obra|max:100'. $this->route('id'),
             'direccion'=>'required|max:400',
             'cliente'=>'nullable|max:100',
         ];

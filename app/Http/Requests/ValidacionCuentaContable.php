@@ -24,8 +24,8 @@ class ValidacionCuentaContable extends FormRequest
     public function rules()
     {
         return [
-            'codigo'=>'required|unique:cuenta_contable|max:8',
-            'nombre'=>'required|unique:cuenta_contable|max:240',
+            'codigo'=>'required|unique:cuenta_contable|max:8'. $this->route('id'),
+            'nombre'=>'required|unique:cuenta_contable|max:240'. $this->route('id'),
             'saldo'=>'required',
             'banco'=>'nullable',
             'numero_cuenta'=>'nullable',

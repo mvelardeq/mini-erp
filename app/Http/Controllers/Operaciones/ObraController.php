@@ -17,7 +17,7 @@ class ObraController extends Controller
     public function index()
     {
         can('listar-obras');
-        $obras= Obra::orderBy('id')->get();
+        $obras= Obra::orderBy('id','desc')->get();
         return view('dinamica.operaciones.obra.index',compact('obras'));
     }
 
@@ -29,7 +29,7 @@ class ObraController extends Controller
     public function crear()
     {
         can('crear-obras');
-        $obras= Obra::orderBy('id')->get();
+        $obras= Obra::orderBy('id','desc')->get();
         return  view('dinamica.operaciones.obra.crear',compact('obras'));
     }
 

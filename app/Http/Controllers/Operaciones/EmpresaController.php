@@ -17,7 +17,7 @@ class EmpresaController extends Controller
     public function index()
     {
         can('listar-empresas');
-        $empresas= Empresa::orderBy('id')->get();
+        $empresas= Empresa::orderBy('id','desc')->get();
         return view('dinamica.operaciones.empresa.index',compact('empresas'));
     }
 
@@ -29,7 +29,7 @@ class EmpresaController extends Controller
     public function crear()
     {
         can('crear-empresas');
-        $empresas= Empresa::orderBy('id')->get();
+        $empresas= Empresa::orderBy('id','desc')->get();
         return  view('dinamica.operaciones.empresa.crear',compact('empresas'));
     }
 

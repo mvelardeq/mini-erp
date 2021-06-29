@@ -22,7 +22,7 @@ class EquipoController extends Controller
     public function index()
     {
         can('listar-equipos');
-        $equipos= Equipo::with('obra')->orderBy('id')->get();
+        $equipos= Equipo::with('obra')->orderBy('id','desc')->get();
         return view('dinamica.operaciones.equipo.index',compact('equipos'));
     }
 
@@ -34,8 +34,8 @@ class EquipoController extends Controller
     public function crear()
     {
         can('crear-equipos');
-        $equipos= Equipo::with('obra')->orderBy('id')->get();
-        $obras= Obra::orderBy('id')->get();
+        $equipos= Equipo::with('obra')->orderBy('id','desc')->get();
+        $obras= Obra::orderBy('id','desc')->get();
         $empresas = Empresa::orderBy('id')->get();
         return  view('dinamica.operaciones.equipo.crear',compact('equipos', 'obras','empresas'));
     }
@@ -78,7 +78,7 @@ class EquipoController extends Controller
     {
         can('editar-equipos');
         $equipo = Equipo::findOrFail($id);
-        $obras= Obra::orderBy('id')->get();
+        $obras= Obra::orderBy('id','desc')->get();
         $empresas = Empresa::orderBy('id')->get();
 
         return view('dinamica.operaciones.equipo.editar', compact('equipo', 'obras', 'empresas'));
