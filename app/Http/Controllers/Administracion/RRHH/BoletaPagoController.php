@@ -123,7 +123,7 @@ class BoletaPagoController extends Controller
         return $sueldo;
      }
 
-     public function numero_domingos($periodo,$idTrabajador){
+     public function numero_domingos15($periodo,$idTrabajador){
 
         $year = Carbon::create($periodo)->isoFormat('YYYY');
         $month = Carbon::create($periodo)->isoFormat('MM');
@@ -139,6 +139,35 @@ class BoletaPagoController extends Controller
             }
         }
         for ($i=15; $i >=1 ; $i--) {
+            if($ots_horas->where('fecha',Carbon::create($year,$month,$i)->isoFormat('YYYY-MM-DD'))->count()>0){
+                $fin_ots =$i;
+                break;
+            }
+        }
+        $numero_domingos = 0;
+        for ($i=$inicio_ots; $i <=$fin_ots ; $i++) {
+            if(Carbon::create($year,$month,$i)->isoFormat('dddd')=='domingo'){
+                $numero_domingos = $numero_domingos+1;
+            }
+        }
+        return $numero_domingos;
+     }
+     public function numero_domingos30($periodo,$idTrabajador){
+
+        $year = Carbon::create($periodo)->isoFormat('YYYY');
+        $month = Carbon::create($periodo)->isoFormat('MM');
+        $inicio = Carbon::create($periodo)->startOfMonth();
+        $fin =Carbon::create($periodo);
+
+        $ots_horas = Ot::with('actividades')->where('trabajador_id',$idTrabajador)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('ot_actividad', 'ot.id','=','ot_actividad.ot_id')->select(DB::raw('SUM(horas) as horas_totales'),'fecha')->groupBy('fecha')->get();
+         // Calculos de domingos considerados
+        for ($i=1; $i <=30 ; $i++) {
+            if($ots_horas->where('fecha',Carbon::create($year,$month,$i)->isoFormat('YYYY-MM-DD'))->count()>0){
+                $inicio_ots =$i;
+                break;
+            }
+        }
+        for ($i=30; $i >=1 ; $i--) {
             if($ots_horas->where('fecha',Carbon::create($year,$month,$i)->isoFormat('YYYY-MM-DD'))->count()>0){
                 $fin_ots =$i;
                 break;
@@ -233,7 +262,7 @@ class BoletaPagoController extends Controller
                 $adelantos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('adelanto_trabajador','ot.id','=','adelanto_trabajador.ot_id')->get();
                 $faltas = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('estado_ot','ot.estado_ot_id','=','estado_ot.id')->where('nombre','Falta')->get();
                 $descuentos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->get()->sum('descuento');
-                $numeros_domingo =$this->numero_domingos($periodo,$id);
+                $numeros_domingo =$this->numero_domingos30($periodo,$id);
 
                 return view('dinamica.administracion.rrhh.boleta-pago.crearboleta',compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico','pago_quincena'));
             }
@@ -255,7 +284,7 @@ class BoletaPagoController extends Controller
                 $adelantos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('adelanto_trabajador','ot.id','=','adelanto_trabajador.ot_id')->get();
                 $faltas = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('estado_ot','ot.estado_ot_id','=','estado_ot.id')->where('nombre','Falta')->get();
                 $descuentos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->get()->sum('descuento');
-                $numeros_domingo =$this->numero_domingos($periodo,$id);
+                $numeros_domingo =$this->numero_domingos30($periodo,$id);
 
                 return view('dinamica.administracion.rrhh.boleta-pago.crearboleta',compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico','pago_quincena'));
             }
@@ -293,7 +322,7 @@ class BoletaPagoController extends Controller
             $adelantos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('adelanto_trabajador','ot.id','=','adelanto_trabajador.ot_id')->get();
             $faltas = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('estado_ot','ot.estado_ot_id','=','estado_ot.id')->where('nombre','Falta')->get();
             $descuentos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->get()->sum('descuento');
-            $numeros_domingo =$this->numero_domingos($periodo,$id);
+            $numeros_domingo =$this->numero_domingos15($periodo,$id);
             return view('dinamica.administracion.rrhh.boleta-pago.crearquincena',compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico'));
         }
     }
@@ -341,7 +370,7 @@ class BoletaPagoController extends Controller
                 $adelantos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('adelanto_trabajador','ot.id','=','adelanto_trabajador.ot_id')->get();
                 $faltas = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('estado_ot','ot.estado_ot_id','=','estado_ot.id')->where('nombre','Falta')->get();
                 $descuentos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->get()->sum('descuento');
-                $numeros_domingo =$this->numero_domingos($periodo,$id);
+                $numeros_domingo =$this->numero_domingos30($periodo,$id);
 
                 $pdf = App::make('dompdf.wrapper');
                 $content = $pdf->loadView('dinamica.administracion.rrhh.boleta-pago.boletaTecnicoPdf', compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico','pago_quincena','request'))->output();
@@ -369,7 +398,7 @@ class BoletaPagoController extends Controller
                 $adelantos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('adelanto_trabajador','ot.id','=','adelanto_trabajador.ot_id')->get();
                 $faltas = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('estado_ot','ot.estado_ot_id','=','estado_ot.id')->where('nombre','Falta')->get();
                 $descuentos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->get()->sum('descuento');
-                $numeros_domingo =$this->numero_domingos($periodo,$id);
+                $numeros_domingo =$this->numero_domingos30($periodo,$id);
 
                 $pdf = App::make('dompdf.wrapper');
                 $content = $pdf->loadView('dinamica.administracion.rrhh.boleta-pago.boletaTecnicoPdf', compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico','pago_quincena','request'))->output();
@@ -441,7 +470,7 @@ class BoletaPagoController extends Controller
             $adelantos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('adelanto_trabajador','ot.id','=','adelanto_trabajador.ot_id')->get();
             $faltas = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->join('estado_ot','ot.estado_ot_id','=','estado_ot.id')->where('nombre','Falta')->get();
             $descuentos = Ot::with('actividades')->where('trabajador_id',$id)->where('fecha','<=',$fin)->where('fecha','>=',$inicio)->get()->sum('descuento');
-            $numeros_domingo =$this->numero_domingos($periodo,$id);
+            $numeros_domingo =$this->numero_domingos15($periodo,$id);
 
             $pdf = App::make('dompdf.wrapper');
             $content = $pdf->loadView('dinamica.administracion.rrhh.boleta-pago.quincenaTecnicoPdf', compact('trabajador','periodo','horas_nor','horas_25p','horas_35p','gastos','adelantos','costo_hora','dias_tra', 'numeros_domingo','horas_dob','dias_noc','faltas','descuentos','tecnico','request'))->output();

@@ -47,13 +47,13 @@ Ot
                                 @endforeach
                             </td>
                             <td>
-                                @if ($ot->adelanto_trabajador->pago)
+                                @if (isset($ot->adelanto_trabajador->pago))
                                 Adelanto: S/. {{$ot->adelanto_trabajador->pago}} <br>
                                 @endif
-                                @if ($ot->descuento)
+                                @if (isset($ot->descuento))
                                 Descuento: S/. {{$ot->descuento}} <br>
                                 @endif
-                                @if ($ot->pedido)
+                                @if (isset($ot->pedido))
                                 Pedido: {{$ot->pedido}}
                                 @endif
                             </td>

@@ -17,11 +17,11 @@ OT
         <div class="card card-outline card-info">
             <div class="card-header">
                 <h3 class="card-title">Ot</h3>
-                <div class="card-tools">
+                {{-- <div class="card-tools">
                     <a href="{{route('crear_ot')}}" class="btn btn-block btn-success btn-sm">
                         <i class="fa fa-fw fa-plus-circle"></i> Nuevo registro
                     </a>
-                </div>
+                </div> --}}
             </div>
             <div class="card-body">
                 <table class="table table-striped table-bordered table-hover table-responsive-lg" id="tabla-data">
