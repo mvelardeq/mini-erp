@@ -48,6 +48,8 @@
             <option value="">Seleccione la unidad de medida</option>
             <option value="und">und</option>
             <option value="kg">kg</option>
+            <option value="kg">m</option>
+            <option value="kg">millar</option>
             <option value="lt">lt</option>
             <option value="gal">gal</option>
         </select>
