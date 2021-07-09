@@ -18,7 +18,7 @@ class CrearTablaPost extends Migration
             $table->unsignedBigInteger('trabajador_id');
             $table->foreign('trabajador_id','fk_post_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
             $table->string('foto',30)->nullable();
-            $table->string('descripcion',400);
+            $table->string('descripcion',800);
             $table->timestamps();
         });
     }
