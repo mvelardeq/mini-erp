@@ -122,7 +122,7 @@ use Illuminate\Support\Str;
         }
 
         table td {
-        padding: 20px;
+        padding: 10px;
         text-align: right;
         }
 
@@ -162,7 +162,7 @@ use Illuminate\Support\Str;
   <body>
     <header class="clearfix">
       <div id="logo">
-        <img src="{{public_path('assets/sb/assets/img/cotizacion-top.png')}}">
+        <img src="{{public_path('assets/sb/assets/img/cabecera-pdf.png')}}">
       </div>
       <h1>COTIZACIÓN N° {{$cotizacion->numero}}</h1>
       <div id="project">

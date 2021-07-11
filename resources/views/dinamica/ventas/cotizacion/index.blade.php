@@ -42,7 +42,7 @@ Cotizaciones
                         @foreach ($cotizaciones as $cotizacion)
                         <tr>
                             <td><a href="#">{{$cotizacion->numero}}</a></td>
-                            <td>{{$cotizacion->equipo->obra->nombre}} - Asc-{{$cotizacion->equipo->numero_equipo}}</td>
+                            <td>{{$cotizacion->equipo->obra->nombre}} (OE-{{$cotizacion->equipo->oe}})</td>
 
                             <td>{{$cotizacion->resumen}}</td>
                             <td>{{Carbon::parse($cotizacion->fecha)->isoFormat('DD/MM/YYYY')}}</td>
