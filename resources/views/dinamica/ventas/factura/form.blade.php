@@ -20,8 +20,13 @@
         <select name="contrato_id" id="contrato_id" class="selectpicker form-control" data-live-search="true">
             <option value="">Seleccione el contrato</option>
             @foreach($contratos as $contrato)
-        <option value="{{$contrato->id}}" {{($contrato->id==old('contrato_id',$factura->concepto_pago->contrato->id ?? ''))?'selected':''}}>
-                {{$contrato->equipo->obra->nombre}} (O.E: {{$contrato->equipo->oe}}) {{$contrato->servicio->nombre}}
+            <option value="{{$contrato->id}}" {{($contrato->id==old('contrato_id',$factura->concepto_pago->contrato->id ?? ''))?'selected':''}}>
+                @if ($contrato->servicio->nombre == 'Servicio Adicional')
+                    {{$contrato->equipo->obra->nombre}} (O.E: {{$contrato->equipo->oe}}) {{Str::substr($contrato->conceptos_pago->first()->concepto,0,30)}}...
+                @else
+                    {{$contrato->equipo->obra->nombre}} (O.E: {{$contrato->equipo->oe}}) {{$contrato->servicio->nombre}}
+                @endif
+
             </option>
             @endforeach
         </select>
