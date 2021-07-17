@@ -57,7 +57,7 @@ Facturas
                                 {{number_format($factura->total_con_igv,2) }}
                             </td>
                             <td align="right">
-                                @if ($factura->pago_sin_detraccion < 700)
+                                @if ($factura->total_con_igv < 700)
                                     <strong>{{number_format($factura->total_con_igv,2) }}</strong> <br>
                                 @else
                                     <strong>{{number_format($factura->pago_sin_detraccion,2) }}</strong> <br>
