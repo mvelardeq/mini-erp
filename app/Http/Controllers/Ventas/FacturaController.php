@@ -35,6 +35,18 @@ class FacturaController extends Controller
 
     }
 
+
+    public function repor()
+    {
+        can('listar-facturas');
+        $facturas= Factura::with('concepto_pago', 'pagar_factura', 'detraer_factura', 'anular_factura')->orderBy('numero','desc')->get();
+        // $contratos= Contrato::with('conceptos_pago','equipo')->where('estado','abierto')->orderBy('id')->get();
+        $equipos= Equipo::orderBy('id')->get();
+
+        return  view('dinamica.ventas.factura.repor-fact',compact('facturas','equipos'));
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -302,7 +314,6 @@ class FacturaController extends Controller
         $sueldo2 = Cuenta_contable::findOrFail($cuenta_por_cobrar)->saldo;
         Cuenta_contable::findOrFail($cuenta_por_cobrar)->update(['saldo'=>$sueldo2-$pago]);
 
-
         return response()->json(['mensaje'=>'ok','id'=>$id, 'pago'=>$pago,'fecha_pago'=>$fecha_pago]);
     }
 
@@ -348,6 +359,7 @@ class FacturaController extends Controller
     public function anular(Request $request, $id)
     {
         can('anular-facturas');
+        define("IGVA",0.18);
         $fecha_anulacion = $_POST['fecha_anulacion'];
         $motivo_anulacion = $_POST['motivo_anulacion'];
         Anular_factura::create(['factura_id'=>$id, 'motivo'=>$motivo_anulacion, 'fecha'=>$fecha_anulacion]);
@@ -355,6 +367,21 @@ class FacturaController extends Controller
 
         $conceptopago_id = Factura::findOrFail($id)->concepto_pago_id;
         Concepto_pago::findOrFail($conceptopago_id)->update(['estado_conceptopago_id' => 1 ]);
+
+        $concepto_pago = Concepto_pago::with('contrato')->findOrFail($conceptopago_id);
+
+        $cuentas_por_cobrar = Cuenta_contable::where('codigo','1212')->value('id');
+        $igv_por_pagar = Cuenta_contable::where('codigo','40111')->value('id');
+        $ingresos_servicios_tercero = Cuenta_contable::where('codigo','70321')->value('id');
+        $sueldo1 = Cuenta_contable::findOrFail($cuentas_por_cobrar)->saldo;
+        Cuenta_contable::findOrFail($cuentas_por_cobrar)->update(['saldo'=>$sueldo1-$concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*(IGVA+1)/100]);
+        $sueldo2 = Cuenta_contable::findOrFail($igv_por_pagar)->saldo;
+        Cuenta_contable::findOrFail($igv_por_pagar)->update(['saldo'=>$sueldo2-$concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*IGVA/100]);
+        $sueldo3 = Cuenta_contable::findOrFail($ingresos_servicios_tercero)->saldo;
+        Cuenta_contable::findOrFail($ingresos_servicios_tercero)->update(['saldo'=>$sueldo3-$concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje/100]);
+
+
+        Factura::findOrFail($id)->asiento->delete();
 
         return response()->json(['mensaje'=>'ok','id'=>$id, 'fecha_anulacion'=>$fecha_anulacion,'motivo_anulacion'=>$motivo_anulacion]);
     }

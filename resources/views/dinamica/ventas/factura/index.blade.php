@@ -1,6 +1,10 @@
 @php
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use App\Models\Ventas\Factura;
+use App\Models\Finanzas\Contabilidad\Asiento_cuenta;
+use App\Models\Finanzas\Contabilidad\Asiento_contable;
+
 @endphp
 
 @extends("theme.$theme.layout")
@@ -14,6 +18,8 @@ Facturas
 @endsection
 
 @section('contenido')
+{{-- {{dd(Factura::findOrFail(20)->asiento)}} --}}
+{{-- {{dd(Asiento_contable::findOrFail(20)->cuentas_contable->first())}} --}}
 <div class="row">
     <div class="col-lg-12">
         @include('dinamica.includes.mensaje')

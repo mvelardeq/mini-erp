@@ -128,6 +128,7 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
     Route::post('contrato/retomar/{id}', 'ContratoController@retomar')->name('retomar_contrato');
     /*RUTAS DE FACTURA*/
     Route::get('factura', 'FacturaController@index')->name('factura');
+    Route::get('factura-repor', 'FacturaController@repor')->name('repor-factura');
     Route::get('factura/crear', 'FacturaController@crear')->name('crear_factura');
     Route::post('factura', 'FacturaController@guardar')->name('guardar_factura');
     Route::delete('factura/{id}', 'FacturaController@eliminar')->name('eliminar_factura');

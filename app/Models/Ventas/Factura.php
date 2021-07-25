@@ -2,6 +2,8 @@
 
 namespace App\Models\Ventas;
 
+use App\Models\Finanzas\Contabilidad\Asiento_contable;
+use App\Models\Finanzas\Contabilidad\Asiento_cuenta;
 use Illuminate\Database\Eloquent\Model;
 
 class Factura extends Model
@@ -31,6 +33,6 @@ class Factura extends Model
         return $this->hasOne(Anular_factura::class);
     }
     public function  asiento(){
-        return $this->morphOne(Asiento_cuenta::class,'asientoable');
+        return $this->morphOne(Asiento_contable::class,'asientoable');
     }
 }
