@@ -248,9 +248,31 @@ class FacturaController extends Controller
     public function eliminar(Request $request, $id)
     {
         can('eliminar-facturas');
+        define("IGVE",0.18);
+
         if ($request->ajax()) {
 
-            $conceptopago_id = Factura::findOrFail($id)->concepto_pago_id;
+
+        $conceptopago_id = Factura::findOrFail($id)->concepto_pago_id;
+        Concepto_pago::findOrFail($conceptopago_id)->update(['estado_conceptopago_id' => 1 ]);
+
+        $concepto_pago = Concepto_pago::with('contrato')->findOrFail($conceptopago_id);
+
+        $cuentas_por_cobrar = Cuenta_contable::where('codigo','1212')->value('id');
+        $igv_por_pagar = Cuenta_contable::where('codigo','40111')->value('id');
+        $ingresos_servicios_tercero = Cuenta_contable::where('codigo','70321')->value('id');
+        $sueldo1 = Cuenta_contable::findOrFail($cuentas_por_cobrar)->saldo;
+        Cuenta_contable::findOrFail($cuentas_por_cobrar)->update(['saldo'=>$sueldo1-$concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*(IGVE+1)/100]);
+        $sueldo2 = Cuenta_contable::findOrFail($igv_por_pagar)->saldo;
+        Cuenta_contable::findOrFail($igv_por_pagar)->update(['saldo'=>$sueldo2-$concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje*IGVE/100]);
+        $sueldo3 = Cuenta_contable::findOrFail($ingresos_servicios_tercero)->saldo;
+        Cuenta_contable::findOrFail($ingresos_servicios_tercero)->update(['saldo'=>$sueldo3-$concepto_pago->contrato->costo_sin_igv*$concepto_pago->porcentaje/100]);
+
+
+        Factura::findOrFail($id)->asiento->delete();
+
+
+            // $conceptopago_id = Factura::findOrFail($id)->concepto_pago_id;
             if (Factura::destroy($id)) {
                 Concepto_pago::findOrFail($conceptopago_id)->update(['estado_conceptopago_id' => 1 ]);
                 return response()->json(['mensaje' => 'ok']);
