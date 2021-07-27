@@ -6,7 +6,7 @@
             <option value="">Seleccione el equipo</option>
             @foreach($equipos as $equipo)
         <option value="{{$equipo->id}}" {{($equipo->id==old('equipo_id',$contrato->equipo->id ?? ''))?'selected':''}}>
-                {{$equipo->obra->nombre}} - Asc-{{$equipo->numero_equipo}}
+                {{$equipo->obra->nombre}} (O.E: {{$equipo->oe}})
             </option>
             @endforeach
         </select>
