@@ -24,7 +24,7 @@ class ValidacionEmpresa extends FormRequest
     public function rules()
     {
         return [
-            'razon_social'=>'required|max:200|unique:empresa,'. $this->route('id'),
+            'razon_social'=>'required|max:200|unique:empresa,razon_social'. $this->route('id'),
             'ruc'=>'required|max:11|min:11|unique:empresa,ruc,'. $this->route('id'),
             'porcentaje_detraccion'=>'required',
             'pago_hora'=>'required',
