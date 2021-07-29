@@ -42,7 +42,13 @@ Contratos
                     <tbody>
                         @foreach ($contratos as $contrato)
                         <tr>
+                            @if ($contrato->servicio->nombre == "Servicio Adicional")
+                            <td><a href="#">{{$contrato->equipo->obra->nombre}} (O.E: {{$contrato->equipo->oe}}) {{$contrato->conceptos_pago->first()->concepto}}</a></td>
+
+                            @else
                             <td><a href="#">{{$contrato->equipo->obra->nombre}} (O.E: {{$contrato->equipo->oe}}) {{$contrato->servicio->nombre}}</a></td>
+
+                            @endif
                             <td>{{$contrato->horas}}</td>
 
                             <td align="right">{{number_format($contrato->costo_sin_igv,2)}}</td>
