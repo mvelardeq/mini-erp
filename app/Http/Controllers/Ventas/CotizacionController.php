@@ -21,7 +21,7 @@ class CotizacionController extends Controller
     public function index()
     {
         can('listar-cotizaciones');
-        $cotizaciones= Cotizacion::with('lineas_cotizacion','equipo')->orderBy('fecha','desc')->get();
+        $cotizaciones= Cotizacion::with('lineas_cotizacion','equipo')->orderBy('fecha','desc')->orderBy('numero','desc')->get();
 
         return view('dinamica.ventas.cotizacion.index',compact('cotizaciones'));
 
