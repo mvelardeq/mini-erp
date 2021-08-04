@@ -80,16 +80,19 @@ class OtController extends Controller
                 ]);
             }
 
-            for ($i=0; $i < count($request->fotos_up); $i++) {
+            if (isset($request->fotos_up)) {
+                for ($i=0; $i < count($request->fotos_up); $i++) {
 
-                if ($foto = Fotos_ot::setFoto($request->fotos_up[$i]))
-                    $request->request->add(['foto' => $foto]);
+                    if ($foto = Fotos_ot::setFoto($request->fotos_up[$i]))
+                        $request->request->add(['foto' => $foto]);
 
-                Fotos_ot::create([
-                    'ot_id' => $idot,
-                    'foto' => $request->foto,
-                ]);
+                    Fotos_ot::create([
+                        'ot_id' => $idot,
+                        'foto' => $request->foto,
+                    ]);
+                }
             }
+
 
         return redirect('usuario/ot')->with('mensaje', 'OT creada con éxito');
     }
