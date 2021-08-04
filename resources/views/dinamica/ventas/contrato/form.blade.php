@@ -30,13 +30,13 @@
 
 
 <div class="form-group row">
-    <label for="horas" class="col-lg-3 col-form-label">Horas</label>
+    <label for="horas" class="col-lg-3 col-form-label requerido">Horas</label>
     <div class="col-lg-8">
         <input type="number" name="horas" id="horas" class="form-control" value="{{old('horas', $contrato->horas ?? '')}}"/>
     </div>
 </div>
 <div class="form-group row">
-    <label for="costo_sin_igv" class="col-lg-3 col-form-label">Costo sin IGV</label>
+    <label for="costo_sin_igv" class="col-lg-3 col-form-label requerido">Costo sin IGV</label>
     <div class="col-lg-8">
         <input type="number" step="0.01" name="costo_sin_igv" id="costo_sin_igv" class="form-control" value="{{old('costo_sin_igv', $contrato->costo_sin_igv ?? '')}}"/>
     </div>
@@ -44,7 +44,7 @@
 
 {{-- <input type="hidden" name="servicio_id" id="servicio_id" class="form-control" value="{{$servicio->id}}" required/> --}}
 <div class="form-group row">
-    <label for="fecha_inicio" class="col-lg-3 col-form-label">Fecha Inicio</label>
+    <label for="fecha_inicio" class="col-lg-3 col-form-label requerido">Fecha Inicio</label>
     <div class="col-lg-8">
         <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" value="{{old('fecha_inicio', $contrato->fecha_inicio ?? '')}}"/>
     </div>
@@ -80,13 +80,13 @@
 
 
 <div class="form-group row">
-    <label for="concepto1" class="col-lg-3 col-form-label">Concepto 1</label>
+    <label for="concepto1" class="col-lg-3 col-form-label requerido">Concepto 1</label>
     <div class="col-lg-8">
         <input type="text" name="concepto1" id="concepto1" class="form-control" value="{{old('concepto1', $conceptos[0] ?? '')}}"/>
     </div>
 </div>
 <div class="form-group row">
-    <label for="porcentaje1" class="col-lg-3 col-form-label">Porcentaje 1</label>
+    <label for="porcentaje1" class="col-lg-3 col-form-label requerido">Porcentaje 1</label>
     <div class="col-lg-8">
         <input type="number" name="porcentaje1" id="porcentaje1" class="form-control" value="{{old('porcentaje1', $porcentajes[0] ?? '')}}"/>
     </div>
