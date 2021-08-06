@@ -39,11 +39,32 @@ $(document).ready(function () {
     }
 
 
+    $(document).on('click', '.imagenfotos', function(e){
+        e.preventDefault();
+        $("#data-trabajador").empty();
+        $("#data-obra").empty();
+        $(".modal-body-fotos").empty();
+        id = $(this).attr('data-id');
+        trabajador = $(this).attr('data-trabajador');
+        obra = $(this).attr('data-obra');
+        $("#data-trabajador").append(trabajador);
+        $("#data-obra").append(obra);
+        $.get('notificaciones/mostrarfotos/'+id,function(response){
+
+            $.each(response, function(i, item) {
+                $(".modal-body-fotos").append(`<img class="imagenmodal img-fluid py-2" src="${item}" alt="">`);
+            });
+        });
+
+        $("#modalFotos").modal('show');
+
+    });
 
 
 
 
-    $("#notificaciones_ot").on('submit', '.form-aprobar', function () {
+
+    $("#notificaciones_ot").on('submit', '.form-aprobar', function (event) {
         event.preventDefault();
         const form = $(this);
         swal({

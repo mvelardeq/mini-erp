@@ -45,7 +45,13 @@ Ot
                                             {{$ot_supervisor->actividad->nombre.': '.$ot_supervisor->actividad->pivot->horas.' hrs'}}<br>
                                         @endforeach
                                     </td>
-                                    <td class="mailbox-attachment">{{$ot_supervisor->pedido}}</td>
+                                    <td class="mailbox-attachment">
+                                        {{$ot_supervisor->pedido}}
+                                        @if (isset($ot_supervisor->fotos) && count($ot_supervisor->fotos)>0)
+                                            <br>
+                                            <a href="" class="fa fa-image fa-lg text-success imagenfotos" data-id="{{$ot_supervisor->id}}" data-trabajador="{{$ot_supervisor->trabajador->primer_nombre.' '.$ot_supervisor->trabajador->primer_apellido}}" data-obra="{{$ot_supervisor->contrato->equipo->obra->nombre}} (OE:{{$ot_supervisor->contrato->equipo->oe}})"></a>
+                                        @endif
+                                    </td>
                                     <td class="mailbox-date" id="accion{{$ot_supervisor->id}}">
 
                                         <form class="d-inline adelanto" data-id="{{$ot_supervisor->id}}" data-estado="{{$ot_supervisor->id}}">
@@ -121,6 +127,28 @@ Ot
             </div>
 
         </div>
+
+
+        {{-- Modal Fotos OT--}}
+        <div class="modal fade" id="modalFotos" tabindex="-1" role="dialog" aria-labelledby="modalFotosLabel" aria-hidden="true">
+
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalFotosLabel">Fotos de la OT de <span id="data-trabajador"></span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h6 id="data-obra"></h6>
+                        <div class="modal-body-fotos"></div>
+                        {{-- <img class="imagenmodal img-fluid" src="" alt=""> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 
         {{-- Modal Adelanto --}}

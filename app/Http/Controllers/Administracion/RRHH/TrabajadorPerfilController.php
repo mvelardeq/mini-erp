@@ -80,7 +80,7 @@ class TrabajadorPerfilController extends Controller
                                     </div>';
                     }
                     $actividades = '<div class="card-footer">'.$lista.'</div>';
-                    $evento->push(['start'=>$ot->fecha,'color'=>'#228E3B', 'title'=>$ot->contrato->equipo->obra->nombre, 'url'=>$actividades]);
+                    $evento->push(['start'=>$ot->fecha,'color'=>'#228E3B', 'title'=>$ot->contrato->equipo->obra->nombre.' (O.E: '.$ot->contrato->equipo->oe.') ', 'url'=>$actividades]);
 
                     if ($ot->adelanto_trabajador) {
                         $evento->push(['start'=>$ot->fecha .' 01:00','color'=>'#DCA606', 'title'=>'Adelanto '.$ot->adelanto_trabajador->pago.' soles', 'url'=>'<div class="card-footer">Se adelantó '.$ot->adelanto_trabajador->pago.' Soles</div>']);
@@ -93,7 +93,7 @@ class TrabajadorPerfilController extends Controller
                     }
 
 
-                    if ($ot->fotos) {
+                    if (isset($ot->fotos) && count($ot->fotos)>0) {
 
                         $lista_fotos ='';
                         foreach ($ot->fotos as $ot_foto) {
@@ -101,7 +101,7 @@ class TrabajadorPerfilController extends Controller
                         }
                     $lista_final = '<div class="timeline-item row">
 
-                            <h6>'.$ot->contrato->equipo->obra->nombre.'</h6>
+                            <h6>'.$ot->contrato->equipo->obra->nombre.' (O.E: '.$ot->contrato->equipo->oe.') </h6>
                           <div class="timeline-body col-12">'.$lista_fotos.'</div>
                         </div>';
 

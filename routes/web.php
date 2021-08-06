@@ -159,6 +159,9 @@ Route::group(['prefix' => 'usuario', 'namespace' => 'Usuario', 'middleware' =>['
     Route::post('notificaciones/gastom/{id}', 'NotificacionesController@gastom')->middleware(['supervisor'])->name('gastom_ot');
     Route::get('notificaciones/crear-falta', 'NotificacionesController@crear_falta')->middleware(['supervisor'])->name('crear_falta_ot');
     Route::post('notificaciones/guardar-falta/{id}', 'NotificacionesController@guardar_falta')->middleware(['supervisor'])->name('guardar_falta_ot');
+    Route::get('notificaciones/mostrarfotos/{id}', 'NotificacionesController@mostrarfotos')->middleware(['supervisor'])->name('mostrarfotos_ot');
+
+
     // RUTAS DE CALENDARIO
     Route::get('calendario','CalendarioController@index')->name('usuario_calendario');
     Route::get('calendario/mostrar','CalendarioController@mostrar')->name('mostrar_calendario');

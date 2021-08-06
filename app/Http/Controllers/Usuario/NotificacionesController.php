@@ -15,6 +15,7 @@ use App\Models\Ventas\Contrato;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class NotificacionesController extends Controller
 {
@@ -39,6 +40,18 @@ class NotificacionesController extends Controller
         return view('dinamica.usuario.notificaciones.index', compact('ots_supervisor', 'tipos_gasto'));
     }
 
+
+    public function mostrarfotos($id)
+    {
+        $ot = Ot::findOrFail($id);
+        $fotos = $ot->fotos;
+        $linksfotos = collect();
+        foreach ($fotos as $foto) {
+            $linksfotos->push(Storage::disk('s3')->url("photos/otPhoto/".$foto->foto));
+        }
+        return response()->json($linksfotos);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -50,7 +63,7 @@ class NotificacionesController extends Controller
             if (Ot::findOrFail($id)->update(['estado_ot_id' => 2 ])) {
                 $ot = Ot::with('trabajador','adelanto_trabajador','gasto_trabajador')->findOrFail($id);
 
-                if($ot->adelanto_trabajador->count()>0)
+                if(isset($ot->adelanto_trabajador) && $ot->adelanto_trabajador->count()>0)
                 {
                     $adelanto = Adelanto_trabajador::orderBy('created_at','desc')->first();
                     Asiento_contable::create([
@@ -78,7 +91,7 @@ class NotificacionesController extends Controller
                     Cuenta_contable::findOrFail($cuenta_sueldos)->update(['saldo'=>$saldo2+$ot->adelanto_trabajador->pago]);
                 }
 
-                if ($ot->gasto_trabajador->estado_gasto->nombre == 'Inmediato')
+                if (isset($ot->gasto_trabajador->estado_gasto->nombre) && $ot->gasto_trabajador->estado_gasto->nombre == 'Inmediato')
                 {
                     $gasto = Gasto_trabajador::orderBy('created_at','desc')->first();
                     Asiento_contable::create([
