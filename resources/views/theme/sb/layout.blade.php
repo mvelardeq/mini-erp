@@ -22,7 +22,7 @@
     </head>
     <body id="page-top">
         <a href="https://wa.me/51971142315?text=Hola,%20estoy%20interesado%20en%20los%20servicios%20que%20ofrecen%20en%20su%20página%20web" class="whatsapp" target="_blank"> <i class="fab fa-whatsapp whatsapp-icon"></i></a>
-        <a href="" class="cotizacion" target="_blank"> Solicita cotización</a>
+        <b class="cotizacion" id="botonModalCotizacion"> Solicita cotización</b>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             @include('theme/sb/navbar')
@@ -213,6 +213,100 @@
                 </div>
             </div>
         </div>
+
+
+        {{-- Modal Editar información--}}
+<div class="modal fade" id="modalCotizacion" tabindex="-1" role="dialog" aria-labelledby="modalCotizacionLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCotizacionLabel">Solicitar Cotización</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form-cotizacion" id="formcotizacion">
+                @csrf
+                <div class="modal-body">
+                    <div class="alert alert-danger" style="display:none"></div>
+
+                    <div class="form-group row">
+                        <label for="direccion" class="col-lg-3 col-form-label requerido">Nombre o empresa</label>
+                        <div class="col-lg-8">
+                            <input type="text" name="nombre" id="nomnbre" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="botas" class="col-lg-3 col-form-label requerido">Correo</label>
+                        <div class="col-lg-8">
+                            <input type="email" name="correo" id="correo" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="overol" class="col-lg-3 col-form-label requerido">Celular-telf</label>
+                        <div class="col-lg-8">
+                            <input type="text" name="celular" id="celular" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="celular" class="col-lg-3 col-form-label requerido">Seleccione servicio</label>
+                        <div class="col-lg-8">
+                            <select name="tipo" id="tipo" class="selectpicker form-control" data-live-search="true">
+                                <option value="Vivienda">Mantenimiento</option>
+                                <option value="Multifamiliar">Instalación</option>
+                                <option value="Oficina">Modernización</option>
+                                <option value="Otros">Reparación</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="celular" class="col-lg-3 col-form-label requerido">Seleccione tipo</label>
+                        <div class="col-lg-8">
+                            <select name="tipo" id="tipo" class="selectpicker form-control" data-live-search="true">
+                                <option value="Multifamiliar">Multifamiliar</option>
+                                <option value="Vivienda">Vivienda</option>
+                                <option value="Oficina">Oficina</option>
+                                <option value="Otros">Otros</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="correo" class="col-lg-3 col-form-label requerido">N° paradas</label>
+                        <div class="col-lg-8">
+                            <input type="text" name="paradas" id="paradas" class="form-control" required/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="correo" class="col-lg-3 col-form-label requerido">N° pasajeros</label>
+                        <div class="col-lg-8">
+                            <input type="text" name="paradas" id="paradas" class="form-control" required/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="observacion" class="col-lg-3 col-form-label">Observación</label>
+                        <div class="col-lg-8">
+                            <textarea name="observacion" id="observacion" class="form-control" cols="30" rows="5" placeholder="Mensaje"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="guardarinfo" class="btn btn-primary">Cotizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
         <!-- Bootstrap core JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>

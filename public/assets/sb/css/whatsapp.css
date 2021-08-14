@@ -32,6 +32,9 @@
     font-size:13px;
     z-index:200;
   }
+  .cotizacion:hover {
+      cursor:pointer;
+  }
 
   .cotizacion-icon {
     margin-top:6px;
