@@ -10,6 +10,7 @@
         <link rel="icon" type="image/x-icon" href="{{asset("assets/sb/assets/img/favicon.ico")}}" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
@@ -17,8 +18,11 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         {{-- <link href="css/styles.css" rel="stylesheet" /> --}}
         <link href="{{asset("assets/sb/css/styles.css")}}" rel="stylesheet" />
+        <link href="{{asset("assets/sb/css/whatsapp.css")}}" rel="stylesheet" />
     </head>
     <body id="page-top">
+        <a href="https://wa.me/51971142315?text=Hola,%20estoy%20interesado%20en%20los%20servicios%20que%20ofrecen%20en%20su%20página%20web" class="whatsapp" target="_blank"> <i class="fab fa-whatsapp whatsapp-icon"></i></a>
+        <a href="" class="cotizacion" target="_blank"> Solicita cotización</a>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             @include('theme/sb/navbar')
@@ -33,7 +37,7 @@
         <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="close-modal" data-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="close-modal" data-dismiss="modal"><img src="{{asset("assets/sb/assets/img/close-icon.svg")}}" alt="Close modal" /></div>
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-8">

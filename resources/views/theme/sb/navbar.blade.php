@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ml-auto">
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Servicios</a></li>
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Obras</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Proyectos</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">Nosotros</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#team">Equipo</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contáctanos</a></li>

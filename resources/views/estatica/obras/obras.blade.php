@@ -1,6 +1,6 @@
 <div class="container">
     <div class="text-center">
-        <h2 class="section-heading text-uppercase">Portfolio - obras</h2>
+        <h2 class="section-heading text-uppercase">Proyectos</h2>
         <h3 class="section-subheading text-muted">Nuestros principales proyectos de instalación de ascensores.</h3>
     </div>
     <div class="row">
@@ -14,7 +14,7 @@
                 </a>
                 <div class="portfolio-caption">
                     <div class="portfolio-caption-heading">Mall Plaza Comas</div>
-                    <div class="portfolio-caption-subheading text-muted">16 ascensores de 1650 kg de capacidad</div>
+                    <div class="portfolio-caption-subheading text-muted">14 ascensores de 1650 kg de capacidad</div>
                 </div>
             </div>
         </div>
