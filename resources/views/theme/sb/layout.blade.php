@@ -8,6 +8,9 @@
         <title>@yield('title')</title>
         {{-- <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" /> --}}
         <link rel="icon" type="image/x-icon" href="{{asset("assets/sb/assets/img/favicon.ico")}}" />
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -19,6 +22,13 @@
         {{-- <link href="css/styles.css" rel="stylesheet" /> --}}
         <link href="{{asset("assets/sb/css/styles.css")}}" rel="stylesheet" />
         <link href="{{asset("assets/sb/css/whatsapp.css")}}" rel="stylesheet" />
+
+
+        <link rel="stylesheet" type="text/css" href="{{asset("assets/sb/css/galeria.css")}}" />
+        <link rel="stylesheet" type="text/css" href="{{asset("assets/sb/css/magnific-popup.css")}}" />
+        <link rel="stylesheet" type="text/css" href="{{asset("assets/sb/css/slick.css")}}" />
+        <link rel="stylesheet" type="text/css" href="{{asset("assets/sb/css/slick-theme.css")}}" />
+
     </head>
     <body id="page-top">
         <a href="https://wa.me/51971142315?text=Hola,%20estoy%20interesado%20en%20los%20servicios%20que%20ofrecen%20en%20su%20página%20web" class="whatsapp" target="_blank"> <i class="fab fa-whatsapp whatsapp-icon"></i></a>
@@ -215,7 +225,7 @@
         </div>
 
 
-        {{-- Modal Editar información--}}
+        {{-- Modal Solicitar cotización--}}
 <div class="modal fade" id="modalCotizacion" tabindex="-1" role="dialog" aria-labelledby="modalCotizacionLabel" aria-hidden="true">
 
     <div class="modal-dialog" role="document">
@@ -307,6 +317,8 @@
 
 
 
+        {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script> --}}
+
         <!-- Bootstrap core JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
@@ -320,5 +332,11 @@
         <!-- Core theme JS-->
         {{-- <script src="js/scripts.js"></script> --}}
         <script src="{{asset("assets/sb/js/scripts.js")}}"></script>
+
+        <script src="{{asset("assets/sb/js/background.cycle.js")}}"></script>
+
+        <script src="{{asset("assets/sb/js/slick.min.js")}}"></script>
+        <script src="{{asset("assets/sb/js/jquery.magnific-popup.min.js")}}"></script>
+
     </body>
 </html>

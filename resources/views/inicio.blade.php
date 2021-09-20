@@ -8,7 +8,7 @@
         @include('theme/sb/presentacion')
     </header>
     <!-- Services-->
-    <section class="page-section" id="services">
+    <section class="page-section" id="servicios">
         @include('estatica/servicios/servicios')
     </section>
     <!-- Portfolio Grid-->
@@ -16,17 +16,17 @@
         @include('estatica/obras/obras')
     </section>
     <!-- About-->
-    <section class="page-section" id="about">
+    {{-- <section class="page-section" id="nosotros">
         @include('estatica/nosotros/nosotros')
-    </section>
+    </section> --}}
     <!-- Team-->
-    <section class="page-section bg-light" id="team">
-        @include('estatica/equipo/equipo')
+    <section class="page-section bg-light" id="galeria">
+        @include('estatica/galeria/galeria')
     </section>
     <!-- Clients-->
-    <div class="py-5">
+    {{-- <div class="py-5">
         @include('estatica/clientes/clientes')
-    </div>
+    </div> --}}
     <!-- Contact-->
     <section class="page-section" id="contact">
         @include('estatica/contactanos/contactanos')

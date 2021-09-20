@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-lg-4 col-sm-6 mb-4">
             <div class="portfolio-item">
-                <a class="portfolio-link" data-toggle="modal" href="#portfolioModal1" style="text-align:center; margin:auto;">
+                <a class="portfolio-link" data-toggle="modal" href="#" style="text-align:center; margin:auto;">
                     <div class="portfolio-hover">
                         <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
@@ -20,7 +20,7 @@
         </div>
         <div class="col-lg-4 col-sm-6 mb-4">
             <div class="portfolio-item">
-                <a class="portfolio-link" data-toggle="modal" href="#portfolioModal2">
+                <a class="portfolio-link" data-toggle="modal" href="#">
                     <div class="portfolio-hover">
                         <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
@@ -34,7 +34,7 @@
         </div>
         <div class="col-lg-4 col-sm-6 mb-4">
             <div class="portfolio-item">
-                <a class="portfolio-link" data-toggle="modal" href="#portfolioModal3" style="text-align:center; margin:auto;">
+                <a class="portfolio-link" data-toggle="modal" href="#" style="text-align:center; margin:auto;">
                     <div class="portfolio-hover">
                         <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
@@ -48,7 +48,7 @@
         </div>
         <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
             <div class="portfolio-item">
-                <a class="portfolio-link" data-toggle="modal" href="#portfolioModal4">
+                <a class="portfolio-link" data-toggle="modal" href="#">
                     <div class="portfolio-hover">
                         <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
@@ -62,7 +62,7 @@
         </div>
         <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
             <div class="portfolio-item">
-                <a class="portfolio-link" data-toggle="modal" href="#portfolioModal5" style="text-align:center; margin:auto;">
+                <a class="portfolio-link" data-toggle="modal" href="#" style="text-align:center; margin:auto;">
                     <div class="portfolio-hover">
                         <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
@@ -76,7 +76,7 @@
         </div>
         <div class="col-lg-4 col-sm-6">
             <div class="portfolio-item">
-                <a class="portfolio-link" data-toggle="modal" href="#portfolioModal6">
+                <a class="portfolio-link" data-toggle="modal" href="#">
                     <div class="portfolio-hover">
                         <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
