@@ -25,7 +25,7 @@ class ValidacionBoletaPago extends FormRequest
     {
         return [
             'trabajador_id'=>'required|integer',
-            'periodo'=>'required|max:10',
+            'periodo'=>'required|max:45',
             'pago_mes'=>'required',
             'descuento_mes'=>'nullable',
             'adelantos'=>'nullable',
