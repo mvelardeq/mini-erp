@@ -169,7 +169,7 @@ use Carbon\Carbon;
                     </div>
                 </form>
                 @else
-                <form action="{{route('guardar_quincena_trabajador',['id'=>$trabajador->id,'periodo'=>$periodo])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
+                <form action="{{route('guardar_boleta_trabajador',['id'=>$trabajador->id,'periodo'=>$periodo])}}" id="form-general" class="form-horizontal" method="POST" autocomplete="off" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group row">
