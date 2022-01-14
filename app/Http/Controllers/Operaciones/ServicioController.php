@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Operaciones;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionServicioTercero;
 use App\Models\Operaciones\Actividad;
 use App\Models\Operaciones\Servicio;
 use Illuminate\Http\Request;
@@ -42,7 +43,7 @@ class ServicioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request)
+    public function guardar(ValidacionServicioTercero $request)
     {
         can('crear-servicios');
         Servicio::create([
@@ -177,7 +178,7 @@ class ServicioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function actualizar(Request $request, $id)
+    public function actualizar(ValidacionServicioTercero $request, $id)
     {
         can('editar-servicios');
         Servicio::findOrFail($id)->update([

@@ -4,14 +4,14 @@
 <div class="form-group row">
     <label for="numero" class="col-lg-3 col-form-label">Número de cotización</label>
     <div class="col-lg-8">
-        <input type="text" name="numero" id="numero" class="form-control" value="{{old('numero', $cotizacion->numero ?? '')}}"/>
+        <input type="text" required name="numero" id="numero" class="form-control" value="{{old('numero', $cotizacion->numero ?? '')}}"/>
     </div>
 </div>
 
 <div class="form-group row">
     <label for="equipo_id" class="col-lg-3 col-form-label requerido">Equipo</label>
     <div class="col-lg-8">
-        <select name="equipo_id" id="equipo_id" class="selectpicker form-control" data-live-search="true">
+        <select name="equipo_id" required id="equipo_id" class="selectpicker form-control" data-live-search="true">
             <option value="">Seleccione el equipo</option>
             @foreach($equipos as $equipo)
         <option value="{{$equipo->id}}" {{($equipo->id==old('equipo_id',$cotizacion->equipo->id ?? ''))?'selected':''}}>
@@ -26,7 +26,7 @@
 <div class="form-group row">
     <label for="resumen" class="col-lg-3 col-form-label">Resumen</label>
     <div class="col-lg-8">
-        <input type="text" name="resumen" id="resumen" class="form-control" value="{{old('resumen', $cotizacion->resumen ?? '')}}"/>
+        <input type="text" required name="resumen" id="resumen" class="form-control" value="{{old('resumen', $cotizacion->resumen ?? '')}}"/>
     </div>
 </div>
 
@@ -34,13 +34,13 @@
 <div class="form-group row">
     <label for="fecha" class="col-lg-3 col-form-label">Fecha</label>
     <div class="col-lg-8">
-        <input type="date" name="fecha" id="fecha" class="form-control" value="{{old('fecha', $cotizacion->fecha ?? '')}}"/>
+        <input type="date" required name="fecha" id="fecha" class="form-control" value="{{old('fecha', $cotizacion->fecha ?? '')}}"/>
     </div>
 </div>
 <div class="form-group row">
     <label for="dirigido_a" class="col-lg-3 col-form-label">Dirigido a</label>
     <div class="col-lg-8">
-        <input type="text" name="dirigido_a" id="dirigido_a" class="form-control" value="{{old('dirigido_a', $cotizacion->dirigido_a ?? '')}}"/>
+        <input type="text" required name="dirigido_a" id="dirigido_a" class="form-control" value="{{old('dirigido_a', $cotizacion->dirigido_a ?? '')}}"/>
     </div>
 </div>
 
@@ -53,19 +53,19 @@
 <div class="form-group row">
     <label for="descripcion1" class="col-lg-3 col-form-label">Descripción 1</label>
     <div class="col-lg-8">
-        <input type="text" name="descripcion1" id="descripcion1" class="form-control" value="{{old('descripcion1', $descripciones[0] ?? '')}}"/>
+        <input type="text" required name="descripcion1" id="descripcion1" class="form-control" value="{{old('descripcion1', $descripciones[0] ?? '')}}"/>
     </div>
 </div>
 <div class="form-group row">
     <label for="cantidad1" class="col-lg-3 col-form-label">Cantidad 1</label>
     <div class="col-lg-8">
-        <input type="number" name="cantidad1" id="cantidad1" class="form-control" value="{{old('cantidad1', $cantidades[0] ?? '')}}"/>
+        <input type="number" required name="cantidad1" id="cantidad1" class="form-control" value="{{old('cantidad1', $cantidades[0] ?? '')}}"/>
     </div>
 </div>
 <div class="form-group row">
     <label for="subtotal1" class="col-lg-3 col-form-label">Sub total 1</label>
     <div class="col-lg-8">
-        <input type="number" name="subtotal1" id="subtotal1" class="form-control" value="{{old('subtotal1', $subtotales[0] ?? '')}}"/>
+        <input type="number" required name="subtotal1" id="subtotal1" class="form-control" value="{{old('subtotal1', $subtotales[0] ?? '')}}"/>
     </div>
 </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Ventas;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidacionContrato;
 use App\Models\Ventas\Concepto_pago;
 use App\Models\Ventas\Contrato;
 use App\Models\Operaciones\Empresa;
@@ -49,7 +50,7 @@ class ContratoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request)
+    public function guardar(ValidacionContrato $request)
     {
         can('listar-contratos');
         Contrato::create([
@@ -153,7 +154,7 @@ class ContratoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function actualizar(Request $request, $id)
+    public function actualizar(ValidacionContrato $request, $id)
     {
         can('listar-contratos');
         Contrato::findOrFail($id)->update([

@@ -46,7 +46,7 @@ class EquipoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function guardar(Request $request)
+    public function guardar(ValidacionEquipo $request)
     {
         can('crear-equipos');
         if ($plane = Equipo::setPlane($request->plano_up))

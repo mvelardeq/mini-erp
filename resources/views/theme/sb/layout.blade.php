@@ -7,7 +7,26 @@
         <meta name="author" content="" />
         <title>@yield('title')</title>
         {{-- <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" /> --}}
-        <link rel="icon" type="image/x-icon" href="{{asset("assets/sb/assets/img/favicon.ico")}}" />
+        {{-- <link rel="icon" type="image/x-icon" href="{{asset("assets/sb/assets/img/favicon.ico")}}" /> --}}
+
+        <link rel="apple-touch-icon" sizes="57x57" href="{{asset("assets/sb/assets/img/fav/apple-icon-57x57.png")}}">
+        <link rel="apple-touch-icon" sizes="60x60" href="{{asset("assets/sb/assets/img/fav/apple-icon-60x60.png")}}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{asset("assets/sb/assets/img/fav/apple-icon-72x72.png")}}">
+        <link rel="apple-touch-icon" sizes="76x76" href="{{asset("assets/sb/assets/img/fav/apple-icon-76x76.png")}}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{asset("assets/sb/assets/img/fav/apple-icon-114x114.png")}}">
+        <link rel="apple-touch-icon" sizes="120x120" href="{{asset("assets/sb/assets/img/fav/apple-icon-120x120.png")}}">
+        <link rel="apple-touch-icon" sizes="144x144" href="{{asset("assets/sb/assets/img/fav/apple-icon-144x144.png")}}">
+        <link rel="apple-touch-icon" sizes="152x152" href="{{asset("assets/sb/assets/img/fav/apple-icon-152x152.png")}}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{asset("assets/sb/assets/img/fav/apple-icon-180x180.png")}}">
+        <link rel="icon" type="image/png" sizes="192x192"  href="{{asset("assets/sb/assets/img/fav/android-icon-192x192.png")}}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{asset("assets/sb/assets/img/fav/favicon-32x32.png")}}">
+        <link rel="icon" type="image/png" sizes="96x96" href="{{asset("assets/sb/assets/img/fav/favicon-96x96.png")}}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{asset("assets/sb/assets/img/fav/favicon-16x16.png")}}">
+        <link rel="manifest" href=imagenes/fav/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
+
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 
@@ -31,6 +50,35 @@
 
     </head>
     <body id="page-top">
+
+        <!-- Messenger plugin del chat Code -->
+    <div id="fb-root"></div>
+
+    <!-- Your plugin del chat code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+      var chatbox = document.getElementById('fb-customer-chat');
+      chatbox.setAttribute("page_id", "113855177741299");
+      chatbox.setAttribute("attribution", "biz_inbox");
+
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml            : true,
+          version          : 'v12.0'
+        });
+      };
+
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
         <a href="https://wa.me/51971142315?text=Hola,%20estoy%20interesado%20en%20los%20servicios%20que%20ofrecen%20en%20su%20página%20web" class="whatsapp" target="_blank"> <i class="fab fa-whatsapp whatsapp-icon"></i></a>
         <b class="cotizacion" id="botonModalCotizacion"> Solicita cotización</b>
         <!-- Navigation-->
@@ -314,6 +362,7 @@
         </div>
     </div>
 </div>
+
 
 
 

@@ -2,7 +2,7 @@
 <div class="form-group row">
     <label for="equipo_id" class="col-lg-3 col-form-label requerido">Equipo</label>
     <div class="col-lg-8">
-        <select name="equipo_id" id="equipo_id" class="selectpicker form-control" data-live-search="true">
+        <select name="equipo_id" required id="equipo_id" class="selectpicker form-control" data-live-search="true">
             <option value="">Seleccione el equipo</option>
             @foreach($equipos as $equipo)
         <option value="{{$equipo->id}}" {{($equipo->id==old('equipo_id',$contrato->equipo->id ?? ''))?'selected':''}}>
@@ -16,7 +16,7 @@
 <div class="form-group row">
     <label for="servicio_id" class="col-lg-3 col-form-label requerido">Servicio</label>
     <div class="col-lg-8">
-        <select name="servicio_id" id="servicio_id" class="form-control" data-live-search="true">
+        <select name="servicio_id" required id="servicio_id" class="form-control" data-live-search="true">
             <option value="">Seleccione el servicio</option>
             @foreach($servicios as $servicio)
         <option value="{{$servicio->id}}" {{($servicio->id==old('servicio_id',$contrato->servicio->id ?? ''))?'selected':''}}>
@@ -32,13 +32,13 @@
 <div class="form-group row">
     <label for="horas" class="col-lg-3 col-form-label requerido">Horas</label>
     <div class="col-lg-8">
-        <input type="number" name="horas" id="horas" class="form-control" value="{{old('horas', $contrato->horas ?? '')}}"/>
+        <input type="number" required name="horas" id="horas" class="form-control" value="{{old('horas', $contrato->horas ?? '')}}"/>
     </div>
 </div>
 <div class="form-group row">
     <label for="costo_sin_igv" class="col-lg-3 col-form-label requerido">Costo sin IGV</label>
     <div class="col-lg-8">
-        <input type="number" step="0.01" name="costo_sin_igv" id="costo_sin_igv" class="form-control" value="{{old('costo_sin_igv', $contrato->costo_sin_igv ?? '')}}"/>
+        <input type="number" required step="0.01" name="costo_sin_igv" id="costo_sin_igv" class="form-control" value="{{old('costo_sin_igv', $contrato->costo_sin_igv ?? '')}}"/>
     </div>
 </div>
 
@@ -46,7 +46,7 @@
 <div class="form-group row">
     <label for="fecha_inicio" class="col-lg-3 col-form-label requerido">Fecha Inicio</label>
     <div class="col-lg-8">
-        <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" value="{{old('fecha_inicio', $contrato->fecha_inicio ?? '')}}"/>
+        <input type="date" required name="fecha_inicio" id="fecha_inicio" class="form-control" value="{{old('fecha_inicio', $contrato->fecha_inicio ?? '')}}"/>
     </div>
 </div>
 <div class="form-group row">
@@ -82,13 +82,13 @@
 <div class="form-group row">
     <label for="concepto1" class="col-lg-3 col-form-label requerido">Concepto 1</label>
     <div class="col-lg-8">
-        <input type="text" name="concepto1" id="concepto1" class="form-control" value="{{old('concepto1', $conceptos[0] ?? '')}}"/>
+        <input type="text" required name="concepto1" id="concepto1" class="form-control" value="{{old('concepto1', $conceptos[0] ?? '')}}"/>
     </div>
 </div>
 <div class="form-group row">
     <label for="porcentaje1" class="col-lg-3 col-form-label requerido">Porcentaje 1</label>
     <div class="col-lg-8">
-        <input type="number" name="porcentaje1" id="porcentaje1" class="form-control" value="{{old('porcentaje1', $porcentajes[0] ?? '')}}"/>
+        <input type="number" required name="porcentaje1" id="porcentaje1" class="form-control" value="{{old('porcentaje1', $porcentajes[0] ?? '')}}"/>
     </div>
 </div>
 

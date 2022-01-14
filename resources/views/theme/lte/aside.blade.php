@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
     <a href="/inicio" class="brand-link">
       {{-- <img src="{{asset("assets/$theme/dist/img/AdminLTELogo.png")}}" class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
-      <img src="{{asset("assets/sb/assets/img/favicon.ico")}}" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="{{asset("assets/sb/assets/img/logo2png.png")}}" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">Ascensores Industriales</span>
     </a>
 
