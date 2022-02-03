@@ -32,8 +32,8 @@ class ValidacionContrato extends FormRequest
             'fecha_fin'=>'nullable',
             'estado'=>'required',
             'observacion'=>'nullable',
-            'numero_oc'=>'required',
-            'oc'=>'required',
+            'numero_oc'=>'nullable',
+            'oc'=>'nullable',
         ];
     }
 }

@@ -27,7 +27,7 @@ class ValidacionEquipo extends FormRequest
             'obra_id'=>'required|integer',
             'empresa_id'=>'required|integer',
             'oe'=>'required|max:12|unique:equipo,oe,'. $this->route('id'),
-            'velocidad'=>'required|20',
+            'velocidad'=>'required|numeric|max:20',
             'paradas'=>'required|max:20',
             'carga'=>'nullable|max:20',
             'marca'=>'nullable|max:40',
