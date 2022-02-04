@@ -25,7 +25,6 @@ class ValidacionConceptoPago extends FormRequest
     {
         return [
             'contrato_id'=>'required',
-            'estado_conceptopago_id'=>'required',
             'concepto'=>'required',
             'porcentaje'=>'required'
         ];

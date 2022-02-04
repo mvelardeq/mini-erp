@@ -30,7 +30,6 @@ class ValidacionContrato extends FormRequest
             'costo_sin_igv'=>'required',
             'fecha_inicio'=>'required',
             'fecha_fin'=>'nullable',
-            'estado'=>'required',
             'observacion'=>'nullable',
             'numero_oc'=>'nullable',
             'oc'=>'nullable',
