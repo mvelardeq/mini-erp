@@ -13,34 +13,43 @@ class Post extends Model
 {
     use HasFactory;
     protected $table = 'post';
-    protected $fillable = ['trabajador_id','foto', 'descripcion'];
+    protected $fillable = ['trabajador_id', 'foto', 'descripcion'];
     protected $guarded = ['id'];
 
-    public function trabajador(){
-        return $this->belongsTo(Trabajador::class,'trabajador_id');
+    public function trabajador()
+    {
+        return $this->belongsTo(Trabajador::class, 'trabajador_id');
     }
 
-    public function likes(){
+    public function likes()
+    {
         return $this->hasMany(Likes::class);
     }
 
-    public function comentarios(){
-        return $this->hasMany(Comentario::class)->orderBy('created_at','desc');
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class)->orderBy('created_at', 'desc');
     }
 
-    public static function setFoto($foto, $actual = false){
+    public static function setFoto($foto, $actual = false)
+    {
         if ($foto) {
             if ($actual) {
-                Storage::disk('s3')->delete("photos/postPhoto/$actual");
+                cloudinary()->destroy($actual);
             }
-            $imageName = Str::random(14) . '.jpg';
-            $imagen = Image::make($foto)->encode('jpg', 75);
-        $imagen->resize(600, null, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-            Storage::disk('s3')->put("photos/postPhoto/$imageName", $imagen->stream());
-            return $imageName;
+            $result = cloudinary()->upload(
+                $foto->getRealPath(),
+                [
+                    'transformation' => [
+                        'gravity' => 'auto',
+                        'width' => 600,
+                        'height' => 800,
+                        'crop' => 'crop',
+                    ],
+                    'folder' => 'photos/postPhoto/'
+                ]
+            )->getSecurePath();
+            return cloudinary()->getPublicId();
         } else {
             return false;
         }

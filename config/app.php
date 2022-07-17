@@ -178,6 +178,7 @@ return [
         App\Providers\GoogleDriveServiceProvider::class,
 
         Barryvdh\DomPDF\ServiceProvider::class,
+        CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
 
 
     ],
@@ -234,7 +235,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
 
         'PDF' => Barryvdh\DomPDF\Facade::class,
-
+        'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
     ],
 
 ];

@@ -16,9 +16,9 @@ class CrearTablaPost extends Migration
         Schema::create('post', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('trabajador_id');
-            $table->foreign('trabajador_id','fk_post_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
-            $table->string('foto',30)->nullable();
-            $table->string('descripcion',800);
+            $table->foreign('trabajador_id', 'fk_post_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
+            $table->string('foto', 120)->nullable();
+            $table->string('descripcion', 800);
             $table->timestamps();
         });
     }

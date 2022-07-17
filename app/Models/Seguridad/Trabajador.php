@@ -23,7 +23,7 @@ class Trabajador extends Authenticatable
 {
     protected $remeber_token = false;
     protected $table = 'trabajador';
-    protected $fillable = ['usuario', 'password', 'primer_nombre', 'segundo_nombre','primer_apellido','segundo_apellido', 'correo', 'dni', 'direccion','celular', 'fecha_nacimiento','foto', 'botas', 'overol', 'supervisor_id'];
+    protected $fillable = ['usuario', 'password', 'primer_nombre', 'segundo_nombre', 'primer_apellido', 'segundo_apellido', 'correo', 'dni', 'direccion', 'celular', 'fecha_nacimiento', 'foto', 'botas', 'overol', 'supervisor_id'];
 
     public function roles()
     {
@@ -57,14 +57,17 @@ class Trabajador extends Authenticatable
         return $this->HasMany(Ascenso_trabajador::class);
     }
 
-    public function posts(){
+    public function posts()
+    {
         return $this->hasMany(Post::class);
     }
-    public function comentarios(){
+    public function comentarios()
+    {
         return $this->hasMany(Comentario::class);
     }
 
-    public function likes(){
+    public function likes()
+    {
         return $this->hasMany(Likes::class);
     }
 
@@ -73,7 +76,7 @@ class Trabajador extends Authenticatable
         Session::put([
             // 'usuario' => $this->usuario,
             'trabajador_id' => $this->id,
-            'nombre_trabajador' => $this->primer_nombre." ".$this->primer_apellido,
+            'nombre_trabajador' => $this->primer_nombre . " " . $this->primer_apellido,
             // 'foto' => $this->foto
         ]);
         if (count($roles) == 1) {
@@ -83,7 +86,7 @@ class Trabajador extends Authenticatable
                     'rol_nombre' => $roles[0]['nombre'],
                 ]
             );
-        }else {
+        } else {
             Session::put('roles', $roles);
         }
     }
@@ -93,18 +96,36 @@ class Trabajador extends Authenticatable
         $this->attributes['password'] = Hash::make($pass);
     }
 
-    public static function setFoto($foto, $actual = false){
+    public static function setFoto($foto, $actual = false)
+    {
         if ($foto) {
             if ($actual) {
-                Storage::disk('s3')->delete("photos/profilePhoto/$actual");
+                cloudinary()->destroy($actual);
+                // Storage::disk('s3')->delete("photos/profilePhoto/$actual");
             }
-            $imageName = Str::random(14) . '.jpg';
+            /* $imageName = Str::random(14) . '.jpg';
             $imagen = Image::make($foto)->encode('jpg', 75);
-        $imagen->resize(600, 800, function ($constraint) {
+            $imagen->resize(600, 800, function ($constraint) {
                 $constraint->upsize();
             });
-            Storage::disk('s3')->put("photos/profilePhoto/$imageName", $imagen->stream());
-            return $imageName;
+            dd($imagen->stream()); */
+            $result = cloudinary()->upload(
+                $foto->getRealPath(),
+                [
+                    'transformation' => [
+                        'gravity' => 'auto',
+                        'width' => 600,
+                        'height' => 800,
+                        'crop' => 'crop',
+                    ],
+                    'folder' => 'photos/profilePhoto/'
+                ]
+            )->getSecurePath();
+            // $result = $imagen->stream()->storeOnCloudinary('photos/profilePhoto/');
+            // Storage::disk('s3')->put("photos/profilePhoto/$imageName", $imagen->stream());
+            // dd(cloudinary()->getPublicId());
+            return cloudinary()->getPublicId();
+            // return $imageName;
         } else {
             return false;
         }

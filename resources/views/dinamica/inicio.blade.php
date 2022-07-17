@@ -27,20 +27,24 @@ use Carbon\Carbon;
                                 <div class="col-3">
                                     <div class="image p-0">
                                         <a href="#" class="d-inline-block mt-4 hidden-xs-down">
-                                            <img src="{{ Storage::disk('s3')->url('photos/profilePhoto/' . auth()->user()->foto) }}"
+                                            <img src="{{ cloudinary()->getUrl(auth()->user()->foto) }}"
                                                 class="rounded-circle" alt="">
+                                            {{-- <img src="{{ Storage::disk('s3')->url('photos/profilePhoto/' . auth()->user()->foto) }}"
+                                                class="rounded-circle" alt=""> --}}
                                         </a>
                                     </div>
                                 </div>
                                 <div class="col-9 p-0 m-0">
-                                    <textarea name="descripcion" id="" class="form-control border-0 textarea p-3"
-                                        placeholder="Publicar Mensaje" required></textarea>
+                                    <textarea name="descripcion" id="" class="form-control border-0 textarea p-3" placeholder="Publicar Mensaje"
+                                        required></textarea>
                                     <div class="" id="preview" style="display:block; margin-top:20px;"></div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <input type="file" style="display: none;" name="foto_up" id="foto" accept="image/*" />
-                                <label for="foto" class="btn p-0 m-0"><i class="fa fa-image fa-2x text-success"></i></label>
+                                <input type="file" style="display: none;" name="foto_up" id="foto"
+                                    accept="image/*" />
+                                <label for="foto" class="btn p-0 m-0"><i
+                                        class="fa fa-image fa-2x text-success"></i></label>
 
                                 <button class="btn btn-primary float-right" type="submit">Publicar</button>
                             </div>
@@ -48,7 +52,6 @@ use Carbon\Carbon;
                     </div>
 
                     @foreach ($posts as $post)
-
                         <div class="card card-widget">
                             <div class="card-header">
                                 <div class="user-block">
@@ -62,21 +65,22 @@ use Carbon\Carbon;
                                 </div>
                                 @if (canTrue('eliminar-posts'))
                                     <div class="card-tools">
-                                            <form action="{{ route('eliminar_post', ['id' => $post->id]) }}"
-                                                class="d-inline form-eliminar" method="POST">
-                                                @csrf @method("delete")
-                                                <button type="submit" class="btn-accion-tabla eliminar tooltips"
-                                                    title="Eliminar este registro">
-                                                    <i class="fa fa-trash text-danger"></i>
-                                                </button>
-                                            </form>
+                                        <form action="{{ route('eliminar_post', ['id' => $post->id]) }}"
+                                            class="d-inline form-eliminar" method="POST">
+                                            @csrf @method('delete')
+                                            <button type="submit" class="btn-accion-tabla eliminar tooltips"
+                                                title="Eliminar este registro">
+                                                <i class="fa fa-trash text-danger"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 @endif
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body px-0 mx-0">
                                 <img class="img-fluid pad mx-auto d-block pb-2"
-                                    src="{{ Storage::disk('s3')->url('photos/postPhoto/' . $post->foto) }}" alt="Photo">
+                                    src="{{ Storage::disk('s3')->url('photos/postPhoto/' . $post->foto) }}"
+                                    alt="Photo">
 
                                 <p class="px-3">{{ $post->descripcion }}</p>
 
@@ -102,11 +106,11 @@ use Carbon\Carbon;
                             <!-- /.card-body -->
                             <div class="card-footer card-comments">
                                 @foreach ($post->comentarios as $comentario)
-
                                     @if ($loop->index < 3)
                                         <div class="card-comment">
                                             <!-- User image -->
-                                            <a href="{{ route('perfil-publico', ['id' => $comentario->trabajador->id]) }}">
+                                            <a
+                                                href="{{ route('perfil-publico', ['id' => $comentario->trabajador->id]) }}">
                                                 <img class="img-circle img-sm"
                                                     src="{{ Storage::disk('s3')->url('photos/profilePhoto/' . $comentario->trabajador->foto) }}"
                                                     alt="User Image">
@@ -140,7 +144,6 @@ use Carbon\Carbon;
                                             </div>
                                         </div>
                                     @endif
-
                                 @endforeach
 
                             </div>
@@ -161,7 +164,6 @@ use Carbon\Carbon;
                             </div>
                             <!-- /.card-footer -->
                         </div>
-
                     @endforeach
 
                 </div>
@@ -191,5 +193,4 @@ use Carbon\Carbon;
             </div>
         </div>
     </div>
-
 @endsection

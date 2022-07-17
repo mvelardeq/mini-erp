@@ -10,8 +10,8 @@ use Intervention\Image\Facades\Image;
 
 class Obs_trabajador extends Model
 {
-    protected $table='obs_trabajador';
-    protected $fillable = ['trabajador_id','titulo_observacion','observacion','fecha','foto'];
+    protected $table = 'obs_trabajador';
+    protected $fillable = ['trabajador_id', 'titulo_observacion', 'observacion', 'fecha', 'foto'];
     protected $guarded = ['id'];
 
     public function trabajador()
@@ -19,18 +19,25 @@ class Obs_trabajador extends Model
         return $this->belongsTo(Trabajador::class, 'trabajador_id');
     }
 
-    public static function setFoto($foto, $actual = false){
+    public static function setFoto($foto, $actual = false)
+    {
         if ($foto) {
             if ($actual) {
-                Storage::disk('s3')->delete("photos/ObsPhoto/$actual");
+                cloudinary()->destroy($actual);
             }
-            $imageName = Str::random(20) . '.jpg';
-            $imagen = Image::make($foto)->encode('jpg', 75);
-        $imagen->resize(600, 800, function ($constraint) {
-                $constraint->upsize();
-            });
-            Storage::disk('s3')->put("photos/ObsPhoto/$imageName", $imagen->stream());
-            return $imageName;
+            $result = cloudinary()->upload(
+                $foto->getRealPath(),
+                [
+                    'transformation' => [
+                        'gravity' => 'auto',
+                        'width' => 600,
+                        'height' => 800,
+                        'crop' => 'crop',
+                    ],
+                    'folder' => 'photos/ObsPhoto/'
+                ]
+            )->getSecurePath();
+            return cloudinary()->getPublicId();
         } else {
             return false;
         }

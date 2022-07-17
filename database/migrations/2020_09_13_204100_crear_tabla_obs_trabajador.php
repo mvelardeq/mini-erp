@@ -16,11 +16,11 @@ class CrearTablaObsTrabajador extends Migration
         Schema::create('obs_trabajador', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('trabajador_id');
-            $table->foreign('trabajador_id','fk_obstrabajador_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
-            $table->string('titulo_observacion',80);
-            $table->string('observacion',300);
+            $table->foreign('trabajador_id', 'fk_obstrabajador_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
+            $table->string('titulo_observacion', 80);
+            $table->string('observacion', 300);
             $table->date('fecha');
-            $table->string('foto',30)->nullable();
+            $table->string('foto', 120)->nullable();
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

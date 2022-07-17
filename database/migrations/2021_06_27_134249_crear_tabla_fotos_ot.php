@@ -16,8 +16,8 @@ class CrearTablaFotosOt extends Migration
         Schema::create('fotos_ot', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ot_id');
-            $table->foreign('ot_id','fk_foto_ot')->references('id')->on('ot')->onDelete('cascade')->onUpdate('restrict');
-            $table->string('foto',30);
+            $table->foreign('ot_id', 'fk_foto_ot')->references('id')->on('ot')->onDelete('cascade')->onUpdate('restrict');
+            $table->string('foto', 120);
             $table->timestamps();
         });
     }

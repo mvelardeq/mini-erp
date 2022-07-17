@@ -3,6 +3,26 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+use CloudinaryLabs\CloudinaryLaravel\MediaAlly;
+
+// Cloudinary::admin();
+// Cloudinary::search();
+// Cloudinary::uploadApi();
+
+// use MediaAlly;
+
+Route::get('prueba', function () {
+    return view('prueba');
+});
+Route::post('prueba', function () {
+    // $uploadedFileUrl = Cloudinary::uploadFile(request()->file('image')->getRealPath())->getSecurePath('samples/');
+    // $result = request()->file('image')->storeOnCloudinary('photos/profilePhoto/');
+    // dd($result);
+    // $publicId = 'photos/profilePhoto/j7rkrkefl9obcs1dvfxk';
+    // cloudinary()->destroy($publicId);
+    dd(request()['image']);
+})->name('prueba');
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,8 +34,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 /*RUTAS PASSWORD RESET*/
-Route::post('usuario/configurar/password/confirm','Auth\ConfirmPasswordController@confirm')->name('password.confirmp');
-Route::get('usuario/configurar/password/confirm','Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
+Route::post('usuario/configurar/password/confirm', 'Auth\ConfirmPasswordController@confirm')->name('password.confirmp');
+Route::get('usuario/configurar/password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
 
 
 // RUTAS DE LOGIN
@@ -26,7 +46,7 @@ Route::get('seguridad/logout', 'Seguridad\LoginController@logout')->name('logout
 Route::post('ajax-sesion', 'AjaxController@setSession')->name('ajax')->middleware('auth');
 
 // RUTAS ADMIN
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' =>['auth','superadmin']], function () {
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'superadmin']], function () {
     Route::get('', 'AdminController@index');
     /*RUTAS DE USUARIO*/
     Route::get('usuario', 'UsuarioController@index')->name('usuario');
@@ -51,9 +71,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' =>['auth
     Route::get('menu/{id}/eliminar', 'MenuController@eliminar')->name('eliminar_menu');
     Route::post('menu/guardar-orden', 'MenuController@guardarOrden')->name('guardar_orden');
     // RUTAS ROL
-    Route::get('rol','RolController@index')->name('rol');
-    Route::get('rol/crear','RolController@crear')->name('crear_rol');
-    Route::post('rol','RolController@guardar')->name('guardar_rol');
+    Route::get('rol', 'RolController@index')->name('rol');
+    Route::get('rol/crear', 'RolController@crear')->name('crear_rol');
+    Route::post('rol', 'RolController@guardar')->name('guardar_rol');
     Route::get('rol/{id}/editar', 'RolController@editar')->name('editar_rol');
     Route::put('rol/{id}', 'RolController@actualizar')->name('actualizar_rol');
     Route::delete('rol/{id}', 'RolController@eliminar')->name('eliminar_rol');
@@ -66,7 +86,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' =>['auth
 });
 
 
-Route::group(['prefix' => 'operaciones', 'namespace' => 'Operaciones', 'middleware' => ['auth','linea-mando']], function () {
+Route::group(['prefix' => 'operaciones', 'namespace' => 'Operaciones', 'middleware' => ['auth', 'linea-mando']], function () {
     /*RUTAS DE OBRA*/
     Route::get('obra', 'ObraController@index')->name('obra');
     Route::get('obra/crear', 'ObraController@crear')->name('crear_obra');
@@ -109,7 +129,7 @@ Route::group(['prefix' => 'operaciones', 'namespace' => 'Operaciones', 'middlewa
     // Route::delete('ot/{id}', 'OtController@eliminar')->name('eliminar_ot');
 });
 
-Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['auth','linea-mando']], function () {
+Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' => ['auth', 'linea-mando']], function () {
     /*RUTAS DE COTIZACIÓN*/
     Route::get('cotizacion', 'CotizacionController@index')->name('cotizacion');
     Route::get('cotizacion/crear', 'CotizacionController@crear')->name('crear_cotizacion');
@@ -140,9 +160,9 @@ Route::group(['prefix' => 'ventas', 'namespace' => 'Ventas', 'middleware' =>['au
     Route::post('factura/anular/{id}', 'FacturaController@anular')->name('anular_factura');
 });
 
-Route::group(['prefix' => 'usuario', 'namespace' => 'Usuario', 'middleware' =>['auth']], function () {
+Route::group(['prefix' => 'usuario', 'namespace' => 'Usuario', 'middleware' => ['auth']], function () {
     // RUTAS DE PERFIL
-    Route::get('perfil','PerfilController@index')->name('usuario_perfil');
+    Route::get('perfil', 'PerfilController@index')->name('usuario_perfil');
     /*RUTAS DE OT*/
     Route::get('ot', 'OtController@index')->name('usuario_ot');
     Route::get('ot/crear', 'OtController@crear')->name('crear_usuario_ot');
@@ -163,8 +183,8 @@ Route::group(['prefix' => 'usuario', 'namespace' => 'Usuario', 'middleware' =>['
 
 
     // RUTAS DE CALENDARIO
-    Route::get('calendario','CalendarioController@index')->name('usuario_calendario');
-    Route::get('calendario/mostrar','CalendarioController@mostrar')->name('mostrar_calendario');
+    Route::get('calendario', 'CalendarioController@index')->name('usuario_calendario');
+    Route::get('calendario/mostrar', 'CalendarioController@mostrar')->name('mostrar_calendario');
 
     Route::get('cuenta-corriente', 'UsuarioCuentaCorrienteController@index')->name('cuenta_corriente_usuario');
     Route::get('cuenta-corriente/{id}/transferencia', 'UsuarioCuentaCorrienteController@transferencia')->name('transferencia_usuario');
@@ -173,14 +193,14 @@ Route::group(['prefix' => 'usuario', 'namespace' => 'Usuario', 'middleware' =>['
 
 
     //RUTAS DE CONFIGURAR
-    Route::get('configurar','ConfigurarController@index')->middleware(['password.confirm'])->name('configurar_usuario');
-    Route::post('configurar/cambiar-password','ConfigurarController@cambiarPassword')->name('cambio_contrasenia_usuario');
-    Route::get('configurar/informacion','ConfigurarController@informacion')->name('informacion_usuario');
-    Route::post('configurar/cambiar-informacion','ConfigurarController@cambiarInformacion')->name('cambiar_informacion_usuario');
+    Route::get('configurar', 'ConfigurarController@index')->middleware(['password.confirm'])->name('configurar_usuario');
+    Route::post('configurar/cambiar-password', 'ConfigurarController@cambiarPassword')->name('cambio_contrasenia_usuario');
+    Route::get('configurar/informacion', 'ConfigurarController@informacion')->name('informacion_usuario');
+    Route::post('configurar/cambiar-informacion', 'ConfigurarController@cambiarInformacion')->name('cambiar_informacion_usuario');
 });
 
 
-Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion\Logistica', 'middleware' =>['auth','linea-mando']], function () {
+Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion\Logistica', 'middleware' => ['auth', 'linea-mando']], function () {
     /*RUTAS DE CATEGORIA_PRODUCTO*/
     Route::get('logistica/categoria', 'CategoriaProductoController@index')->name('categoria_producto');
     Route::get('logistica/categoria/crear', 'CategoriaProductoController@crear')->name('crear_categoria_producto');
@@ -218,9 +238,9 @@ Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion\Logis
     Route::get('logistica/compra/{id}/editar', 'CompraController@editar')->name('editar_compra');
     Route::put('logistica/compra/{id}', 'CompraController@actualizar')->name('actualizar_compra');
     Route::delete('logistica/compra/{id}', 'CompraController@eliminar')->name('eliminar_compra');
-    });
+});
 
-Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion\RRHH', 'middleware' =>['auth','linea-mando']], function () {
+Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion\RRHH', 'middleware' => ['auth', 'linea-mando']], function () {
     /*RUTAS DE TRABAJADOR*/
     Route::get('rrhh/trabajador', 'TrabajadorController@index')->name('trabajador');
     Route::get('rrhh/trabajador/crear', 'TrabajadorController@crear')->name('crear_trabajador');
@@ -253,7 +273,7 @@ Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion\RRHH'
     Route::post('rrhh/boleta-pago/guardar-quincena/{id}/{periodo}', 'BoletaPagoController@guardarQuincena')->name('guardar_quincena_trabajador');
 });
 
-Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion', 'middleware' =>['auth','linea-mando']], function () {
+Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion', 'middleware' => ['auth', 'linea-mando']], function () {
     /*RUTAS DE SERVICIO TERCERO*/
     Route::get('servicio-tercero', 'ServicioTerceroController@index')->name('servicio_tercero');
     Route::get('servicio-tercero/crear', 'ServicioTerceroController@crear')->name('crear_servicio_tercero');
@@ -270,7 +290,7 @@ Route::group(['prefix' => 'administracion', 'namespace' => 'Administracion', 'mi
     Route::delete('pago-servicio/{id}', 'PagoServicioController@eliminar')->name('eliminar_pago_servicio');
 });
 
-Route::group(['prefix' => 'finanzas/contabilidad', 'namespace' => 'Finanzas\Contabilidad', 'middleware' =>['auth','linea-mando']], function () {
+Route::group(['prefix' => 'finanzas/contabilidad', 'namespace' => 'Finanzas\Contabilidad', 'middleware' => ['auth', 'linea-mando']], function () {
     /*RUTAS DE CUENTA CONTABLE*/
     Route::get('cuenta-contable', 'CuentaContableController@index')->name('cuenta_contable');
     Route::get('cuenta-contable/crear', 'CuentaContableController@crear')->name('crear_cuenta_contable');
@@ -280,7 +300,7 @@ Route::group(['prefix' => 'finanzas/contabilidad', 'namespace' => 'Finanzas\Cont
     Route::delete('cuenta-contable/{id}', 'CuentaContableController@eliminar')->name('eliminar_cuenta_contable');
 });
 
-Route::group(['prefix' => 'finanzas', 'namespace' => 'Finanzas', 'middleware' =>['auth','linea-mando']], function () {
+Route::group(['prefix' => 'finanzas', 'namespace' => 'Finanzas', 'middleware' => ['auth', 'linea-mando']], function () {
     /*RUTAS DE CUENTA CONTABLE*/
     Route::get('estado-movimientos', 'EstadoMovimientosController@index')->name('estado_movimientos');
     Route::get('cuenta-corriente', 'CuentaCorrienteController@index')->name('cuenta_corriente');
@@ -291,7 +311,7 @@ Route::group(['prefix' => 'finanzas', 'namespace' => 'Finanzas', 'middleware' =>
 Route::get('/inicio', 'HomeController@index')->name('home');
 Route::get('/inicio/perfil/{id}', 'PerfilPublicoController@index')->middleware('auth')->name('perfil-publico');
 
-Route::group(['prefix' => 'social', 'namespace' => 'Social', 'middleware' =>['auth']], function () {
+Route::group(['prefix' => 'social', 'namespace' => 'Social', 'middleware' => ['auth']], function () {
     /*RUTAS DE POST*/
     Route::post('post', 'PostController@guardar')->name('guardar_post');
     Route::delete('post/{id}', 'PostController@eliminar')->name('eliminar_post');
@@ -302,4 +322,3 @@ Route::group(['prefix' => 'social', 'namespace' => 'Social', 'middleware' =>['au
     /*RUTAS DE COMENTARIOS*/
     Route::post('comentario/{id}', 'ComentarioController@guardar')->name('guardar_comentario');
 });
-
