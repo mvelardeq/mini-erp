@@ -7,6 +7,7 @@ use App\Http\Requests\ValidacionTrabajador;
 use App\Models\Admin\Rol;
 use App\Models\Seguridad\Trabajador;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
 class UsuarioController extends Controller
@@ -80,7 +81,7 @@ class UsuarioController extends Controller
                 $supervisores->push($trabajador);
             }
         }
-        return view('dinamica.admin.usuario.editar', compact('data', 'rols','supervisores'));
+        return view('dinamica.admin.usuario.editar', compact('data', 'rols', 'supervisores'));
     }
 
     /**
@@ -92,10 +93,17 @@ class UsuarioController extends Controller
      */
     public function actualizar(ValidacionTrabajador $request, $id)
     {
+        return $request;
         $trabajador = Trabajador::findOrFail($id);
         if ($foto = Trabajador::setFoto($request->foto_up, $trabajador->foto))
             $request->request->add(['foto' => $foto]);
-        $trabajador->update(array_filter($request->all()));
+        if ($request->password == '' && $request->re_password == '') {
+            return dd('hola');
+            $trabajador->update(Arr::except($request->all(), ['password']));
+        } else {
+            $trabajador->update($request->all());
+        }
+        // // $trabajador->update(array_filter($request->all()));
         $trabajador->roles()->sync($request->rol_id);
         return redirect()->route('usuario')->with('mensaje', 'El trabajdor se actualizó correctamente');
     }
@@ -109,14 +117,14 @@ class UsuarioController extends Controller
     public function eliminar(Request $request, $id)
     {
         if ($request->ajax()) {
-            $trabajador=Trabajador::findOrFail($id);
+            $trabajador = Trabajador::findOrFail($id);
             $trabajador->roles()->detach();
             $trabajador->delete();
-            Storage::disk('s3')->delete("photos/profilePhoto/$trabajador->foto");
-            return response()->json(['mensaje'=>'ok']);
+            // Storage::disk('s3')->delete("photos/profilePhoto/$trabajador->foto");
+            Storage::disk('cloudinary')->delete("files/quotation/$trabajador->foto");
+            return response()->json(['mensaje' => 'ok']);
         } else {
             abort(404);
         }
-
     }
 }

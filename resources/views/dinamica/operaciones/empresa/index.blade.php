@@ -38,7 +38,7 @@ Empresas
                     <tbody>
                         @foreach ($empresas as $empresa)
                         <tr>
-                            <td><a href="#">{{$empresa->razon_social}}</a></td>
+                            <td>{{$empresa->razon_social}}</td>
                             <td>{{$empresa->ruc}}</td>
                             <td>{{$empresa->pago_hora}}</td>
                             <td>{{$empresa->direccion}}</td>

@@ -25,10 +25,10 @@ class Fotos_ot extends Model
                 $foto->getRealPath(),
                 [
                     'transformation' => [
-                        'gravity' => 'auto',
-                        'width' => 600,
-                        'height' => 600,
-                        'crop' => 'crop',
+                        // 'gravity' => 'auto',
+                        'width' => 700,
+                        // 'height' => 600,
+                        'crop' => 'scale',
                     ],
                     'folder' => 'photos/otPhoto/'
                 ]

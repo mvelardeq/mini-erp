@@ -22,7 +22,7 @@ use Carbon\Carbon;
                                 <div class="card-header">
                                     <div class="user-block">
                                         <img class="img-circle"
-                                            src="{{ Storage::disk('s3')->url('photos/profilePhoto/' . $post->trabajador->foto) }}"
+                                            src="{{ cloudinary()->getUrl($post->trabajador->foto) }}"
                                             alt="User Image">
                                         <span class="username"><a
                                                 href="{{ route('perfil-publico', ['id' => $post->trabajador->id]) }}">{{ $post->trabajador->primer_nombre . ' ' . $post->trabajador->primer_apellido }}</a></span>
@@ -33,7 +33,7 @@ use Carbon\Carbon;
                                 <!-- /.card-header -->
                                 <div class="card-body px-0 mx-0">
                                     <img class="img-fluid pad mx-auto d-block pb-2"
-                                        src="{{ Storage::disk('s3')->url('photos/postPhoto/' . $post->foto) }}" alt="Photo">
+                                        src="{{ cloudinary()->getUrl($post->foto) }}" alt="Photo">
 
                                     <p class="px-3">{{ $post->descripcion }}</p>
 
@@ -65,7 +65,7 @@ use Carbon\Carbon;
                                                 <!-- User image -->
                                                 <a href="{{ route('perfil-publico', ['id' => $comentario->trabajador->id]) }}">
                                                     <img class="img-circle img-sm"
-                                                        src="{{ Storage::disk('s3')->url('photos/profilePhoto/' . $comentario->trabajador->foto) }}"
+                                                        src="{{ cloudinary()->getUrl($comentario->trabajador->foto) }}"
                                                         alt="User Image">
                                                 </a>
 
@@ -84,7 +84,7 @@ use Carbon\Carbon;
                                             <div class="card-comment collapse" rol="tabpanel" aria-labelledby="heading"
                                                 id="bloque{{ $post->id }}">
                                                 <img class="img-circle img-sm"
-                                                    src="{{ Storage::disk('s3')->url('photos/profilePhoto/' . $comentario->trabajador->foto) }}"
+                                                    src="{{ cloudinary()->getUrl($comentario->trabajador->foto) }}"
                                                     alt="User Image">
 
                                                 <div class="comment-text">
@@ -107,7 +107,7 @@ use Carbon\Carbon;
                                     <form action="{{ route('guardar_comentario', ['id' => $post->id]) }}" method="POST">
                                         @csrf
                                         <img class="img-fluid img-circle img-sm"
-                                            src="{{ Storage::disk('s3')->url('photos/profilePhoto/' . auth()->user()->foto) }}"
+                                            src="{{ cloudinary()->getUrl(auth()->user()->foto) }}"
                                             alt="Alt Text">
                                         <!-- .img-push is used to add margin to elements next to floating images -->
                                         <div class="img-push">

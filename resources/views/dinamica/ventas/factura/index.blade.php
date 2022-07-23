@@ -53,7 +53,7 @@ Facturas
                     <tbody>
                         @foreach ($facturas as $factura)
                         <tr>
-                            <td><a href="#">{{$factura->numero}}</a></td>
+                            <td>{{$factura->numero}}</td>
                             <td>{{$factura->concepto_pago->contrato->equipo->obra->nombre}} ({{$factura->concepto_pago->contrato->equipo->oe}}) - {{$factura->concepto_pago->contrato->servicio->nombre}}</td>
                             <td>{{$factura->concepto_pago->concepto}}</td>
                             <td>{{Carbon::parse($factura->fecha_facturacion)->isoFormat('DD/MM /YYYY')}}</td>

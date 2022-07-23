@@ -47,7 +47,7 @@ class NotificacionesController extends Controller
         $fotos = $ot->fotos;
         $linksfotos = collect();
         foreach ($fotos as $foto) {
-            $linksfotos->push(Storage::disk('s3')->url("photos/otPhoto/".$foto->foto));
+            $linksfotos->push(Storage::disk('cloudinary')->url($foto->foto));
         }
         return response()->json($linksfotos);
     }

@@ -114,7 +114,7 @@ class Trabajador extends Authenticatable
                 [
                     'transformation' => [
                         'gravity' => 'auto',
-                        'width' => 600,
+                        'width' => 800,
                         'height' => 800,
                         'crop' => 'crop',
                     ],

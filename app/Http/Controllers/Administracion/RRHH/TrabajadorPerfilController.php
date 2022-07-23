@@ -97,7 +97,7 @@ class TrabajadorPerfilController extends Controller
 
                         $lista_fotos ='';
                         foreach ($ot->fotos as $ot_foto) {
-                            $lista_fotos .= '<img src="'.Storage::disk('s3')->url("photos/otPhoto/".$ot_foto->foto).'" alt="..." class="img-fluid pad mx-auto d-block pb-2" >';
+                            $lista_fotos .= '<img src="'. cloudinary()->getUrl($ot_foto->foto).'" alt="..." class="img-fluid pad mx-auto d-block pb-2" >';
                         }
                     $lista_final = '<div class="timeline-item row">
 

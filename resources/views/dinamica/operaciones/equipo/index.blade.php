@@ -43,7 +43,7 @@ Equipos
                     <tbody>
                         @foreach ($equipos as $equipo)
                         <tr>
-                            <td><a href="#">Asc-{{$equipo->numero_equipo}}</a></td>
+                            <td>Asc-{{$equipo->numero_equipo}}</td>
                             <td>{{$equipo->obra->nombre}}</td>
                             <td>{{$equipo->oe}}</td>
                             <td>{{$equipo->velocidad}}</td>

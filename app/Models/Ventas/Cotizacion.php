@@ -24,15 +24,15 @@ class Cotizacion extends Model
     }
 
     public static function setQuotation($pdf, $name, $actual = false){
+        // return var_dump($pdf);
         if ($pdf) {
             if ($actual) {
-                Storage::disk('s3')->delete("files/quotation/$actual");
+                Storage::disk('cloudinary')->delete("files/quotation/$name");
             }
-            // $planeName = Str::random(20) .'.pdf';
-            Storage::disk('s3')->put("files/quotation/$name", $pdf);
-            // return $name;
+            Storage::disk('cloudinary')->put("files/quotation/$name", $pdf);
         } else {
             return false;
         }
+
     }
 }

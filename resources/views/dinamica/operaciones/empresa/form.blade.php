@@ -35,7 +35,7 @@
     </div>
 </div>
 <div class="form-group row">
-    <label for="observacion" class="col-lg-3 col-form-label requerido">Observación</label>
+    <label for="observacion" class="col-lg-3 col-form-label">Observación</label>
     <div class="col-lg-8">
         <textarea name="observacion" id="observacion" class="form-control" cols="30" rows="5">{{old('observacion', $empresa->observacion ?? '')}}</textarea>
     </div>

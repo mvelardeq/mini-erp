@@ -4,7 +4,7 @@
     <a href="/inicio" class="brand-link">
       {{-- <img src="{{asset("assets/$theme/dist/img/AdminLTELogo.png")}}" class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
       <img src="{{asset("assets/sb/assets/img/logo2png.png")}}" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Ascensores Industriales</span>
+      <span class="brand-text font-weight-light">Company Name</span>
     </a>
 
     <!-- Sidebar -->
@@ -17,7 +17,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
             <li class="nav-header">PRINCIPAL</li>
-
+            {{-- {{dd($menusComposer)}} --}}
             @foreach ($menusComposer as $key => $item)
                 @if ($item["menu_id"] != 0)
                     @break

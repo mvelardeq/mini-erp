@@ -187,7 +187,7 @@ class CompraController extends Controller
 
         return redirect('administracion/logistica/compra')->with('mensaje', 'Compra realizada con éxito');
 
-        // return dd(count($request->producto_id));
+        return dd(count($request->producto_id));
     }
 
     /**

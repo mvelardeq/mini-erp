@@ -43,10 +43,10 @@ Contratos
                         @foreach ($contratos as $contrato)
                         <tr>
                             @if ($contrato->servicio->nombre == "Servicio Adicional")
-                            <td><a href="#">{{$contrato->equipo->obra->nombre}} (O.E: {{$contrato->equipo->oe}}) {{$contrato->conceptos_pago->first()->concepto}}</a></td>
+                            <td>{{$contrato->equipo->obra->nombre}} (O.E: {{$contrato->equipo->oe}}) {{$contrato->conceptos_pago->first()->concepto}}</td>
 
                             @else
-                            <td><a href="#">{{$contrato->equipo->obra->nombre}} (O.E: {{$contrato->equipo->oe}}) {{$contrato->servicio->nombre}}</a></td>
+                            <td>{{$contrato->equipo->obra->nombre}} (O.E: {{$contrato->equipo->oe}}) {{$contrato->servicio->nombre}}</td>
 
                             @endif
                             <td>{{$contrato->horas}}</td>

@@ -8,6 +8,7 @@ use App\Models\Admin\Rol;
 use App\Models\Seguridad\Trabajador;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
 class TrabajadorController extends Controller
@@ -93,8 +94,11 @@ class TrabajadorController extends Controller
         $trabajador = Trabajador::findOrFail($id);
         if ($foto = Trabajador::setFoto($request->foto_up, $trabajador->foto))
             $request->request->add(['foto' => $foto]);
-        $trabajador->update(array_filter($request->all()));
-        $request->request->add(["rol_id"=>2]);
+        if($request->password==null && $request->re_password==null){
+            $trabajador->update(Arr::except($request->all(),['password']));
+        }else{
+            $trabajador->update($request->all());
+        }
         $trabajador->roles()->sync($request->rol_id);
         return redirect()->route('trabajador')->with('mensaje', 'El trabajdor se actualizó correctamente');
     }

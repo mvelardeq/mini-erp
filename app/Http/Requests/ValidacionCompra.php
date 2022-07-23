@@ -26,8 +26,8 @@ class ValidacionCompra extends FormRequest
         return [
             'proveedor'=>'required|max:90',
             'fecha'=>'required',
-            'total_con_igv'=>'required|numeric',
-            'ruc_proveedor'=>'nullable|numeric|min:11|max:11',
+            'total'=>'required|numeric',
+            'ruc_proveedor'=>'nullable|numeric|digits:11',
             'observacion'=>'nullable|max:400'
         ];
     }

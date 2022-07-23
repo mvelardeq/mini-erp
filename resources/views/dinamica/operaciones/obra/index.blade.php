@@ -33,7 +33,7 @@ Obras
                     <tbody>
                         @foreach ($obras as $obra)
                         <tr>
-                            <td><a href="#">{{$obra->nombre}}</a></td>
+                            <td>{{$obra->nombre}}</td>
                             <td>{{$obra->direccion}}</td>
                             <td>{{$obra->cliente}}</td>
                             <td>

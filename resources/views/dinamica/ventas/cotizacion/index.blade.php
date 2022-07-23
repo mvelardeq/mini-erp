@@ -41,14 +41,14 @@ Cotizaciones
                     <tbody>
                         @foreach ($cotizaciones as $cotizacion)
                         <tr>
-                            <td><a href="#">{{$cotizacion->numero}}</a></td>
+                            <td>{{$cotizacion->numero}}</td>
                             <td>{{$cotizacion->equipo->obra->nombre}} (OE-{{$cotizacion->equipo->oe}})</td>
 
                             <td>{{$cotizacion->resumen}}</td>
                             <td>{{Carbon::parse($cotizacion->fecha)->isoFormat('DD/MM/YYYY')}}</td>
                             <td>{{$cotizacion->dirigido_a}}</td>
                             <td>
-                                <a href="{{Storage::disk('s3')->url('files/quotation/'.$cotizacion->pdf)}}" target="_blank"><i class="fas fa-file-pdf text-danger"></i></a>
+                                <a href="{{ cloudinary()->getUrl('files/quotation/'.$cotizacion->pdf) }}" target="_blank"><i class="fas fa-file-pdf text-danger"></i></a>
                             </td>
 
                             <td>

@@ -28,7 +28,7 @@ class ValidacionProducto extends FormRequest
             'tipo_producto_id'=>'required|integer',
             'descripcion'=>'required|max:80',
             'unidades'=>'required|max:15',
-            'foto'=>'nullable|max:28',
+            // 'foto_producto'=> 'required|max:28',
         ];
     }
 }

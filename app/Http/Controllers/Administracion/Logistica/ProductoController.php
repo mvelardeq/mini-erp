@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidacionProducto;
 use App\Models\Administracion\Logistica\Categoria_producto;
 use App\Models\Administracion\Logistica\Producto;
+use App\Models\Administracion\Logistica\Tipo_producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,8 +34,9 @@ class ProductoController extends Controller
         can('crear-productos');
         $productos = Producto::orderBy('id')->get();
         $categorias_producto = Categoria_producto::orderBy('id')->get();
+        $tipo_productos = Tipo_producto::orderBy('id')->get();
 
-        return  view('dinamica.administracion.logistica.producto.crear', compact('productos', 'categorias_producto'));
+        return  view('dinamica.administracion.logistica.producto.crear', compact('productos', 'categorias_producto','tipo_productos'));
     }
 
     /**
@@ -75,7 +77,9 @@ class ProductoController extends Controller
         can('editar-productos');
         $producto = Producto::findOrFail($id);
         $categorias_producto = Categoria_producto::orderBy('id')->get();
-        return view('dinamica.administracion.logistica.producto.editar', compact('producto', 'categorias_producto'));
+        $tipo_productos = Tipo_producto::orderBy('id')->get();
+
+        return view('dinamica.administracion.logistica.producto.editar', compact('producto', 'categorias_producto', 'tipo_productos'));
 
     }
 
@@ -89,7 +93,10 @@ class ProductoController extends Controller
     public function actualizar(ValidacionProducto $request, $id)
     {
         can('editar-productos');
-        Producto::findOrFail($id)->update($request->all());
+        $producto = Producto::findOrFail($id);
+        if ($foto = Producto::setFoto($request->foto_producto,$producto->foto))
+            $request->request->add(['foto' => $foto]);
+        $producto->update($request->all());
         return redirect('administracion/logistica/producto')->with('mensaje','producto actualizado con éxito');
     }
 
@@ -103,10 +110,12 @@ class ProductoController extends Controller
     {
         can('eliminar-productos');
         if ($request->ajax()) {
-            $producto = Producto::findOrFail($id);
-            Storage::disk('s3')->delete("photos/product/$producto->foto");
-            $producto->delete();
-            return response()->json(['mensaje'=>'ok']);
+            $foto = Producto::findOrFail($id)->foto;
+            if(Producto::destroy($id)){
+                // Storage::disk('cloudinary')->delete("photos/product/$foto.jpg");
+                cloudinary()->destroy($foto);
+                return response()->json(['mensaje'=>'ok']);
+            }
         } else {
             abort(404);
         }

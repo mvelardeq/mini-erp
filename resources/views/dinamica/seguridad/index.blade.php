@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ascensores Industriales | Login</title>
+  <title>Company Name | Login</title>
 
 
     <link rel="apple-touch-icon" sizes="57x57" href="{{asset("assets/sb/assets/img/fav/apple-icon-57x57.png")}}">
@@ -36,7 +36,20 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="{{route('inicio')}}">Ascensores Industriales</a>
+    <a href="{{route('inicio')}}">Company Name</a>
+  </div>
+  <div class="card">
+    <div class="card-body login-card-body">
+        <h5 class="text-info">This is a demo of this company app</h5>
+        <p>Please be careful when testing the application as others people could see your saved information, consider the following points:</p>
+
+        <ul class="list-group">
+            <li class="list-group-item"><b>Superadmin user:</b> wbartlett , password: pass123</li>
+            <li class="list-group-item">You can see other user in: administracion/rrhh/trabajadores, and all user have password 'pass123'</li>
+            <li class="list-group-item">Diferent users have diferent rols</li>
+            <li class="list-group-item">I would really appreciate if you give me feedback by contacting my page: <a href="https://portfolio-mvelarde.herokuapp.com/" target="_blank">MyPortfolio</a></li>
+        </ul>
+    </div>
   </div>
   <!-- /.login-logo -->
   <div class="card">

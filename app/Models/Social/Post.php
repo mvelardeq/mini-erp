@@ -41,10 +41,10 @@ class Post extends Model
                 $foto->getRealPath(),
                 [
                     'transformation' => [
-                        'gravity' => 'auto',
-                        'width' => 600,
-                        'height' => 800,
-                        'crop' => 'crop',
+                        // 'gravity' => 'auto',
+                        'width' => 800,
+                        // 'height' => 800,
+                        'crop' => 'scale',
                     ],
                     'folder' => 'photos/postPhoto/'
                 ]

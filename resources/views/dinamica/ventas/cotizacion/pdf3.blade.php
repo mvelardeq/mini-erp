@@ -162,7 +162,8 @@ use Illuminate\Support\Str;
   <body>
     <header class="clearfix">
       <div id="logo">
-        <img src="{{public_path('assets/sb/assets/img/top-pdf.png')}}">
+        {{-- <img src="{{public_path('assets/sb/assets/img/top-pdf.png')}}"> --}}
+        <img src="{{public_path('assets/sb/assets/img/top-pdf2.png')}}">
       </div>
       <h1>COTIZACIÓN N° {{$cotizacion->numero}}</h1>
       <div id="project">

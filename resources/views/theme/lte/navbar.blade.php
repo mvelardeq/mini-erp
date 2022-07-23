@@ -28,17 +28,6 @@ use Carbon\Carbon;
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-        {{-- <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="{{route('login')}}" role="button">
-            <p>Login</p>
-          </a>
-        </li>
-      <li class="nav-item">
-      <a class="nav-link" data-widget="fullscreen" href="{{route('logout')}}" role="button">
-          <p>Logout</p>
-        </a>
-      </li> --}}
-
 
         <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">

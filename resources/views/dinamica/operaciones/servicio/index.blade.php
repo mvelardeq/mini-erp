@@ -33,7 +33,7 @@ Servicios
                     <tbody>
                         @foreach ($servicios as $servicio)
                         <tr>
-                            <td><a href="#">{{$servicio->nombre}}</a></td>
+                            <td>{{$servicio->nombre}}</td>
                             {{-- <td>{{$servicio->actividades[0]['nombre']}}</td> --}}
                             <td>
                                 <ul class="pl-3">

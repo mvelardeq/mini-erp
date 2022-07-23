@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CotizacionController extends Controller
 {
@@ -61,7 +62,7 @@ class CotizacionController extends Controller
             'resumen' => $request->resumen,
             'fecha' => $request->fecha,
             'dirigido_a' => $request->dirigido_a,
-            'pdf' =>'Cotización_'.$request->numero.'_obra_'.$equipo->obra->nombre.'_'.$request->resumen.'.pdf',
+            'pdf' => Str::of('cotizacion_' . $request->numero . '_obra_' . $equipo->obra->nombre . '_' . $request->resumen)->slug('-'),
             ]);
 
             $idcotizacion= Cotizacion::orderBy('created_at', 'desc')->first()->id;
@@ -179,7 +180,7 @@ class CotizacionController extends Controller
             'resumen' => $request->resumen,
             'fecha' => $request->fecha,
             'dirigido_a' => $request->dirigido_a,
-            'pdf' =>'Cotización_'.$request->numero.'_obra_'.$equipo->obra->nombre.'_'.$request->resumen.'.pdf',
+            'pdf' => Str::of('cotizacion_' . $request->numero . '_obra_' . $equipo->obra->nombre . '_' . $request->resumen)->slug('-'),
 
         ]);
         $descripciones = Linea_cotizacion::orderBy('id')->where('cotizacion_id', $id)->pluck('descripcion')->toArray();
@@ -213,7 +214,7 @@ class CotizacionController extends Controller
         }
 
 
-        if (isset($descripciones[2])) {
+        if (isset($descripciones[1])) {
             if (isset($request->descripcion2)) {
                 Linea_cotizacion::findOrFail($lineas_cotizacion[1])->update([
                     'cotizacion_id' => $id,
@@ -373,7 +374,7 @@ class CotizacionController extends Controller
             $name = Cotizacion::findOrFail($id)->pdf;
             if (Linea_cotizacion::where('cotizacion_id',$id)->delete()) {
                 if (Cotizacion::destroy($id)) {
-                    Storage::disk('s3')->delete("files/quotation/$name");
+                    Storage::disk('cloudinary')->delete("files/quotation/$name");
                     return response()->json(['mensaje' => 'ok']);
                 }
 
