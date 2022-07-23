@@ -24,7 +24,7 @@ class CrearTablaFactura extends Migration
             $table->double('subtotal',8,2);
             $table->double('total_con_igv',8,2);
             $table->double('pago_sin_detraccion',8,2);
-            $table->string('observacion',400)->nullable();
+            $table->text('observacion')->nullable();
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

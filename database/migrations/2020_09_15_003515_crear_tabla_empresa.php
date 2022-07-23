@@ -21,7 +21,7 @@ class CrearTablaEmpresa extends Migration
             $table->double('pago_hora',7,2);
             $table->string('direccion',300);
             $table->string('actividad',90);
-            $table->string('observacion',400)->nullable();
+            $table->text('observacion')->nullable();
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

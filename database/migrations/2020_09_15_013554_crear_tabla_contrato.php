@@ -24,7 +24,7 @@ class CrearTablaContrato extends Migration
             $table->date('fecha_inicio');
             $table->date('fecha_fin')->nullable();
             $table->string('estado',20)->default('Abierto');
-            $table->string('observacion',300)->nullable();
+            $table->text('observacion')->nullable();
             $table->string('numero_oc',15)->nullable();
             $table->string('oc',100)->nullable();
             $table->timestamps();

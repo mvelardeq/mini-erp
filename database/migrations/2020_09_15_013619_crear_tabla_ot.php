@@ -22,9 +22,9 @@ class CrearTablaOt extends Migration
             $table->unsignedBigInteger('estado_ot_id');
             $table->foreign('estado_ot_id','fk_ot_estadoot')->references('id')->on('estado_ot')->onDelete('restrict')->onUpdate('restrict');
             $table->date('fecha');
-            $table->double('descuento',7,2)->nullable();        
-            $table->string('motivo_descuento',300)->nullable();
-            $table->string('pedido',300)->nullable();
+            $table->double('descuento',7,2)->nullable();
+            $table->text('motivo_descuento')->nullable();
+            $table->text('pedido')->nullable();
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

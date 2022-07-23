@@ -17,7 +17,7 @@ class CrearTablaLineaCotizacion extends Migration
             $table->id();
             $table->unsignedBigInteger('cotizacion_id');
             $table->foreign('cotizacion_id','fk_lineacotizacion_cotizacion')->references('id')->on('cotizacion')->onDelete('restrict')->onUpdate('restrict');
-            $table->string('descripcion',600);
+            $table->text('descripcion');
             $table->double('cantidad',8,2);
             $table->double('subtotal',8,2);
             $table->timestamps();

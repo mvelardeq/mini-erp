@@ -21,7 +21,7 @@ class CrearTablaAscensoTrabajador extends Migration
             $table->foreign('cargo_trabajador_id','fk_ascensotrabajador_cargotrabajador')->references('id')->on('cargo_trabajador')->onDelete('restrict')->onUpdate('restrict');
             $table->double('sueldo',7,2);
             $table->date('fecha');
-            $table->string('observacion',400)->nullable();
+            $table->text('observacion')->nullable();
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

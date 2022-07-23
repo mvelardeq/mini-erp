@@ -19,7 +19,7 @@ class CrearTablaTransferencia extends Migration
             $table->unsignedBigInteger('cuentacargo_id');
             $table->double('cantidad',10,2);
             $table->date('fecha');
-            $table->string('observacion',400)->nullable();
+            $table->text('observacion')->nullable();
             $table->timestamps();
         });
     }

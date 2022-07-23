@@ -18,7 +18,7 @@ class CrearTablaObsTrabajador extends Migration
             $table->unsignedBigInteger('trabajador_id');
             $table->foreign('trabajador_id', 'fk_obstrabajador_trabajador')->references('id')->on('trabajador')->onDelete('restrict')->onUpdate('restrict');
             $table->string('titulo_observacion', 80);
-            $table->string('observacion', 300);
+            $table->text('observacion');
             $table->date('fecha');
             $table->string('foto', 120)->nullable();
             $table->timestamps();
