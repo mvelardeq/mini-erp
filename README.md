@@ -11,7 +11,7 @@ I did this project when I had just learned php and was starting with laravel, so
 
 ## Demo of this App
 
-Here you could test this project, go to the link: [mini-erp](https://minierp-mvelardeq.herokuapp.com/seguridad/login)
+Here you could test this project, go to the link: <a href="https://minierp-mvelardeq.herokuapp.com/seguridad/login" target="_blank">mini-erp</a>
 
 This demo was deployed on Heroku, using DBclear and Cloudinary and AdmitLte with bootstrap.
 
@@ -19,6 +19,6 @@ This demo was deployed on Heroku, using DBclear and Cloudinary and AdmitLte with
 
 ## Acknowledgment
 
-This project was made thanks video-tutorial in Youtube: [Curso Iniciación Laravel 7](https://www.youtube.com/watch?v=t9rEizOUPw4&list=PLZhE4t9ih5N1hiHPPjrT6CycQJeSAvq3V&index=53) 
+This project was made thanks video-tutorial in Youtube: <a href="https://www.youtube.com/watch?v=t9rEizOUPw4&list=PLZhE4t9ih5N1hiHPPjrT6CycQJeSAvq3V&index=53" target="_blank">Curso Iniciación Laravel 7</a>
 
 the canal: Tutoriales virtuales
