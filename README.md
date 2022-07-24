@@ -11,11 +11,14 @@ I did this project when I had just learned php and was starting with laravel, so
 
 ## Demo of this App
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Here you could test this project, go to the link: [mini-erp](https://minierp-mvelardeq.herokuapp.com/seguridad/login)
+
+This demo was deployed on Heroku, using DBclear and Cloudinary and AdmitLte with bootstrap.
 
 ![Demo image](https://live.staticflickr.com/65535/52236102548_2c4988d54c_z.jpg "Demo image")
 
+## Acknowledgment
 
-<!-- ## Database model
+This project was made thanks video-tutorial in Youtube: [Curso Iniciación Laravel 7](https://www.youtube.com/watch?v=t9rEizOUPw4&list=PLZhE4t9ih5N1hiHPPjrT6CycQJeSAvq3V&index=53) 
 
-![This is my image](https://live.staticflickr.com/65535/52236102548_2c4988d54c_z.jpg "my-title") -->
+the canal: Tutoriales virtuales
