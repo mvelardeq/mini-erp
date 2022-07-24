@@ -14,6 +14,8 @@ class EstadoConceptoPagoTableSeeder extends Seeder
      */
     public function run()
     {
+        \DB::table('estado_conceptopago')->delete();
+
         \DB::table('estado_conceptopago')->insert([
             'nombre' => 'Sin facturar',
             'created_at' => '2022-07-23 08:54:03',
