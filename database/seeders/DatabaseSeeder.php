@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ContratoTableSeeder::class);
         $this->call(OtTableSeeder::class);
         $this->call(CotizacionTableSeeder::class);
-        $this->call(EstadoConceptoPago::class);
+        $this->call(EstadoConceptoPagoSeeder::class);
         $this->call(ConceptoPagoTableSeeder::class);
         $this->call(LineaCotizacionTableSeeder::class);
         $this->call(FacturaTableSeeder::class);
