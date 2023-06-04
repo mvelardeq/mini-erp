@@ -15,22 +15,19 @@ services:
     volumes:
       - ./:/var/www
     ports:
-      - "9000:9000"
-    networks:
-      - minierp
+      - "9001:9000"
   nginx:
     image: nginx:alpine
     container_name: minierp-server
     restart: unless-stopped
     ports:
-      - "8080:80"
+      - "8082:80"
     volumes:
       - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
-    networks:
-      - minierp
     depends_on:
       - app
 networks:
-  minierp:
-    driver: bridge
+  default:
+    external: true
+    name: nginx-network
