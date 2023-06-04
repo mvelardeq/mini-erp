@@ -79,10 +79,15 @@ use Carbon\Carbon;
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body px-0 mx-0">
-                                <img class="img-fluid pad mx-auto d-block pb-2"
-                                    {{-- src="{{ Storage::disk('s3')->url('photos/postPhoto/' . $post->foto) }}" --}}
-                                    src="{{ cloudinary()->getUrl($post->foto) }}"
-                                    alt="Photo">
+
+                                @if(!empty(cloudinary()->getUrl($post->foto)))
+                                    <img class="img-fluid pad mx-auto d-block pb-2"
+                                        {{-- src="{{ Storage::disk('s3')->url('photos/postPhoto/' . $post->foto) }}" --}}
+                                        src="{{ cloudinary()->getUrl($post->foto) }}"
+                                        alt="Photo">
+
+                                @endif
+
 
                                 <p class="px-3">{{ $post->descripcion }}</p>
 
@@ -111,13 +116,14 @@ use Carbon\Carbon;
                                     @if ($loop->index < 3)
                                         <div class="card-comment">
                                             <!-- User image -->
-                                            <a
-                                                href="{{ route('perfil-publico', ['id' => $comentario->trabajador->id]) }}">
-                                                <img class="img-circle img-sm"
-                                                    {{-- src="{{ Storage::disk('s3')->url('photos/profilePhoto/' . $comentario->trabajador->foto) }}" --}}
-                                                    src="{{ cloudinary()->getUrl($comentario->trabajador->foto) }}"
-                                                    alt="User Image">
-                                            </a>
+
+                                                <a
+                                                    href="{{ route('perfil-publico', ['id' => $comentario->trabajador->id]) }}">
+                                                    <img class="img-circle img-sm"
+                                                        {{-- src="{{ Storage::disk('s3')->url('photos/profilePhoto/' . $comentario->trabajador->foto) }}" --}}
+                                                        src="{{ cloudinary()->getUrl($comentario->trabajador->foto) }}"
+                                                        alt="User Image">
+                                                </a>
 
                                             <div class="comment-text">
                                                 <span class="username">

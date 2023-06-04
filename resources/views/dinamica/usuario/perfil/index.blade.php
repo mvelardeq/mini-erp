@@ -140,8 +140,14 @@ use Carbon\Carbon;
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body px-0 mx-0">
-                                    <img class="img-fluid pad mx-auto d-block pb-2"
-                                        src="{{ cloudinary()->getUrl($post->foto) }}" alt="Photo">
+
+                                    @if(!empty(cloudinary()->getUrl($post->foto)))
+                                        <img class="img-fluid pad mx-auto d-block pb-2"
+                                            {{-- src="{{ Storage::disk('s3')->url('photos/postPhoto/' . $post->foto) }}" --}}
+                                            src="{{ cloudinary()->getUrl($post->foto) }}"
+                                            alt="Photo">
+
+                                    @endif
 
                                     <p class="px-3">{{ $post->descripcion }}</p>
 
